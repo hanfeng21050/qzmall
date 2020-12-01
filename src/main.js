@@ -1,0 +1,21 @@
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import './style/css/common.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import httpRequest from '@/utils/httpRequest'
+
+Vue.use(ElementUI, VueAxios, axios)
+Vue.config.productionTip = false
+Vue.prototype.$http = httpRequest
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app')
+
+console.log(process.env.VUE_APP_URL)
+console.log(process.env.NODE_ENV)

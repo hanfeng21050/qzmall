@@ -1,0 +1,539 @@
+.clear {
+  overflow: hidden;
+}
+
+.detail-body {
+  margin: 90px auto;
+  width: 1140px;
+  background-color: #ffffff;
+}
+
+.crumb-wrap {
+  height: 44px;
+  background: #f2f2f2;
+}
+
+.crumb-wrap .crumb-item {
+  float: left;
+  padding: 0 6px;
+  font-size: 12px;
+  line-height: 44px;
+}
+
+.crumb-wrap .crumb-item a {
+  color: #000;
+}
+
+.crumb-wrap .crumb-item:hover a {
+  color: red;
+}
+
+.shop {
+  margin: 0 auto;
+  width: 1140px;
+
+}
+
+.box {
+  margin-top: 10px;
+  overflow: hidden;
+  z-index: -999;
+  font-size: 14px;
+}
+
+.box .box-one {
+  position: relative;
+  width: 1210px;
+  margin: 0 auto;
+}
+
+.boxx {
+  float: left;
+  width: 450px;
+}
+
+.boxx .boxx-one {
+  padding: 20px 0 0;
+}
+
+.boxx .boxx-one ul li {
+  color: #999;
+}
+
+.boxx .boxx-one ul li:first-child {
+  float: left;
+}
+
+.boxx .boxx-one ul li:first-child span img {
+  vertical-align: -3px;
+}
+
+.boxx .boxx-one ul li:last-child {
+  float: right;
+}
+
+.box-lh {
+  margin-bottom: 18px;
+  position: relative;
+  bottom: -20px;
+}
+
+.box-lh .box-lh-one {
+  margin-top: 30px;
+  position: relative;
+  width: 380px;
+  height: 63px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.box-lh .box-lh-one ul {
+  position: absolute;
+  width: 684px;
+  height: 58px;
+  top: 0px;
+  left: 0px;
+  list-style: none;
+}
+
+.box-lh .box-lh-one ul li {
+  float: left;
+  margin: 0 8px;
+  padding: 1px;
+}
+
+.box-lh .box-lh-one ul li img {
+  width: 58px;
+  height: 57px;
+}
+
+.box-lh #left,
+.box-lh #right {
+  position: absolute;
+  font-family: simsun;
+  bottom: 10px;
+  font-size: 40px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.box-lh #left {
+  left: 0;
+}
+
+.box-lh #right {
+  right: 0;
+}
+
+.imgbox {
+  position: relative;
+  z-index: 3;
+}
+
+.probox {
+  width: 450px;
+  height: 450px;
+}
+
+.probox img {
+  width: 440px;
+  height: 440px;
+  vertical-align: top;
+}
+
+.showbox {
+  display: none;
+  position: absolute;
+  left: 452px;
+  top: 0;
+  width: 450px;
+  height: 500px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background: #ffffff;
+}
+
+.showbox img {
+  position: absolute;
+  height: 600px;
+  width: 600px;
+}
+
+.hoverbox {
+  display: none;
+  position: absolute;
+  top: 0;
+  background: rgba(255, 255, 0, 0.5);
+  height: 300px;
+  width: 300px;
+  cursor: move;
+  z-index: 10;
+}
+
+
+
+.box .box-two {
+  right: 0;
+  width: 650px;
+  float: right;
+}
+
+.box .box-two .box-name {
+  font: 700 18px Arial, "microsoft yahei";
+  color: #666;
+  padding-top: 10px;
+  line-height: 28px;
+  margin-bottom: 5px;
+}
+
+.box .box-two .box-hide {
+  margin-bottom: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-height: 1.5em;
+  line-height: 1.5em;
+  font-size: 12px;
+  color: #777;
+}
+
+.box .box-two .box-summary {
+  padding: 10px 0 5px;
+  background: #f7f6f4;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.box .box-two .box-summary ul {
+  list-style: none;
+}
+
+.box .box-two .box-summary ul li {
+  float: left;
+  line-height: 22px;
+}
+
+.box .box-two .box-summary ul li:first-child {
+  padding-left: 10px;
+  font-family: simsun;
+  color: #999;
+}
+
+.box .box-two .box-summary ul li:nth-child(2) {
+  color: #c78a49;
+  ;
+  font-family: "microsoft yahei";
+  margin-left: 20px;
+}
+
+.box .box-two .box-summary ul li:nth-child(2) span:last-child {
+  font-size: 22px;
+}
+
+.box .box-two .box-summary ul li:last-child {
+  float: right;
+  margin-right: 50px;
+}
+
+.box .box-two .box-summary ul li {
+  color: #007EC3;
+}
+
+.box .box-two .box-attr-3 {
+  border: #CCCCCC 1px dashed;
+  border-left: none;
+  border-right: none;
+}
+
+
+.box .box-two .box-attr {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.box .box-two .box-attr img {
+  width: 40px;
+  height: 40px;
+}
+
+.box .box-two .box-attr dt,
+.box .box-two .box-attr dd {
+  float: left;
+}
+
+.box .box-two .box-attr dt {
+  padding-left: 10px;
+  font-family: simsun;
+  color: #999;
+  line-height: 40px;
+}
+
+.box .box-two .box-attr dd {
+  border: solid 1px #CCCCCC;
+  background: #F7F7F7;
+  color: #999;
+  margin-bottom: 4px;
+  margin-left: 5px;
+  padding-right: 10px;
+}
+
+.box .box-two .box-attr dd a {
+  color: #666;
+}
+
+.box .box-two .box-attr dd img {
+  vertical-align: -15px;
+}
+
+.box .box-two .box-attr-2 {
+  margin-bottom: 5px;
+}
+
+.box .box-two .box-attr-2 dt,
+.box .box-two .box-attr-2 dd {
+  float: left;
+}
+
+.box .box-two .box-attr-2 dt {
+  padding-left: 10px;
+  font-family: simsun;
+  color: #999;
+  line-height: 34px;
+}
+
+.box .box-two .box-attr-2 dd {
+  border: solid 1px #CCCCCC;
+  margin-left: 5px;
+  line-height: 34px;
+  padding: 0 13px;
+  white-space: nowrap;
+}
+
+.box .box-two .box-attr-2 dd a {
+  color: #666;
+}
+
+.box .box-two .box-attr-2 dd.redborder {
+  border: solid 1px red;
+}
+
+.box .box-two .box-btns {
+  margin-top: 0;
+  padding: 24px 10px 0;
+}
+
+.box .box-two .box-btns .box-btns-one {
+  height: 44px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  position: relative;
+  margin-right: 10px;
+  float: left;
+}
+
+.box .box-two .box-btns .box-btns-one input {
+  width: 43px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  float: left;
+  box-shadow: 0px 0px 0px 0px;
+  border: none;
+  outline: none;
+}
+
+.box .box-two .box-btns .box-btns-one .box-btns-one1 {
+  float: left;
+}
+
+.box .box-two .box-btns .box-btns-one .box-btns-one1 button {
+  cursor: pointer;
+  width: 17px;
+  height: 23px;
+  outline: none;
+  margin-top: -1px;
+}
+
+.box .box-two .box-btns .box-btns-two {
+  float: left;
+  height: 46px;
+  line-height: 46px;
+  padding: 0 26px;
+  background: #c78a49;
+  cursor: hand
+}
+
+.box .box-two .box-btns .box-btns-two a {
+  font-size: 18px;
+  font-family: "microsoft yahei";
+  color: white;
+}
+
+.box .box-two .summary-tips {
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+
+.box .box-two .summary-tips .dt {
+  float: left;
+  padding-left: 10px;
+  font-family: simsun;
+  color: #999;
+}
+
+.box .box-two .summary-tips .dd {
+  margin-left: 70px;
+}
+
+.box .box-two .summary-tips .tips-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.box .box-two .summary-tips .tips-list li {
+  float: left;
+  margin-right: 15px;
+  font-family: simsun;
+  color: #999;
+}
+
+
+/* 侧边栏 */
+.w {
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 1140px;
+}
+
+.aside {
+  width: 212px;
+  float: left;
+}
+.clearboth {
+  clear: both;
+}
+
+.aside .mt {
+  width: 212px;
+  background: #f7f7f7;
+  line-height: 40px;
+}
+
+.aside .mt h4 {
+  margin-left: 20px;
+  color: #666666;
+}
+
+.aside .mc {
+  width: 210px;
+  border: 1px solid #eeeeee;
+}
+
+.aside .mc .plist {
+  width: 100%;
+  list-style: none;
+}
+
+.aside .mc .plist li {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+}
+.aside .mc .plist li:hover a{
+  color: red;
+}
+
+.aside .mc .plist li img {
+  margin-top: 20px;
+  width: 200px;
+  border: none;
+}
+
+.aside .mc .plist li p {
+  font-size: 12px;
+  text-align: left;
+  margin: 5px 10px;
+}
+
+.aside .mc .plist li p a {
+  color: #666666;
+}
+
+.aside .mc .plist li p strong {
+  color: #c78a49;
+  font-size: 14px;
+}
+
+.detail {
+  float: right;
+  width: 920px;
+  position: relative;
+}
+
+.tab-main {
+  background: #f7f7f7;
+  height: 40px;
+  width: 920px;
+  border-bottom: 1px solid #c78a49;
+}
+.tab-main ul{
+  list-style: none;
+}
+
+.tab-main ul li {
+  height: 40px;
+  line-height: 45px;
+  text-align: center;
+  font-size: 15px;
+  float: left;
+  padding: 0px 25px;
+  background: #f7f7f7;
+}
+.tab-main ul li a {
+  color: #666666;
+  font-size: 600;
+}
+
+.detail .tab-con ul{
+  width: 927px;
+}
+.detail .tab-con ul li{
+  /* display: none; */
+}
+.jieshao{
+  width: 100%;
+  margin-top: 20px;
+}
+.jieshao p a {
+  font-size: 12px;
+  color: #666666;
+  margin-left: 40px;
+}
+.detail .tab-con ul {
+  list-style: none;
+}
+
+.detail .tab-con ul li .jieshao table {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+.jieshao table td {
+  width: 25%;
+}
+.jieshao table td a {
+  font-size: 12px;
+  color: #666666;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jieshao table td a:hover {
+  color: red;
+}
+.jieshao img {
+  width: 100%;
+  margin-top: 20px;
+}
