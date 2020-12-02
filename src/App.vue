@@ -92,6 +92,7 @@ a{
   width: 100%;
   height: 68px;
   background-color: #ffffff;
+  border-bottom: 1px solid #c2a485;
   z-index: 99;
 }
 .header .inter {
@@ -146,6 +147,7 @@ a{
   width: 100%;
   height: 390px;
   background-color: #FAF8F8;
+    border-top: 1px solid #c2a485;
 }
 .footer .inter1{
   width: 1140px;
