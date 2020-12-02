@@ -467,41 +467,40 @@
   font-size: 14px;
 }
 
+
+/* -------------------------------- */
+.detail .el-tabs__content {
+  padding: 0 !important;
+}
+.el-tabs--border-card {
+  box-shadow: 0 0 0 0;
+}
+.el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active {
+  color: #fff;
+  background-color: #c78a49;
+  border-right-color: #DCDFE6;
+  border-left-color: #DCDFE6;
+}
+.el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+  color: #c9b49e;
+}
+.el-tabs--border-card>.el-tabs__header {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #c78a49;
+  margin: 0;
+}
+
+/* -------------------------------- */
+
+/* 商品介绍 */
 .detail {
   float: right;
   width: 920px;
   position: relative;
 }
 
-.tab-main {
-  background: #f7f7f7;
-  height: 40px;
-  width: 920px;
-  border-bottom: 1px solid #c78a49;
-}
-.tab-main ul{
-  list-style: none;
-}
-
-.tab-main ul li {
-  height: 40px;
-  line-height: 45px;
-  text-align: center;
-  font-size: 15px;
-  float: left;
-  padding: 0px 25px;
-  background: #f7f7f7;
-}
-.tab-main ul li a {
-  color: #666666;
-  font-size: 600;
-}
-
 .detail .tab-con ul{
   width: 927px;
-}
-.detail .tab-con ul li{
-  /* display: none; */
 }
 .jieshao{
   width: 100%;
@@ -510,7 +509,7 @@
 .jieshao p a {
   font-size: 12px;
   color: #666666;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 .detail .tab-con ul {
   list-style: none;
@@ -518,7 +517,7 @@
 
 .detail .tab-con ul li .jieshao table {
   margin-top: 20px;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 .jieshao table td {
   width: 25%;
@@ -531,9 +530,100 @@
   text-overflow: ellipsis;
 }
 .jieshao table td a:hover {
-  color: red;
+  color: #c78a49;
 }
 .jieshao img {
   width: 100%;
   margin-top: 20px;
+}
+
+/* 规格 */
+.guiGebox {
+  width: 927px;
+  margin: 0 auto;
+}
+.guiGebox .guiGe {
+  padding: 12px 0;
+  color: #888;
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+}
+.guiGebox .guiGe h3 {
+  width: 110px;
+  height: 26.4px;
+  float: left;
+  line-height: 26.4px;
+  text-align: right;
+  font-weight: 400;
+  font-size: 12px;
+  color: #888;
+}
+.guiGebox .guiGe dl {
+  width: 880px;
+  margin-left: 110px;
+}
+.guiGebox .guiGe dl dt {
+  width: 165px;
+  height: 26.4px;
+  line-height: 26.4px;
+  padding-right: 5px;
+  float: left;
+  text-align: right;
+}
+.guiGebox .guiGe dl dd {
+  width: 670px;
+  line-height: 26.4px;
+  height: 26.4px;
+  margin-left: 210px;
+}
+.guiGebox .package-list {
+  width: 990px;
+  padding: 12px 0;
+  color: #999;
+  font-size: 12px;
+  margin-top: -1px;
+}
+.guiGebox .package-list h3 {
+  width: 130px;
+  height: 26.4px;
+  line-height: 26.4px;
+  text-align: right;
+  font-weight: 400;
+  font-size: 12px;
+  float: left;
+}
+
+.guiGebox .package-list p {
+  width: 835px;
+  height: 52.8px;
+  line-height: 27.8px;
+  margin-left: 155px;
+  padding-right: 50px;
+}
+
+/* 售后 */
+.oBox {
+  width: 927px;;
+}
+
+.oBox .after-sale-title-item  {
+  margin: 50px auto;
+  position: relative;
+  left: 50px;
+  color: #666666;
+}
+.oBox .after-sale-title-item .oImg h3 {
+  margin-top: 10px;
+}
+
+.oBox .after-sale-title-item .oImg h3 {
+  width: 64px;
+  height: 43px;
+  color: #c78a49;
+  display: inline;
+}
+
+.oBox .after-sale-title-item .wenZi {
+  margin: 10px auto;
+  font-size: 13px;
 }
