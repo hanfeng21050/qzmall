@@ -452,4 +452,5 @@ export default {
 }
 </script>
 <style scoped src="../style/css/shopping-cart.css">
+
 </style>

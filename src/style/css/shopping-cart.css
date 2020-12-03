@@ -58,53 +58,64 @@ h6 {
   --width: 1140px;
   --aPart: calc(var(--width) / 12);
 }
-
 .row-1 {
   width: calc(var(--aPart) * 1);
+  width: 95px;
 }
 
 .row-2 {
   width: calc(var(--aPart) * 2);
+  width: 190px;
 }
 
 .row-3 {
   width: calc(var(--aPart) * 3);
+  width: 285px;
 }
 
 .row-4 {
   width: calc(var(--aPart) * 4);
+  width: 360px;
 }
 
 .row-5 {
   width: calc(var(--aPart) * 5);
+  width: 475px;
 }
 
 .row-6 {
   width: calc(var(--aPart) * 6);
+  width: 570px;
 }
 
 .row-7 {
   width: calc(var(--aPart) * 7);
+  width: 665px;
 }
 
 .row-8 {
   width: calc(var(--aPart) * 8);
+  width: 760px;
 }
 
 .row-9 {
   width: calc(var(--aPart) * 9);
+  width: 855x;
 }
 
 .row-10 {
   width: calc(var(--aPart) * 10);
+  width: 950px
 }
 
 .row-11 {
   width: calc(var(--aPart) * 11);
+  width: 1045px;
 }
 
 .row-12 {
   width: calc(var(--aPart) * 12);
+  width: 1140px;
 }
 
 /*webkit*/
