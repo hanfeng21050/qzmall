@@ -55,54 +55,8 @@
             </ul>
           </div>
           <div class="box-attr-3">
-            <div class="box-attr clear">
-              <dl>
-                <dt>选择颜色</dt>
-                <dd style="border: 1px solid rgb(204, 204, 204);">
-                  <a href="#">
-                    <img src="../style/img/59ded62eN64a9784c.jpg"> 摩卡金
-                  </a>
-                </dd>
-                <dd>
-                  <a href="#">
-                    <img src="../style/img/59ded62eN64a9784c.jpg"> 亮黑色
-                  </a>
-                </dd>
-                <dd style="border: 1px solid rgb(204, 204, 204);">
-                  <a href="#">
-                    <img src="../style/img/59ded62eN64a9784c.jpg"> 香槟金
-                  </a>
-                </dd>
-                <dd style="border: 1px solid rgb(204, 204, 204);">
-                  <a href="#">
-                    <img src="../style/img/59ded62eN64a9784c.jpg"> 樱粉金
-                  </a>
-                </dd>
-              </dl>
-            </div>
-            <div class="box-attr-2 clear">
-              <dl>
-                <dt>选择版本</dt>
-                <dd>
-                  <a href="#">标准版</a>
-                </dd>
-                <dd>
-                  <a href="#">套装版</a>
-                </dd>
-              </dl>
-            </div>
-
-            <div class="box-attr-2 clear">
-              <dl>
-                <dt>选择内存</dt>
-                <dd>
-                  <a href="#">64GB</a>
-                </dd>
-                <dd>
-                  <a href="#">128GB</a>
-                </dd>
-              </dl>
-            </div>
+            <single-selector></single-selector>
+            <single-selector></single-selector>
           </div>
           <div class="box-btns clear">
             <div class="box-btns-one">
@@ -403,10 +357,15 @@
 <script>
 import '@/style/iconfont/iconfont.css'
 import $ from 'jquery'
+import SingleSelector from '@/components/SingleSelector'
 export default {
-  components: {},
+  components: {
+    SingleSelector
+  },
   data () {
-    return {}
+    return {
+      radio1: ''
+    }
   },
   computed: {},
   watch: {},
@@ -534,7 +493,7 @@ export default {
   activated () {}
 }
 </script>
-<style src="../style/css/product-detail.css">
+<style src="../style/css/product-detail.css" scoped>
 .el-tabs__content {
   padding: 0 !important;
 }
