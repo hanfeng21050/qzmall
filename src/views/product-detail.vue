@@ -55,8 +55,10 @@
             </ul>
           </div>
           <div class="box-attr-3">
-            <single-selector></single-selector>
-            <single-selector></single-selector>
+            <div >
+
+            </div>
+            <single-selector v-for="(attr, index) in saleAttrs" :key="index" :attr="attr" :skuId="sku.skuId"></single-selector>
           </div>
           <div class="box-btns clear">
             <div class="box-btns-one">
@@ -364,12 +366,75 @@ export default {
   },
   data () {
     return {
-      radio1: ''
+      sku: {
+        skuId: 9
+      },
+      images: [],
+      desc: {},
+      saleAttrs: [
+        {
+          attrId: 5,
+          attrName: '颜色',
+          attrValues: [
+            {
+              attrValue: '白色',
+              skuIds: [13, 12, 14]
+            },
+            {
+              attrValue: '红色',
+              skuIds: [16, 15, 17]
+            },
+            {
+              attrValue: '黄色',
+              skuIds: [19, 18, 20]
+            },
+            {
+              attrValue: '黑色',
+              skuIds: [10, 9, 11]
+            }
+          ]
+        },
+        {
+          attrId: 17,
+          attrName: '版本',
+          attrValues: [
+            {
+              attrValue: '128GB',
+              skuIds: [10, 13, 16, 19]
+            },
+            {
+              attrValue: '256GB',
+              skuIds: [11, 14, 17, 20]
+            },
+            {
+              attrValue: '64GB',
+              skuIds: [9, 12, 15, 18]
+            }
+          ]
+        }
+      ],
+      groupAttrs: []
     }
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    getSkuId (arrs) {
+      var arr = arrs.shift()
+      for (var i = arrs.length; i--;) {
+        var p = { boolean: {}, number: {}, string: {} }
+        var obj = []
+        arr = arr.concat(arrs[i]).filter(function (x) {
+          var t = typeof x
+          return !(t in p
+            ? !p[t][x] && (p[t][x] = 1)
+            : obj.indexOf(x) < 0 && obj.push(x))
+        })
+        if (!arr.length) return null
+      }
+      return arr[0]
+    }
+  },
   created () {},
   mounted () {
     // 左右滚动
