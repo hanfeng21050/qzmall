@@ -21,13 +21,10 @@
           </div>
           <div class="box-lh">
             <div class="box-lh-one">
-              <ul>
+              <ul class="box-lh-one-ul">
                 <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
                 <li style="padding: 1px; border: none;"><img src="../style/img/57d11b9cNad700eeb.jpg"></li>
                 <li style="padding: 1px; border: none;"><img src="../style/img/57d11b9cNad700eeb.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
                 <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
                 <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
                 <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
@@ -418,6 +415,11 @@ export default {
   mounted () {
     // 左右滚动
     $('#right').click(function () {
+      debugger
+      if ($('.box-lh-one-ul').children('li').length <= 5) {
+        console.log($('.box-lh-one').children('li').length)
+        return
+      }
       $('.box-lh-one ul').stop().animate({
         left: '-297px'
       })
@@ -429,6 +431,9 @@ export default {
       })
     })
     $('#left').click(function () {
+      if ($('.box-lh-one-ul').children('li').length <= 5) {
+        return
+      }
       $('.box-lh-one ul').stop().animate({
         left: 0
       })

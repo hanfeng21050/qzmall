@@ -1,44 +1,20 @@
 <template>
   <div>
     <p class="da">
-      <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-        <img src="../style/img/57d0d400nfd249af4.jpg" class="dim">
+      <a href="#" :title="spu.spuName">
+        <img :src="spu.skuList[0].skuImg" class="dim">
       </a>
     </p>
     <ul class="tab_im">
-      <li><a href="#" title="黑色"><img src="../style/img/57d0d400nfd249af4.jpg"></a></li>
-      <li><a href="#" title="黑色"><img src="../style/img/57d11c33N5cd57490.jpg"></a></li>
-      <li><a href="#" title="黑色"><img src="../style/img/58d1d078N20e18b62.jpg"></a></li>
-      <li><a href="#" title="黑色"><img src="../style/img/57d11b6cn1fd1194d.jpg"></a></li>
-      <li><a href="#" title="黑色"><img src="../style/img/57d11c72N093250ec.jpg"></a></li>
-      <!--               <li><a href="#" title="粉色"><img src="../style/img/57d11c33N5cd57490.jpg"></a></li>
-              <li><a href="#" title="红色"><img src="../style/img/58d1d078N20e18b62.jpg"></a></li>
-              <li><a href="#" title="黑色"><img src="../style/img/57d11b6cN1fd1194d.jpg"></a></li>
-              <li><a href="#" title="白色"><img src="../style/img/57d11c72N093250ec.jpg"></a></li> -->
+      <li v-for="sku in spu.skuList" :key="sku.skuId"><a href="#" :title="sku.skuName" @click="toDetail(sku.skuId)"><img :src="sku.skuImg"></a></li>
     </ul>
     <p class="tab_R">
-      <span>¥5199.00</span>
-      <span>¥5299.00</span>
-      <span>¥5399.00</span>
-      <span>¥6388.00</span>
-      <span>¥5599.00</span>
+      <span v-for="sku in spu.skuList" :key="sku.skuId">¥{{sku.skuPrice}}</span>
     </p>
 
     <p class="tab_JE">
-      <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-        Apple iPhone 7 Plus (A1661) 32G 黑色 移动联通电信4G手机
-      </a>
-      <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-        Apple iPhone 7 Plus (A1661) 32G 玫瑰金色 移动联通电信4G手机
-      </a>
-      <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-        Apple iPhone 7 Plus 128G 红色特别版 移动联通电信4G手机
-      </a>
-      <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-        Apple iPhone 7 Plus (A1661) 32G 亮黑色 移动联通电信4G手机
-      </a>
-      <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-        Apple iPhone 7 Plus (A1661) 32G 银色 移动联通电信4G手机
+      <a  v-for="sku in spu.skuList" :key="sku.skuId" href="#" :title="sku.skuName" @click="toDetail(sku.skuId)">
+        {{sku.skuName}}
       </a>
     </p>
   </div>
@@ -47,13 +23,22 @@
 <script>
 import $ from 'jquery'
 export default {
+  props: {
+    spu: {
+      type: Object
+    }
+  },
   components: {},
   data () {
     return {}
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    toDetail (spuId) {
+      console.log('http://localhost:88/api/product/spuinfo/spuDetail/' + spuId)
+    }
+  },
   created () {},
   mounted () {
     $('.tab_im img').hover(function () {
@@ -139,7 +124,7 @@ div > ul li img {
 }
 
 div .tab_R {
-  color: red;
+  color: #be6307;
   font-size: 18px;
   font-weight: 800;
   margin: 10px;
@@ -165,7 +150,7 @@ div .tab_JE a {
 }
 
 div .tab_JE a:hover {
-  color: red;
+  color: #da7007;
 }
 
 div .tab_JE a:first-child {

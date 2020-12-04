@@ -24,82 +24,6 @@
 	height: 24px;
 	line-height: 24px;
 }
-.nav_bar a{
-	color: #000;
-}
-
-
-.nav_bar .nav_bar_one {
-	float: left;
-  margin-right: 5px;
-}
-.nav_bar .nav_bar_one a{
-	text-decoration: none;
-  background-color: #fff;
-}
-
-.nav_bar .a{
-	font-size: 17px;
-  font-weight: 900;
-}
-.nav_bar .c,
-.nav_bar .b {
-  position: relative;
-}
-.nav_bar .b a,
-.nav_bar .c a {
-	display: inline-block;
-  height: 22px;
-  padding: 0 4px 0 8px;
-  border: 1px solid #ddd;
-  line-height: 22px;
-  vertical-align: top;
-  font-size: 14px;
-  position: relative;
-}
-.nav_bar .c div,
-.nav_bar .b div {
-  position: absolute;
-  top: 23px;
-  left: 0;
-  width: 400px;
-  padding: 10px 0;
-  border: 1px solid #ddd;
-  background: #fff;
-  display: none;
-}
-
-.nav_bar .c div a,
-.nav_bar .b div a {
-  border: 0;
-  display: block;
-  float: left;
-  margin-right: 5px;
-}
-
-.nav_bar .c div a:hover,
-.nav_bar .b div a:hover {
-  color: #e23a3a;
-}
-
-.nav_bar i {
-  float: left;
-  margin-right: 5px;
-}
-
-.nav_bar .b:hover .qqq {
-  border: 1px solid #ddd;
-  border-bottom: 1px solid #fff;
-}
-
-.nav_bar .c:hover .qqq {
-  border: 1px solid  #ddd;
-  border-bottom: 1px solid #fff;
-}
-
-/* ------------------------------------------------- */
-
-
 
 
 /* -----------------------商品筛选-------------------------- */
@@ -286,29 +210,6 @@
   overflow: hidden;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-
-/*
-.s_content .s_content_c  .s_prod {
-	overflow: hidden;
-}
-
- .s_content .s_content_c  .s_prod ul {
-	overflow: hidden;
-	width: 1164px;
-}
-
-.s_content .s_content_c  .s_prod ul li {
-	width: 246px;
-	height: 362px;
-	margin-right: 45px;
-	margin-bottom: 30px;
-	float: left;
-	position: relative;
-	list-style: none;
-} */
-
-
-
 
 .s_content .s_content_c  .pages{
 	text-align: right;

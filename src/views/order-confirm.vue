@@ -59,6 +59,7 @@
             </div>
             <div class="addr-sumbit-gw">
               <input type="button" value="保存收货地址" class="btn-gray-gw" @click="add" />
+              <input type="button" value="关闭" class="btn-gray-gw" @click="addrIsShow=false" />
             </div>
           </div>
         </form>

@@ -2,36 +2,11 @@
   <div class="s_content">
     <div class="s_content_c inner_c">
       <!-- 导航条 -->
-      <div class="nav_bar">
-        <div class="nav_bar_one a">
-          <a href="#">手机</a>
-        </div>
-        <i><img src="../style/img/right-@1x.png" alt=""></i>
-        <div class="nav_bar_one b">
-          <a href="#" class="qqq">手机通讯录 <img src="../style/img/down-@1x.png" alt=""></a>
-          <div>
-            <a href="#">手机通讯</a>
-            <a href="#">运营商</a>
-            <a href="#">手机配件</a>
-            <a href="#">手机服务</a>
-          </div>
-        </div>
-        <i><img src="../style/img/right-@1x.png" alt=""></i>
-        <div class="nav_bar_one c">
-          <a href="#" class="qqq">手机 <img src="../style/img/down-@1x.png" alt=""></a>
-          <div>
-            <a href="#">手机</a>
-            <a href="#">老人机</a>
-            <a href="#">对讲机</a>
-            <a href="#">女性手机</a>
-            <a href="#">超续航手机</a>
-            <a href="#">全面屏手机</a>
-            <a href="#">拍照手机</a>
-            <a href="#">游戏手机</a>
-          </div>
-        </div>
-
-      </div>
+      <el-breadcrumb separator-class="el-icon-arrow-right" class="nav_bar">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>数码</el-breadcrumb-item>
+        <el-breadcrumb-item>手机</el-breadcrumb-item>
+      </el-breadcrumb>
 
       <!-- 商品筛选 -->
       <div class="banner">
@@ -39,41 +14,39 @@
           <div class="selector">
             <div class="title">
               <h3><b>手机</b><em>商品筛选</em></h3>
-              <div class="st-ext">共&nbsp;<span>10135</span>个商品 </div>
             </div>
 
             <div class="condition">
-              <!--价格-->
+              <!--品牌-->
               <div class="JD_pre">
                 <div class="sl_key">
                   <span>品牌：</span>
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li><a href="#">小米</a></li>
-                    <li><a href="#">华为</a></li>
-                    <li><a href="#">苹果</a></li>
-                    <li><a href="#">vivo</a></li>
-                    <li><a href="#">oppo</a></li>
-                    <li><a href="#">1+</a></li>
-                    <li><a href="#">三星</a></li>
+                    <li v-for="brand in brands" :key="brand.brandId"><a href="#">{{brand.brandName}}</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- 分类 -->
+              <div class="JD_pre">
+                <div class="sl_key">
+                  <span>分类：</span>
+                </div>
+                <div class="sl_value">
+                  <ul>
+                    <li v-for="catalog in catalogs" :key="catalog.catalogId"><a href="#">{{catalog.catalogName}}</a></li>
                   </ul>
                 </div>
               </div>
 
-              <div class="JD_pre">
+              <div class="JD_pre" v-for="attr in attrs" :key=attr.attrId>
                 <div class="sl_key">
-                  <span>价格：</span>
+                  <span>{{attr.attrName}}：</span>
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li><a href="#">0-499</a></li>
-                    <li><a href="#">500-999</a></li>
-                    <li><a href="#">1000-1699</a></li>
-                    <li><a href="#">1700-2799</a></li>
-                    <li><a href="#">2800-4499</a></li>
-                    <li><a href="#">4500-11999</a></li>
-                    <li><a href="#">12000以上</a></li>
+                    <li v-for="(val, index) in attr.attrValues" :key="index"><a href="#">{{val}}</a></li>
                   </ul>
                 </div>
               </div>
@@ -98,36 +71,18 @@
         </div>
         <div class="swi">
           <span>仅显示有货：</span>
-          <!--<a href="#">
-              <i></i>
-            </a> -->
           <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949">
           </el-switch>
         </div>
         <div class="total">
-          共<span>20</span>个商品
+          共<span>{{total}}</span>个商品
         </div>
       </div>
-      <div class="s_prod">
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
-        <product-item></product-item>
+      <div class="s_prod" v-loading="loading" >
+        <product-item v-for="spu in spuList" :key="spu.spuId" :spu="spu"></product-item>
       </div>
 
-      <el-pagination background layout="prev, pager, next" :total="1000" style="text-align:right">
+      <el-pagination background layout="prev, pager, next" :page-size="20" :total="total" style="text-align:right" :current-page="pageNum">
       </el-pagination>
     </div>
   </div>
@@ -140,7 +95,150 @@ export default {
   components: { ProductItem },
   data () {
     return {
-      value: false
+      loading: false,
+      value: false,
+      pageNum: 1,
+      total: 1000,
+      brands: [
+        {
+          brandId: 1,
+          brandName: '华为'
+        },
+        {
+          brandId: 2,
+          brandName: '小米'
+        },
+        {
+          brandId: 3,
+          brandName: '苹果'
+        },
+        {
+          brandId: 4,
+          brandName: 'vivo'
+        },
+        {
+          brandId: 5,
+          brandName: 'oppo'
+        }
+      ],
+      catalogs: [
+        {
+          catalogId: 1,
+          catalogName: '手机'
+        },
+        {
+          catalogId: 2,
+          catalogName: '智能手表'
+        },
+        {
+          catalogId: 3,
+          catalogName: '智能手环'
+        }
+      ],
+      attrs: [
+        {
+          attrId: 1,
+          attrName: '尺寸',
+          attrValues: ['1寸', '2寸', '三寸']
+        },
+        {
+          attrId: 2,
+          attrName: '颜色',
+          attrValues: ['红色', '黑色', '蓝色']
+        }
+      ],
+      spuList: [
+        {
+          spuId: 1,
+          spuName: '华为 mate30',
+          skuList: [
+            {
+              skuId: 1,
+              skuName: '华为mate30 8+128',
+              skuPrice: 6999.0,
+              skuImg: require('../style/img/58d1d078N20e18b62.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            },
+            {
+              skuId: 2,
+              skuName: '华为mate30 12+128',
+              skuPrice: 5999.0,
+              skuImg: require('../style/img/57d0d400nfd249af4.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            },
+            {
+              skuId: 3,
+              skuName: '华为mate30 8+256',
+              skuPrice: 4999.0,
+              skuImg: require('../style/img/57d11c33N5cd57490.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            }
+          ]
+        },
+        {
+          spuId: 2,
+          spuName: '华为 mate30',
+          skuList: [
+            {
+              skuId: 4,
+              skuName: '华为mate30 8+128',
+              skuPrice: 6999.0,
+              skuImg: require('../style/img/58d1d078N20e18b62.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            },
+            {
+              skuId: 5,
+              skuName: '华为mate30 12+128',
+              skuPrice: 5999.0,
+              skuImg: require('../style/img/57d0d400nfd249af4.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            },
+            {
+              skuId: 6,
+              skuName: '华为mate30 8+256',
+              skuPrice: 4999.0,
+              skuImg: require('../style/img/57d11c33N5cd57490.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            }
+          ]
+        },
+        {
+          spuId: 3,
+          spuName: '华为 mate30',
+          skuList: [
+            {
+              skuId: 7,
+              skuName: '华为mate30 8+128',
+              skuPrice: 6999.0,
+              skuImg: require('../style/img/58d1d078N20e18b62.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            },
+            {
+              skuId: 8,
+              skuName: '华为mate30 12+128',
+              skuPrice: 5999.0,
+              skuImg: require('../style/img/57d0d400nfd249af4.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            },
+            {
+              skuId: 9,
+              skuName: '华为mate30 8+256',
+              skuPrice: 4999.0,
+              skuImg: require('../style/img/57d11c33N5cd57490.jpg'),
+              saleCount: 0,
+              hasStock: 1
+            }
+          ]
+        }
+      ]
     }
   },
   computed: {},
