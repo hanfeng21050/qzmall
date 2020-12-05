@@ -55,10 +55,10 @@
             </ul>
           </div>
           <div class="box-attr-3">
-            <div >
+            <div>
 
             </div>
-            <single-selector v-for="(attr, index) in saleAttrs" :key="index" :attr="attr" :skuId="sku.skuId"></single-selector>
+            <single-selector v-for="(attr, index) in saleAttrs" :key="index" :attr="attr" :skuId="sku.skuId" @attrClick="attrClick" :ref="'item'+ index" />
           </div>
           <div class="box-btns clear">
             <div class="box-btns-one">
@@ -413,7 +413,8 @@ export default {
           ]
         }
       ],
-      groupAttrs: []
+      groupAttrs: [],
+      select: []
     }
   },
   computed: {},
@@ -433,6 +434,15 @@ export default {
         if (!arr.length) return null
       }
       return arr[0]
+    },
+
+    attrClick (arr) {
+      this.select = []
+      for (let i = 0; i < this.saleAttrs.length; i++) {
+        const _attr = this.$refs['item' + i]
+        this.select.push(_attr[0].attr.attrValues[_attr[0].select].skuIds)
+      }
+      console.log('请求skuId=' + this.getSkuId(this.select))
     }
   },
   created () {},

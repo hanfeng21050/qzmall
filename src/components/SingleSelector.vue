@@ -52,8 +52,12 @@ export default {
   watch: {},
   methods: {
     singleSelect (val) {
-      this.select = val
-      // todo
+      // 如果当前已经选中,则不需要触发父组件的方法
+      if (this.select !== val) {
+        this.select = val
+        // todo
+        this.$emit('attrClick')
+      }
     }
   },
   created () {
