@@ -75,16 +75,6 @@ export default {
 }
 </script>
 <style scoped>
-*{
-  margin: 0 auto;
-  padding: 0;
-}
-img{
-  vertical-align: middle;
-}
-a{
-  text-decoration: none;
-}
 .header {
   position: fixed;
   top: 0;

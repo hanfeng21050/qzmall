@@ -214,3 +214,6 @@
 .s_content .s_content_c  .pages{
 	text-align: right;
 }
+.el-notification__icon{
+	margin: 0;
+}

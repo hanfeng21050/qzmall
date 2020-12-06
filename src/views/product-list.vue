@@ -46,7 +46,7 @@
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li v-for="(val, index) in attr.attrValues" :key="index"><a href="#">{{val}}</a></li>
+                    <li v-for="(val, index) in attr.attrValueList" :key="index"><a href="#">{{val}}</a></li>
                   </ul>
                 </div>
               </div>
@@ -78,11 +78,11 @@
           共<span>{{total}}</span>个商品
         </div>
       </div>
-      <div class="s_prod" v-loading="loading" >
+      <div class="s_prod" v-loading="loading">
         <product-item v-for="spu in spuList" :key="spu.spuId" :spu="spu"></product-item>
       </div>
 
-      <el-pagination background layout="prev, pager, next" :page-size="20" :total="total" style="text-align:right" :current-page="pageNum">
+      <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="total" style="text-align:right" :current-page="pageNum">
       </el-pagination>
     </div>
   </div>
@@ -98,153 +98,50 @@ export default {
       loading: false,
       value: false,
       pageNum: 1,
+      pageSize: 16,
       total: 1000,
-      brands: [
-        {
-          brandId: 1,
-          brandName: '华为'
-        },
-        {
-          brandId: 2,
-          brandName: '小米'
-        },
-        {
-          brandId: 3,
-          brandName: '苹果'
-        },
-        {
-          brandId: 4,
-          brandName: 'vivo'
-        },
-        {
-          brandId: 5,
-          brandName: 'oppo'
-        }
-      ],
-      catalogs: [
-        {
-          catalogId: 1,
-          catalogName: '手机'
-        },
-        {
-          catalogId: 2,
-          catalogName: '智能手表'
-        },
-        {
-          catalogId: 3,
-          catalogName: '智能手环'
-        }
-      ],
-      attrs: [
-        {
-          attrId: 1,
-          attrName: '尺寸',
-          attrValues: ['1寸', '2寸', '三寸']
-        },
-        {
-          attrId: 2,
-          attrName: '颜色',
-          attrValues: ['红色', '黑色', '蓝色']
-        }
-      ],
-      spuList: [
-        {
-          spuId: 1,
-          spuName: '华为 mate30',
-          skuList: [
-            {
-              skuId: 1,
-              skuName: '华为mate30 8+128',
-              skuPrice: 6999.0,
-              skuImg: require('../style/img/58d1d078N20e18b62.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            },
-            {
-              skuId: 2,
-              skuName: '华为mate30 12+128',
-              skuPrice: 5999.0,
-              skuImg: require('../style/img/57d0d400nfd249af4.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            },
-            {
-              skuId: 3,
-              skuName: '华为mate30 8+256',
-              skuPrice: 4999.0,
-              skuImg: require('../style/img/57d11c33N5cd57490.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            }
-          ]
-        },
-        {
-          spuId: 2,
-          spuName: '华为 mate30',
-          skuList: [
-            {
-              skuId: 4,
-              skuName: '华为mate30 8+128',
-              skuPrice: 6999.0,
-              skuImg: require('../style/img/58d1d078N20e18b62.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            },
-            {
-              skuId: 5,
-              skuName: '华为mate30 12+128',
-              skuPrice: 5999.0,
-              skuImg: require('../style/img/57d0d400nfd249af4.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            },
-            {
-              skuId: 6,
-              skuName: '华为mate30 8+256',
-              skuPrice: 4999.0,
-              skuImg: require('../style/img/57d11c33N5cd57490.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            }
-          ]
-        },
-        {
-          spuId: 3,
-          spuName: '华为 mate30',
-          skuList: [
-            {
-              skuId: 7,
-              skuName: '华为mate30 8+128',
-              skuPrice: 6999.0,
-              skuImg: require('../style/img/58d1d078N20e18b62.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            },
-            {
-              skuId: 8,
-              skuName: '华为mate30 12+128',
-              skuPrice: 5999.0,
-              skuImg: require('../style/img/57d0d400nfd249af4.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            },
-            {
-              skuId: 9,
-              skuName: '华为mate30 8+256',
-              skuPrice: 4999.0,
-              skuImg: require('../style/img/57d11c33N5cd57490.jpg'),
-              saleCount: 0,
-              hasStock: 1
-            }
-          ]
-        }
-      ]
+      brands: [],
+      catalogs: [],
+      attrs: [],
+      spuList: []
     }
   },
   computed: {},
   watch: {},
-  methods: {},
-  created () {},
+  methods: {
+    getSpuList () {
+      this.$http({
+        url: this.$http.adornUrl('/product/spuinfo/spuList'),
+        method: 'get',
+        params: this.$http.adornParams({})
+      }).then(({ data }) => {
+        console.log(data)
+        if (data.code === 0) {
+          this.$notify({
+            title: '获取数据成功',
+            type: 'success'
+          })
+          const _data = data.page
+          this.pageNum = _data.currentPage
+          this.total = _data.totalCount
+          this.brands = _data.list[0].brands
+          this.catalogs = _data.list[0].catalogs
+          this.attrs = _data.list[0].attrs
+          this.spuList = _data.list[0].spuList
+        } else {
+          this.$notify({
+            title: '获取数据失败',
+            type: 'error'
+          })
+        }
+      })
+      this.loading = false
+    }
+  },
+  created () {
+    this.loading = true
+    this.getSpuList()
+  },
   mounted () {
     /* 导航条 */
     $('.nav_bar_one').hover(
@@ -265,5 +162,5 @@ export default {
   activated () {}
 }
 </script>
-<style src="../style/css/product-list.css" scoped>
+<style src="../style/css/product-list.css">
 </style>
