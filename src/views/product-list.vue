@@ -114,6 +114,7 @@ export default {
       /* 已选择的筛选条件 */
       selectTags: [],
       params: {
+        spuName: '',
         pageNum: 1,
         pageSize: 16,
         brandId: [],
@@ -122,9 +123,23 @@ export default {
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    // 监控路由变化
+    $route (to, from) {
+      this.selectTags = []
+      this.params = {
+        spuName: to.query.spuName,
+        pageNum: 1,
+        pageSize: 16,
+        brandId: [],
+        attrs: []
+      }
+      this.getSpuList()
+    }
+  },
   methods: {
     getSpuList () {
+      this.loading = true
       this.$http({
         url: this.$http.adornUrl('/product/spuinfo/spuList'),
         method: 'get',
@@ -152,15 +167,17 @@ export default {
               type: 'error'
             })
           }
+          this.loading = false
         },
         (error) => {
           this.$notify({
             title: error.message,
             type: 'error'
           })
+          this.loading = false
         }
+
       )
-      this.loading = false
     },
 
     brandCick (id, name) {
@@ -233,7 +250,7 @@ export default {
     }
   },
   created () {
-    this.loading = true
+    this.params.spuName = this.$route.query.spuName
     this.getSpuList()
   },
   mounted () {

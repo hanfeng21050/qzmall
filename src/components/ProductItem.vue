@@ -2,12 +2,14 @@
   <div class="body">
     <p class="da">
       <a href="#" :title="spu.spuName">
-        <img :src="spu.skuList[0].skuImg" class="dim">
+        <!-- <img :src="spu.skuList[0].skuImg" class="dim"> -->
+        <el-image class="dim" :src="spu.skuList[0].skuImg" fit="cover"></el-image>
       </a>
     </p>
     <swiper class="swiper" ref="mySwiper" :options="swiperOption">
       <swiper-slide class="swiper-slide" v-for="sku in spu.skuList" :key="sku.skuId" style="width:40px; height:45px; text-align:center;">
-        <img class="thumb" @click="toDetail(sku.skuId)" :src="sku.skuImg">
+        <!-- <img class="thumb" @click="toDetail(sku.skuId)" :src="sku.skuImg"> -->
+        <el-image class="thumb" @click="toDetail(sku.skuId)" fit="cover" :src="sku.skuImg"></el-image>
       </swiper-slide>
     </swiper>
     <p class="tab_R">
@@ -56,6 +58,12 @@ export default {
   methods: {
     toDetail (spuId) {
       console.log('http://localhost:88/api/product/spuinfo/spuDetail/' + spuId)
+      this.$router.push({
+        path: '/product/detail',
+        query: {
+          spuId: spuId
+        }
+      })
     }
   },
   created () {},
@@ -119,7 +127,7 @@ export default {
   text-align: center;
 }
 
-.body > .da img {
+.body > .da .dim {
   width: 250px;
   height: 260px;
 }
