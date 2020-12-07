@@ -13,7 +13,13 @@
         <div class="nav">
           <div class="selector">
             <div class="title">
-              <h3><b>手机</b><em>商品筛选</em></h3>
+              <h3><b>全部结果></b></h3>
+              <div class="label">
+                <span class="tag" v-for="(tag, index) in selectTags" :key="index">
+                  <span class="span-text">{{tag.name}}:{{tag.flag === 2 ? tag.value.split("_")[1] : tag.value}}</span>
+                  <button class="tag-remove" @click="deleteTag(tag)">X</button>
+                </span>
+              </div>
             </div>
 
             <div class="condition">
@@ -24,7 +30,7 @@
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li v-for="brand in brands" :key="brand.brandId"><a href="#">{{brand.brandName}}</a></li>
+                    <li v-for="brand in brands" :key="brand.brandId" @click="brandCick(brand.brandId, brand.brandName, 0)"><a>{{brand.brandName}}</a></li>
                   </ul>
                 </div>
               </div>
@@ -35,7 +41,7 @@
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li v-for="catalog in catalogs" :key="catalog.catalogId"><a href="#">{{catalog.catalogName}}</a></li>
+                    <li v-for="catalog in catalogs" :key="catalog.catalogId" @click="catalogClick(catalog.catalogId, catalog.catalogName, 0)"><a>{{catalog.catalogName}}</a></li>
                   </ul>
                 </div>
               </div>
@@ -46,7 +52,7 @@
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li v-for="(val, index) in attr.attrValueList" :key="index"><a href="#">{{val}}</a></li>
+                    <li v-for="(val, index) in attr.attrValueList" :key="index" @click="attrClick(attr.attrId, attr.attrName, val)"><a>{{val}}</a></li>
                   </ul>
                 </div>
               </div>
@@ -91,6 +97,7 @@
 <script>
 import $ from 'jquery'
 import ProductItem from '@/components/ProductItem'
+import { omit } from '@/utils/utils'
 export default {
   components: { ProductItem },
   data () {
@@ -103,7 +110,15 @@ export default {
       brands: [],
       catalogs: [],
       attrs: [],
-      spuList: []
+      spuList: [],
+      /* 已选择的筛选条件 */
+      selectTags: [],
+      params: {
+        pageNum: 1,
+        pageSize: 16,
+        brandId: [],
+        attrs: []
+      }
     }
   },
   computed: {},
@@ -113,14 +128,15 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/product/spuinfo/spuList'),
         method: 'get',
-        params: this.$http.adornParams({})
+        params: this.$http.adornParams(this.params)
       }).then(
         ({ data }) => {
           console.log(data)
           if (data.code === 0) {
             this.$notify({
               title: '获取数据成功',
-              type: 'success'
+              type: 'success',
+              duration: 1500
             })
             const _data = data.page
             this.pageNum = _data.currentPage
@@ -145,6 +161,75 @@ export default {
         }
       )
       this.loading = false
+    },
+
+    brandCick (id, name) {
+      /* 防止重复点击 */
+      if (this.params.brandId.findIndex((_id) => _id === id) !== -1) {
+        return
+      }
+
+      const tag = {
+        flag: 0,
+        name: '品牌',
+        value: name
+      }
+      this.selectTags.push(tag)
+      this.params.brandId.push(id)
+      this.getSpuList()
+    },
+
+    catalogClick (id, name) {
+      /* 防止重复点击 */
+      if (this.params.catalog3Id) {
+        return
+      }
+      const tag = {
+        flag: 1,
+        name: '分类',
+        value: name
+      }
+      this.selectTags.push(tag)
+      this.params.catalog3Id = id
+      this.getSpuList()
+    },
+    /**
+     * id: 自定义属性id
+     * name: 自定义属性名
+     * value: 自定义属性值
+     */
+    attrClick (id, name, value) {
+      /* 防止重复点击 */
+      if (this.params.attrs.findIndex((val) => val === id + '_' + value) !== -1) {
+        return
+      }
+
+      const tag = {
+        flag: 2,
+        name: name,
+        value: id + '_' + value
+      }
+      this.selectTags.push(tag)
+      this.params.attrs.push(id + '_' + value)
+      this.getSpuList()
+    },
+    /*
+      flag = 0 表示品牌
+      flag = 1 表示分类
+      flag = 2 表示属性
+    */
+    deleteTag (tag) {
+      this.selectTags.splice(
+        this.selectTags.findIndex((item) => item.name === tag.name && item.value === tag.value), 1
+      )
+      if (tag.flag === 0) {
+        this.params.brandId.splice(this.params.brandId.findIndex((item) => item === tag.value), 1)
+      } else if (tag.flag === 1) {
+        this.params = omit(this.params, ['catalog3Id'])
+      } else if (tag.flag === 2) {
+        this.params.attrs.splice((val) => val === tag.value)
+      }
+      this.getSpuList()
     }
   },
   created () {

@@ -63,7 +63,6 @@ export default {
     $('.thumb').hover(function () {
       var a = $(this).prop('src')
       var index = $(this).parent('div').index()
-      console.log(index)
       $(this).parent().children('.thumb').css('border', '1.5px solid red')
       $(this)
         .parent()
@@ -106,7 +105,7 @@ export default {
   border-radius: 5px;
 }
 .body:hover{
-  box-shadow: 0 0 8px 0.5px rgb(185, 185, 185);
+  box-shadow: 0 0 5px 0.5px rgb(185, 185, 185);
 }
 
 .body {
