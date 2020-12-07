@@ -114,27 +114,36 @@ export default {
         url: this.$http.adornUrl('/product/spuinfo/spuList'),
         method: 'get',
         params: this.$http.adornParams({})
-      }).then(({ data }) => {
-        console.log(data)
-        if (data.code === 0) {
+      }).then(
+        ({ data }) => {
+          console.log(data)
+          if (data.code === 0) {
+            this.$notify({
+              title: '获取数据成功',
+              type: 'success'
+            })
+            const _data = data.page
+            this.pageNum = _data.currentPage
+            this.total = _data.totalCount
+            this.brands = _data.list[0].brands
+            this.catalogs = _data.list[0].catalogs
+            this.attrs = _data.list[0].attrs
+            this.spuList = _data.list[0].spuList
+          } else {
+            this.$notify({
+              title: data.code,
+              message: data.msg,
+              type: 'error'
+            })
+          }
+        },
+        (error) => {
           this.$notify({
-            title: '获取数据成功',
-            type: 'success'
-          })
-          const _data = data.page
-          this.pageNum = _data.currentPage
-          this.total = _data.totalCount
-          this.brands = _data.list[0].brands
-          this.catalogs = _data.list[0].catalogs
-          this.attrs = _data.list[0].attrs
-          this.spuList = _data.list[0].spuList
-        } else {
-          this.$notify({
-            title: '获取数据失败',
+            title: error.message,
             type: 'error'
           })
         }
-      })
+      )
       this.loading = false
     }
   },
