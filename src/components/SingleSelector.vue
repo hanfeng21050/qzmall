@@ -14,28 +14,7 @@
 export default {
   props: {
     attr: {
-      type: Object,
-      default: function () {
-        const attr = {
-          attrId: 1,
-          attrName: '颜色',
-          attrValues: [
-            {
-              attrValue: '红色',
-              skuIds: [0, 2, 3]
-            },
-            {
-              attrValue: '黑色',
-              skuIds: [4, 5, 6]
-            },
-            {
-              attrValue: '红色',
-              skuIds: [7, 8, 9]
-            }
-          ]
-        }
-        return attr
-      }
+      type: Object
     },
     skuId: {
       type: Number,
@@ -45,11 +24,18 @@ export default {
   components: {},
   data () {
     return {
-      select: 1
+      select: -1
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    skuId: {
+      immediate: true,
+      handler (val) {
+        this.defalutSelect(val)
+      }
+    }
+  },
   methods: {
     singleSelect (val) {
       // 如果当前已经选中,则不需要触发父组件的方法
@@ -58,17 +44,20 @@ export default {
         // todo
         this.$emit('attrClick')
       }
+    },
+
+    // 默认选中
+    defalutSelect (val) {
+      const arr = this.attr.attrValues
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].skuIds.indexOf(val + '') !== -1) {
+          this.select = i
+          break
+        }
+      }
     }
   },
   created () {
-    // 默认选中
-    const arr = this.attr.attrValues
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].skuIds.indexOf(this.skuId) !== -1) {
-        this.select = i
-        break
-      }
-    }
   },
   mounted () {},
   beforeCreate () {},
@@ -102,11 +91,13 @@ export default {
 .box .box-two .box-attr dd {
   border: solid 1px #cccccc;
   background: #f7f7f7;
+  padding: 0;
   margin: 0 5px;
   height: 40px;
   cursor: pointer;
 }
 .box .box-two .box-attr dd .name {
+  width: 100%;
   line-height: 40px;
   padding: 0 10px;
 }

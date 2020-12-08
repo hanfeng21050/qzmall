@@ -7,47 +7,37 @@
       <div class="crumb-item"><a href="">></a></div>
       <div class="crumb-item"><a href="">手机</a></div>
     </div>
-    <div class="shop">
+    <div class="">
       <div class="box">
         <div class="boxx">
           <div class="imgbox">
             <div class="probox">
-              <img class="img1" alt="" src="../style/img/59ded62dN7e28abc5 (1).jpg">
+              <img class="img1" :src="sku.skuDefaultImg">
               <div class="hoverbox" style="display: none; opacity: 0.3; left: 0px; top: 140px;"></div>
             </div>
             <div class="showbox" style="display: none;">
-              <img class="img1" alt="" src="../style/img/59ded62eN64a9784c.jpg" style="left: 0px; top: -190.909px;">
+              <img class="img1" alt="" :src="sku.skuDefaultImg" style="left: 0px; top: -190.909px;">
             </div>
           </div>
-          <div class="box-lh">
-            <div class="box-lh-one">
-              <ul class="box-lh-one-ul">
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/57d11b9cNad700eeb.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/57d11b9cNad700eeb.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
-                <li style="padding: 1px; border: none;"><img src="../style/img/59ded62eN64a9784c.jpg"></li>
-              </ul>
-            </div>
-            <div id="left">
-              &lt; </div>
-            <div id="right">
-              &gt;
-            </div>
+          <div class="box-thumb">
+            <swiper class="swiper" ref="mySwiper" :options="swiperOption">
+              <swiper-slide class="swiper-slide" v-for="(img, index) in images" :key="img.id">
+                <img class="thumb" @mouseenter="mouseenter(index)" :src="img.imgUrl" :style="imgHover === index ? 'border:1px solid #c78a49' : ''">
+              </swiper-slide>
+            </swiper>
           </div>
         </div>
         <div class="box-two">
           <div class="box-name">
-            华为 HUAWEI Mate 10 6GB+128GB 亮黑色 移动联通电信4G手机 双卡双待
+            {{sku.skuTitle}}
           </div>
-          <div class="box-hide">预订用户预计11月30日左右陆续发货！麒麟970芯片！AI智能拍照！</div>
+          <div class="box-hide">{{sku.skuSubtitle}}</div>
           <div class="box-summary clear">
             <ul>
               <li>售价</li>
               <li>
                 <span>￥</span>
-                <span>4499.00</span>
+                <span>{{price}}</span>
               </li>
               <li>
                 降价通知
@@ -143,47 +133,7 @@
             <ul>
               <li>
                 <div class="jieshao">
-                  <p>
-                    <a href="#">品牌:华为（HUAWEI）</a>
-                  </p>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <a href="##">商品名称：华为Mate 10</a>
-                        </td>
-                        <td>
-                          <a href="##">商品毛重：0.58kg</a>
-                        </td>
-                        <td>
-                          <a href="##">商品编号：5544038</a>
-                        </td>
-                        <td>
-                          <a href="##">商品产地：中国大陆</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <a href="##">系统：安卓（Android）</a>
-                        </td>
-                        <td>
-                          <a href="##">前置摄像头像素：800万-1599万</a>
-                        </td>
-                        <td>
-                          <a href="##">后置摄像头像素：2000万及以上，1200万-1999万</a>
-                        </td>
-                        <td>
-                          <a href="##">机身内存：128GB</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="4">
-                          <a href="##">全面屏，双卡双待，指纹识别，Type-C，VoLTE，2K屏，拍照神器，支持NFC，商务手机，安全手机，分辨率10</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <img class="xiaoguo" src="../style/img/介绍.jpg">
+                  <img class="xiaoguo" :src="desc.decript">
                 </div>
               </li>
             </ul>
@@ -191,118 +141,14 @@
         </el-tab-pane>
         <el-tab-pane label="规格与包装">
           <div class="guiGebox">
-            <div class="guiGe">
-              <h3>主体</h3>
+            <div class="guiGe" v-for="(group, index) in groupAttrs" :key="index">
+              <h3>{{group.groupName}}</h3>
               <dl>
-                <dt>品牌</dt>
-                <dd>华为(HUAWEI)</dd>
-                <dt>型号</dt>
-                <dd>ALP-AL00</dd>
-                <dt>入网型号</dt>
-                <dd>ALP-AL00</dd>
-                <dt>上市年份</dt>
-                <dd>2017年</dd>
-                <dt>上市时间</dt>
-                <dd>10月</dd>
+                <div v-for="attr in group.attrs" :key="attr.attrId">
+                  <dt>{{attr.attrName}}</dt>
+                  <dd>{{attr.attrValue}}</dd>
+                </div>
               </dl>
-            </div>
-            <div class="guiGe">
-              <h3>基本信息</h3>
-              <dl>
-                <dt>机身颜色</dt>
-                <dd>亮黑色</dd>
-                <dt>机身长度（mm）</dt>
-                <dd>150.5</dd>
-                <dt>机身宽度（mm）</dt>
-                <dd>77.8</dd>
-                <dt>机身厚度（mm）</dt>
-                <dd>8.2</dd>
-                <dt>机身重量（g）</dt>
-                <dd>约186g（含电池）</dd>
-                <dt>输入方式</dt>
-                <dd>触控</dd>
-                <dt>运营商标志与内容</dt>
-                <dd>无</dd>
-                <dt>机身材质分类</dt>
-                <dd>金属边框；玻璃后盖</dd>
-                <dt>机身材质工艺</dt>
-                <dd>四曲面玻璃后壳</dd>
-              </dl>
-            </div>
-            <div class="guiGe">
-              <h3>操作系统</h3>
-              <dl>
-                <dt>操作系统</dt>
-                <dd>Android</dd>
-                <dt>操作系统版本</dt>
-                <dd>华为 EMUI 8.0</dd>
-              </dl>
-            </div>
-            <div class="guiGe">
-              <h3>主芯片</h3>
-              <dl>
-                <dt>CPU品牌</dt>
-                <dd>海思（Hisilicon）</dd>
-                <dt>CPU频率</dt>
-                <dd>4*Cortex A73 2.36GHz + 4*Cortex A53 1.8GHz</dd>
-                <dt>CPU核数</dt>
-                <dd>八核</dd>
-                <dt>CPU型号</dt>
-                <dd>麒麟970</dd>
-              </dl>
-            </div>
-            <div class="guiGe">
-              <h3>网络支持</h3>
-              <dl>
-                <dt>双卡机类型</dt>
-                <dd>双卡双待单通</dd>
-                <dt>最大支持SIM卡数量</dt>
-                <dd>2个</dd>
-                <dt>SIM卡类型</dt>
-                <dd class="Ptable-tips">
-                  <a href="#"><i>？</i></a>
-                </dd>
-                <dd>Nano SIM</dd>
-                <dt>4G网络</dt>
-                <dd class="Ptable-tips">
-                  <a href="#"><i>？</i></a>
-                </dd>
-                <dd>4G：移动（TD-LTE）；4G：联通（FDD-LTE）；4G：电信（FDD-LTE）；4G：联通（TD-LTE）</dd>
-                <dt>3G/2G网络</dt>
-                <dd>3G：移动（TD-LTE）；4G：联通（WCDMA）；3G：电信（CDMA2000）；2G：移动联通（GSM）+ 电信（CDMA）</dd>
-                <dt>副SIM卡类型</dt>
-                <dd class="Ptable-tips">
-                  <a href="#"><i>？</i></a>
-                </dd>
-                <dd>副SIM卡与存储卡二选一</dd>
-                <dt>副SIM卡4G网络</dt>
-                <dd class="Ptable-tips">
-                  <a href="#"><i>？</i></a>
-                </dd>
-                <dd>4G：移动（TD-LTE）；4G：联通（FDD-LTE）；4G：电信（FDD-LTE）；4G：联通（TD-LTE）</dd>
-                <dt>副SIM卡3G/2G网络</dt>
-                <dd>不支持主副卡同时使用电信卡；3G联通（WCDMA）；3G：电信（CDMA2000）；2G：移动联通（GSM）+电信（CDMA）</dd>
-                <dt>网络频率（2G/3G）</dt>
-                <dd>2G：GSM 850/900/1800/1900；2G：CDMA 800；3G：TD-SCDMA 1900/2000；3G：WCDMA 850/900/1900/2100；3G</dd>
-                <dd>CDMA2000；3G：CDMA 800MHz 1X&amp;EVDO ；3G：WCDMA：850/900/1700/1900/2100MHz</dd>
-              </dl>
-            </div>
-            <div class="guiGe">
-              <h3>存储</h3>
-              <dl>
-                <dt>ROM</dt>
-                <dd>128GB</dd>
-                <dt>RAM</dt>
-                <dd>6GB</dd>
-                <dt>存储卡</dt>
-                <dd>支持MicroSD（TF）</dd>
-                <dt>最大存储扩展容量</dt>
-                <dd>256GB</dd>
-              </dl>
-            </div>
-            <div class="package-list">
-              <h3>包装清单</h3>
-              <p>手机（含内置电池） X 1、5A大电流华为SuperCharge充电器X 1、5A USB数据线 X 1、半入耳式线控耳机 X 1、快速指南X 1、三包凭证 X 1、取卡针 X 1、保护壳 X 1</p>
             </div>
           </div>
         </el-tab-pane>
@@ -360,66 +206,84 @@
 import '@/style/iconfont/iconfont.css'
 import $ from 'jquery'
 import SingleSelector from '@/components/SingleSelector'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
 export default {
   components: {
-    SingleSelector
+    SingleSelector,
+    Swiper,
+    SwiperSlide
   },
   data () {
     return {
+      imgHover: 0,
+      swiperOption: {
+        slidesPerView: 6,
+        spaceBetween: 0,
+        preventClicks: false
+      },
       sku: {
-        skuId: 9
+        price: 0
       },
       images: [],
       desc: {},
-      saleAttrs: [
-        {
-          attrId: 5,
-          attrName: '颜色',
-          attrValues: [
-            {
-              attrValue: '白色',
-              skuIds: [13, 12, 14]
-            },
-            {
-              attrValue: '红色',
-              skuIds: [16, 15, 17]
-            },
-            {
-              attrValue: '黄色',
-              skuIds: [19, 18, 20]
-            },
-            {
-              attrValue: '黑色',
-              skuIds: [10, 9, 11]
-            }
-          ]
-        },
-        {
-          attrId: 17,
-          attrName: '版本',
-          attrValues: [
-            {
-              attrValue: '128GB',
-              skuIds: [10, 13, 16, 19]
-            },
-            {
-              attrValue: '256GB',
-              skuIds: [11, 14, 17, 20]
-            },
-            {
-              attrValue: '64GB',
-              skuIds: [9, 12, 15, 18]
-            }
-          ]
-        }
-      ],
+      saleAttrs: [],
       groupAttrs: [],
       select: []
     }
   },
-  computed: {},
-  watch: {},
+  computed: {
+    // 格式化价格
+    price: function () {
+      return new Intl.NumberFormat().format(this.sku.price)
+    },
+    imgList: function () {
+      return this.images.map((img) => img.imgUrl)
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.select = []
+      this.imgHover = 0
+      this.getskuDetail(to.query.skuId)
+    }
+  },
   methods: {
+    getskuDetail (skuId) {
+      this.$http({
+        url: this.$http.adornUrl('/product/skuinfo/skuDetail/' + skuId),
+        method: 'get',
+        params: this.$http.adornParams({})
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.$notify({
+            title: '获取数据成功',
+            type: 'success',
+            duration: 1500
+          })
+          console.log(data)
+          this.sku = data.data.sku
+          this.desc = data.data.desc
+          this.images = data.data.images
+          this.groupAttrs = data.data.groupAttrs
+          this.saleAttrs = data.data.saleAttrs
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error'
+          })
+        }
+      })
+    },
+    mouseenter (index) {
+      this.imgHover = index
+      this.sku.skuDefaultImg = this.images[index].imgUrl
+    },
+
+    /**
+     * 计算属性选择的交集,得到skuid
+     */
     getSkuId (arrs) {
       var arr = arrs.shift()
       for (var i = arrs.length; i--;) {
@@ -442,57 +306,21 @@ export default {
         const _attr = this.$refs['item' + i]
         this.select.push(_attr[0].attr.attrValues[_attr[0].select].skuIds)
       }
-      console.log('请求skuId=' + this.getSkuId(this.select))
+
+      this.$router.push({
+        path: '/product/detail',
+        query: {
+          skuId: this.getSkuId(this.select)
+        }
+      })
     }
   },
-  created () {},
+  created () {
+    this.imgHover = 0
+    const skuId = this.$route.query.skuId
+    this.getskuDetail(skuId)
+  },
   mounted () {
-    // 左右滚动
-    $('#right').click(function () {
-      debugger
-      if ($('.box-lh-one-ul').children('li').length <= 5) {
-        console.log($('.box-lh-one').children('li').length)
-        return
-      }
-      $('.box-lh-one ul').stop().animate({
-        left: '-297px'
-      })
-      $(this).css({
-        color: '#ccc'
-      })
-      $('#left').css({
-        color: '#000'
-      })
-    })
-    $('#left').click(function () {
-      if ($('.box-lh-one-ul').children('li').length <= 5) {
-        return
-      }
-      $('.box-lh-one ul').stop().animate({
-        left: 0
-      })
-      $(this).css({
-        color: '#ccc'
-      })
-      $('#right').css({
-        color: '#000'
-      })
-    })
-
-    // 换图片
-    $('.box-lh-one li').mouseover(function () {
-      $(this)
-        .css({
-          padding: '0',
-          border: 'solid 1px red'
-        })
-        .siblings()
-        .css({
-          padding: '1px',
-          border: 'none'
-        })
-    })
-
     function Zoom (imgbox, hoverbox, l, t, x, y, tw, hh, showbox) {
       var moveX = x - l - tw / 2
       // 鼠标区域距离
@@ -554,9 +382,6 @@ export default {
     }
     $(function () {
       Zoomhover($('.probox img'), $('.hoverbox'), $('.showbox img'))
-      $('.box-lh-one ul li').hover(function () {
-        $('.img1').attr('src', $(this).find('img').attr('src'))
-      })
     })
   },
   beforeCreate () {},
@@ -568,7 +393,7 @@ export default {
   activated () {}
 }
 </script>
-<style src="../style/css/product-detail.css" scoped>
+<style src="../style/css/product-detail.css">
 .el-tabs__content {
   padding: 0 !important;
 }

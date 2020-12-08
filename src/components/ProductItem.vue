@@ -2,14 +2,12 @@
   <div class="body">
     <p class="da">
       <a href="#" :title="spu.spuName">
-        <!-- <img :src="spu.skuList[0].skuImg" class="dim"> -->
-        <el-image class="dim" :src="spu.skuList[0].skuImg" fit="cover"></el-image>
+        <img class="dim" :src="this.spu.skuList[0].skuImg">
       </a>
     </p>
     <swiper class="swiper" ref="mySwiper" :options="swiperOption">
       <swiper-slide class="swiper-slide" v-for="sku in spu.skuList" :key="sku.skuId" style="width:40px; height:45px; text-align:center;">
-        <!-- <img class="thumb" @click="toDetail(sku.skuId)" :src="sku.skuImg"> -->
-        <el-image class="thumb" @click="toDetail(sku.skuId)" fit="cover" :src="sku.skuImg"></el-image>
+        <img class="thumb" @click="toDetail(sku.skuId)" fit="cover" :src="sku.skuImg">
       </swiper-slide>
     </swiper>
     <p class="tab_R">
@@ -40,6 +38,7 @@ export default {
   },
   data () {
     return {
+      defaultImg: '',
       swiperOption: {
         slidesPerView: 5,
         spaceBetween: 0,
@@ -50,18 +49,14 @@ export default {
     }
   },
   computed: {
-    swiper () {
-      return this.$refs.mySwiper.$swiper
-    }
   },
   watch: {},
   methods: {
-    toDetail (spuId) {
-      console.log('http://localhost:88/api/product/spuinfo/spuDetail/' + spuId)
+    toDetail (skuId) {
       this.$router.push({
         path: '/product/detail',
         query: {
-          spuId: spuId
+          skuId: skuId
         }
       })
     }
@@ -77,8 +72,7 @@ export default {
         .siblings()
         .children('.thumb')
         .css('border', '1.5px solid #ccc')
-
-      $(this).parents('.swiper').prev().find('img').prop('src', a)
+      $(this).parents('.swiper').prev().find('.dim').prop('src', a)
 
       $(this).parents('.swiper')
         .siblings('.tab_JE')

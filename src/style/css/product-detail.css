@@ -72,58 +72,20 @@
   float: right;
 }
 
-.box-lh {
-  margin-bottom: 18px;
-  position: relative;
-  bottom: -20px;
+.box-thumb {
+  margin: 15px 0;
 }
 
-.box-lh .box-lh-one {
-  margin-top: 30px;
-  position: relative;
-  width: 380px;
-  height: 63px;
-  overflow: hidden;
-  margin: 0 auto;
+.box-thumb .swiper .swiper-slide {
+  width: 60px;
+  height: 60px;
+  text-align: center;
 }
-
-.box-lh .box-lh-one ul {
-  position: absolute;
-  width: 684px;
-  height: 58px;
-  top: 0px;
-  left: 0px;
-  list-style: none;
-}
-
-.box-lh .box-lh-one ul li {
-  float: left;
-  margin: 0 8px;
-  padding: 1px;
-}
-
-.box-lh .box-lh-one ul li img {
-  width: 58px;
-  height: 57px;
-}
-
-.box-lh #left,
-.box-lh #right {
-  position: absolute;
-  font-family: simsun;
-  bottom: 10px;
-  font-size: 40px;
-  font-weight: 800;
-  cursor: pointer;
-  color: #ccc;
-}
-
-.box-lh #left {
-  left: 0;
-}
-
-.box-lh #right {
-  right: 0;
+.box-thumb .swiper .thumb {
+  width: 55px;
+  height: 55px;
+  border: 1px solid rgb(202, 202, 202);
+  box-sizing: border-box;
 }
 
 .imgbox {
@@ -136,10 +98,10 @@
   height: 450px;
 }
 
-.probox img {
+.probox .img1 {
   width: 440px;
   height: 440px;
-  vertical-align: top;
+  border: 1px solid rgb(233, 231, 231);
 }
 
 .showbox {
@@ -504,7 +466,7 @@
 }
 .jieshao{
   width: 100%;
-  margin-top: 20px;
+  margin-top: 1px;
 }
 .jieshao p a {
   font-size: 12px;
@@ -534,7 +496,6 @@
 }
 .jieshao img {
   width: 100%;
-  margin-top: 20px;
 }
 
 /* 规格 */
@@ -626,4 +587,8 @@
 .oBox .after-sale-title-item .wenZi {
   margin: 10px auto;
   font-size: 13px;
+}
+
+.el-notification__icon {
+  margin: 0;
 }
