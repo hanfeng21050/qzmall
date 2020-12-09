@@ -5,9 +5,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueCookies from 'vue-cookies'
 import httpRequest from '@/utils/httpRequest'
 
 Vue.use(ElementUI, VueAxios, axios)
+Vue.use(VueCookies)
 Vue.config.productionTip = false
 Vue.prototype.$http = httpRequest
 

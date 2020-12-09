@@ -56,8 +56,7 @@ export default {
       countdown: 10,
       form: {
         mobile: '',
-        password: '',
-        code: ''
+        password: ''
       },
       rules: {
         mobile: [{ validator: validateMobile, trigger: 'blur' }],
@@ -87,10 +86,33 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loginLoading = true
-          setTimeout(() => {
+          this.$http({
+            url: this.$http.adornUrl('/auth/login'),
+            method: 'post',
+            data: this.$http.adornData(this.form, false)
+          }).then(({ data }) => {
+            if (data && data.code === 0) {
+              this.$notify({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500
+              })
+              this.$cookies.set('token', data.token)
+              this.$cookies.set('user', data.user)
+              this.$router.replace({ name: 'Home' })
+            } else {
+              this.$notify.error(data.msg)
+            }
             this.loginLoading = false
-            alert('submit!')
-          }, 1000)
+          },
+          (error) => {
+            this.$notify({
+              title: error.message,
+              type: 'error'
+            })
+            this.loginLoading = false
+          }
+          )
         } else {
           console.log('error submit!!')
           return false
@@ -110,7 +132,10 @@ export default {
   activated () {}
 }
 </script>
-<style scoped>
+<style>
+.el-notification__icon {
+  margin: 0;
+}
 .body {
   background-color: #f2f2f2;
   padding: 144px 0 80px 0;

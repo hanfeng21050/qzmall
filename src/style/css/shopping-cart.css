@@ -258,7 +258,8 @@ h6 {
   margin: auto;
   font-weight: 400;
   font-family: Helvetica, sans-serif;
-
+  border: 1px solid rgb(214, 213, 213);
+  margin-top: 69px;
 }
 
 #site-headline {
@@ -298,7 +299,6 @@ h6 {
   width: var(--width);
   padding-bottom: .8rem;
   margin: auto;
-  margin-top: 90px;
 }
 
 

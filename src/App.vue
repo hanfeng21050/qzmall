@@ -14,10 +14,16 @@
         <el-input v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;"></el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <div class="inter_right">
-          <router-link to="/login">登录</router-link>
-          <span>|</span>
-          <router-link to="/regist">注册</router-link>
-          <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</router-link>
+          <div v-if="login">
+            <router-link to="/">欢迎你: <span>{{username}}</span></router-link>
+            <a style="cursor:pointer" @click="logout">退出登录</a>
+            <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</router-link>
+          </div>
+          <div v-else>
+            <router-link to="/login">登录</router-link>
+            <span>|</span>
+            <router-link to="/regist">注册</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +76,14 @@ import '@/style/iconfont/iconfont.css'
 export default {
   data () {
     return {
-      searchText: ''
+      searchText: '',
+      username: '',
+      login: false
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.checkLogin()
     }
   },
   methods: {
@@ -83,11 +96,34 @@ export default {
           }
         }
       )
+    },
+    logout () {
+      this.username = ''
+      this.login = false
+      this.$cookies.remove('token')
+      this.$cookies.remove('user')
+      this.$notify.success('退出登录成功')
+    },
+    checkLogin () {
+      const token = this.$cookies.get('token')
+      // todo 去后台验证token
+      if (token !== null) {
+        this.login = true
+        this.username = this.$cookies.get('user').username
+      } else {
+        this.login = false
+      }
     }
+  },
+  created () {
+    this.checkLogin()
   }
 }
 </script>
 <style scoped>
+.el-notification__icon {
+  margin: 0;
+}
 .header {
   position: fixed;
   top: 0;

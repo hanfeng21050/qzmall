@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: '/shoppingcart',
-    name: 'car',
+    name: 'ShoppingCart',
     component: () => import(/* webpackChunkName: "shoppingcart" */ '../views/shopping-cart.vue')
   },
   {

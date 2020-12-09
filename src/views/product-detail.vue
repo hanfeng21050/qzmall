@@ -52,24 +52,11 @@
           </div>
           <div class="box-btns clear">
             <div class="box-btns-one">
-              <input type="text" name="" id="" value="1">
-              <div class="box-btns-one1">
-
-                <div>
-                  <button id="jia">
-                    +
-                  </button>
-                </div>
-                <div>
-                  <button id="jian">
-                    -
-                  </button>
-                </div>
-
-              </div>
+              <!-- <input el-in type="text" name="" id="" v-model="buyNum" max="999"> -->
+              <el-input class="buyNumInput" @change="changeBuyNum" v-model="buyNum" type="number"></el-input>
             </div>
-            <div class="box-btns-two">
-              <a href="../商品分类\index.html">
+            <div class="box-btns-two" @click="addToCart">
+              <a>
                 加入购物车
               </a>
             </div>
@@ -216,12 +203,16 @@ export default {
   },
   data () {
     return {
+      // 表示鼠标放到了第几张图片上
       imgHover: 0,
+      // 轮播图
       swiperOption: {
         slidesPerView: 6,
         spaceBetween: 0,
         preventClicks: false
       },
+      // 购买数量
+      buyNum: 1,
       sku: {
         price: 0
       },
@@ -245,6 +236,7 @@ export default {
     $route (to, from) {
       this.select = []
       this.imgHover = 0
+      this.buyNum = 1
       this.getskuDetail(to.query.skuId)
     }
   },
@@ -276,11 +268,40 @@ export default {
         }
       })
     },
+
+    // 当鼠标放在小图上时,自动切换大图
     mouseenter (index) {
       this.imgHover = index
       this.sku.skuDefaultImg = this.images[index].imgUrl
     },
 
+    // 添加到购物车
+    addToCart () {
+      console.log(this.sku.skuId + '添加到购物车', '数量' + this.buyNum)
+      this.$confirm(
+        '添加到购物车成功!',
+        '成功',
+        {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '前往购物车',
+          cancelButtonText: '继续购物'
+        }
+      ).then(() => {
+        // 跳转到购物车
+        console.log('跳转到购物车')
+      }).catch((action) => {
+        // 留在当前页面
+        console.log('留在当前页面')
+      })
+    },
+
+    changeBuyNum (val) {
+      if (val > 999) {
+        this.buyNum = 999
+      } else if (val < 1) {
+        this.buyNum = 1
+      }
+    },
     /**
      * 计算属性选择的交集,得到skuid
      */
