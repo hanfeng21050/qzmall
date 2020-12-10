@@ -174,6 +174,7 @@ export default {
   width: 300px;
   background-color: #ffffff;
   padding: 50px 50px 20px 50px;
+  margin: 0 auto;
 }
 
 .regist .title {

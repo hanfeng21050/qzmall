@@ -273,5 +273,5 @@ export default {
   activated () {}
 }
 </script>
-<style src="../style/css/product-list.css">
+<style src="../style/css/product-list.css" scoped>
 </style>

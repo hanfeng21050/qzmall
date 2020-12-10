@@ -277,22 +277,52 @@ export default {
 
     // 添加到购物车
     addToCart () {
-      console.log(this.sku.skuId + '添加到购物车', '数量' + this.count)
-      this.$confirm(
-        '添加到购物车成功!',
-        '成功',
-        {
-          distinguishCancelAndClose: true,
-          confirmButtonText: '前往购物车',
-          cancelButtonText: '继续购物'
+      const token = this.$cookies.get('token')
+      if (token === null) {
+        this.$notify({
+          title: '请先登录!',
+          type: 'error',
+          duration: 1500
+        })
+      }
+
+      const data = {
+        skuId: this.sku.skuId,
+        count: this.count
+      }
+
+      this.$http({
+        url: this.$http.adornUrl('/member/cartinfo/addcart'),
+        method: 'post',
+        headers: {
+          token: token
+        },
+        data: this.$http.adornData(data, false)
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.$confirm('添加到购物车成功!', '成功', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '前往购物车',
+            cancelButtonText: '继续购物'
+          })
+            .then(() => {
+              // 跳转到购物车
+              console.log('跳转到购物车')
+            })
+            .catch((action) => {
+              // 留在当前页面
+              console.log('留在当前页面')
+            })
+        } else {
+          this.$notify({
+            title: 'data.code',
+            message: 'data.msg',
+            type: 'error',
+            duration: 1500
+          })
         }
-      ).then(() => {
-        // 跳转到购物车
-        console.log('跳转到购物车')
-      }).catch((action) => {
-        // 留在当前页面
-        console.log('留在当前页面')
       })
+      console.log(this.sku.skuId + '添加到购物车', '数量' + this.count)
     },
 
     changeBuyNum (val) {
@@ -414,8 +444,5 @@ export default {
   activated () {}
 }
 </script>
-<style src="../style/css/product-detail.css">
-.el-tabs__content {
-  padding: 0 !important;
-}
+<style src="../style/css/product-detail.css" scoped>
 </style>

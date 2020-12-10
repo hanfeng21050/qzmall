@@ -3,14 +3,8 @@
     <div class="header">
       <div class="inter">
         <router-link to="/" class="logo"><img src="./style/images/logo.png" alt=""></router-link>
-        <ul>
-          <li>
-            <router-link to="/">首页</router-link>
-          </li>
-          <li>
-            <router-link to="/product/list">查看所有类别</router-link>
-          </li>
-        </ul>
+        <router-link to="/" class="inter-i">首页</router-link>
+        <router-link to="/product/list" class="inter-i">查看所有类别</router-link>
         <el-input v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;"></el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <div class="inter_right">
@@ -155,6 +149,17 @@ export default {
   height: 27.88px;
   line-height: 27.88px;
 }
+.header .inter .inter-i {
+  font-size: 14px;
+  color: #555;
+  height: 68px;
+  line-height: 68px;
+  padding: 0 28px;
+}
+
+.header .inter .inter-i:hover {
+  color: #c78a49;
+}
 
 .header .inter ul li {
   float: left;
@@ -193,6 +198,7 @@ export default {
   height: 228px;
   /*background-color: #55a532;*/
   padding-top: 58px;
+  margin: 0 auto;
 }
 .footer .inter1 .left {
   float: left;

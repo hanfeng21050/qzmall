@@ -99,7 +99,7 @@ export default {
               })
               this.$cookies.set('token', data.token)
               this.$cookies.set('user', data.user)
-              this.$router.replace({ name: 'Home' })
+              this.$router.go(-1)
             } else {
               this.$notify.error(data.msg)
             }
@@ -132,10 +132,7 @@ export default {
   activated () {}
 }
 </script>
-<style>
-.el-notification__icon {
-  margin: 0;
-}
+<style scoped>
 .body {
   background-color: #f2f2f2;
   padding: 144px 0 80px 0;
@@ -144,7 +141,8 @@ export default {
 .regist {
   width: 300px;
   background-color: #ffffff;
-  padding: 50px 50px 20px 50px;
+  padding: 50px 50px 50px 50px;
+  margin: 0 auto;
 }
 
 .regist .title {

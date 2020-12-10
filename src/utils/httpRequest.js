@@ -3,7 +3,7 @@ import qs from 'qs'
 import merge from 'lodash/merge'
 
 const http = axios.create({
-  timeout: 1000 * 3,
+  timeout: 1000 * 10,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json; charset=utf-8'

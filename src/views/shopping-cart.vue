@@ -99,17 +99,21 @@ export default {
           ]
         }
       ]
-
     }
   },
   computed: {
     isSelectAll: function () {
       // 如果productList中每一条数据的select都为true，返回true，否则返回false;
-      return this.productList.every(function (val) { return val.select })
+      return this.productList.every(function (val) {
+        return val.select
+      })
     },
     getTotal: function () {
       // 获取productList中select为true的数据。
-      var _proList = this.productList.filter(function (val) { return val.select }); var totalPrice = 0
+      var _proList = this.productList.filter(function (val) {
+        return val.select
+      })
+      var totalPrice = 0
       for (var i = 0, len = _proList.length; i < len; i++) {
         // 总价累加
         totalPrice += _proList[i].count * _proList[i].price
@@ -127,7 +131,9 @@ export default {
       }
     }, // 删除已经选中(select=true)的产品
     deleteProduct: function () {
-      this.productList = this.productList.filter(function (item) { return !item.select })
+      this.productList = this.productList.filter(function (item) {
+        return !item.select
+      })
     },
     // 删除单条产品
     deleteOneProduct: function (index) {
@@ -159,7 +165,11 @@ export default {
     }
   },
   created () {
-
+    this.$notify.error({
+      title: '请先登录!',
+      type: 'error',
+      duration: 0
+    })
   },
   mounted () {
     // 为productList添加select（是否选中）字段，初始值为true
@@ -178,5 +188,8 @@ export default {
   activated () {}
 }
 </script>
-<style scoped src="../style/css/shopping-cart.css">
+<style src="../style/css/shopping-cart.css" scoped>
+.el-notification__icon{
+  margin: 0;
+}
 </style>
