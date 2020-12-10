@@ -53,7 +53,7 @@
           <div class="box-btns clear">
             <div class="box-btns-one">
               <!-- <input el-in type="text" name="" id="" v-model="buyNum" max="999"> -->
-              <el-input class="buyNumInput" @change="changeBuyNum" v-model="buyNum" type="number"></el-input>
+              <el-input class="buyNumInput" @change="changeBuyNum" v-model="count" type="number"></el-input>
             </div>
             <div class="box-btns-two" @click="addToCart">
               <a>
@@ -212,7 +212,7 @@ export default {
         preventClicks: false
       },
       // 购买数量
-      buyNum: 1,
+      count: 1,
       sku: {
         price: 0
       },
@@ -236,7 +236,7 @@ export default {
     $route (to, from) {
       this.select = []
       this.imgHover = 0
-      this.buyNum = 1
+      this.count = 1
       this.getskuDetail(to.query.skuId)
     }
   },
@@ -277,7 +277,7 @@ export default {
 
     // 添加到购物车
     addToCart () {
-      console.log(this.sku.skuId + '添加到购物车', '数量' + this.buyNum)
+      console.log(this.sku.skuId + '添加到购物车', '数量' + this.count)
       this.$confirm(
         '添加到购物车成功!',
         '成功',
@@ -297,9 +297,9 @@ export default {
 
     changeBuyNum (val) {
       if (val > 999) {
-        this.buyNum = 999
+        this.count = 999
       } else if (val < 1) {
-        this.buyNum = 1
+        this.count = 1
       }
     },
     /**

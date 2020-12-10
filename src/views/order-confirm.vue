@@ -102,68 +102,51 @@
       <div class="sec-title-border mb0 clearfix">
         <h3>产品详情</h3>
       </div>
-      <div class="orderBox">
-        <div class="orderC-table">
-          <table cellspacing="0" cellpadding="0" border="0" width="100%" class="orderC-tb">
+      <div class="page-shopping-cart" id="shopping-cart">
+        <div class="cart-product clearfix">
+          <table>
             <thead>
-              <tr>
-                <th width="60%">订单详情 </th>
-                <th width="20%">收件人</th>
-                <th width="20%">金额</th>
+              <tr class="cart-product-title">
+                <th class="td-product">商品</th>
+                <th class="td-num">数量</th>
+                <th class="td-price">单价(元)</th>
+                <th class="td-total">金额(元)</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item,index) in productList" :key="index">
-                <td class="text-left">
-                  <div class="order-gw clearfix">
-                    <div class="order-img"><img :src="item.pro_img" /></div>
-                    <div class="order-sum">
-                      <h2><a :href="item.pro_url">{{item.pro_name}}</a></h2>
-                      <div class="parameter">{{item.pro_dec}}</div>
-                    </div>
+                <td class="td-product">
+                  <img :src="item.image" width="98" height="98">
+                  <div class="product-info">
+                    <h3><a :title="item.pro_name">{{item.skuName}}</a></h3>
+                    <p>品牌：{{item.spuBrand}}</p>
+                    <p v-for="(attr, index) in item.skuAttrsVals" :key="index">{{attr.attrName}}:{{attr.attrValue}}</p>
+                  </div>
+                  <div class="clearfix"></div>
+                </td>
+                <td class="td-num">
+                  <div class="product-num">
+                    <p>{{item.count}}</p>
                   </div>
                 </td>
-                <td>{{item.pro_person}}</td>
-                <td><span class="noTel">总额</span><span class="priceD">￥{{item.pro_price.toFixed(2)}}</span></td>
+                <td class="td-price">
+                  <p class="red-text">￥<span class="price-text">{{item.price.toFixed(2)}}</span></p>
+                </td>
+                <td class="td-total">
+                  <p class="red-text">￥<span class="total-text">{{(item.price*item.count).toFixed(2)}}</span></p>
+                </td>
               </tr>
             </tbody>
           </table>
-          <div class="orderC-total">
-            <div class="order-t">
-              <dl class="clearfix">
-                <dd class="dl_ddL">商品总额：</dd>
-                <dd class="dl_ddR">￥{{getTotal1.totalPrice.toFixed(2)}}</dd>
-              </dl>
-            </div>
-            <div class="order-fare">
-              <dl class="clearfix">
-                <dd class="dl_ddL">运费：</dd>
-                <dd class="dl_ddR">￥{{freight.toFixed(2)}}</dd>
-              </dl>
-            </div>
-            <div class="order-sum">
-              <dl class="clearfix">
-                <dd class="dl_ddL">应付总额：</dd>
-                <dd class="dl_ddR"><span class="fontBig">￥{{(getTotal1.totalPrice + freight).toFixed(2)}}</span></dd>
-              </dl>
-            </div>
-          </div>
-          <div class="order-message">
-            <dl class="clearfix">
-              <dd class="dl_ddL">给卖家留言：</dd>
-              <dd class="dl_ddR">
-                <textarea class="textarea-gw" placehold="对本次交易补充说明" v-model="msg" maxlength="85"></textarea>
-                <span>{{msg.length}}/85</span>
-              </dd>
-            </dl>
-          </div>
-          <div class="clear"></div>
-          <div class="order-submit">
-            <a href="#" class="a_back">返回购物车修改</a>
-            <a href="#" class="btn-red btn-submit">提交订单</a>
-          </div>
+        </div>
+        <div class="cart-product-info">
+          <a class="keep-shopping" href="#">返回</a>
+          <a class="btn-buy fr" href="javascript:;">结算</a>
+          <p class="fr product-total">￥<span>100</span></p>
+          <p class="fr check-num"><span>100</span>件商品总计（不含运费）：</p>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -191,20 +174,41 @@ export default {
       },
       productList: [
         {
-          pro_name: '产品名称2', // 产品名称
-          pro_url: '#', // 产品链接
-          pro_dec: '颜色：白色', // 产品参数
-          pro_person: '陈某某', // 收货人
-          pro_img: 'images/test1.jpg', // 图片链接
-          pro_price: 800 // 单价
+          skuId: 1,
+          skuName: 'iphone12',
+          spuBrand: 'Apple',
+          image: require('../style/img/test1.jpg'), // 图片链接
+          count: 3, // 数量
+          price: 800, // 单价
+          skuAttrsVals: [
+            {
+              attrName: '颜色',
+              attrValue: '红色'
+            },
+            {
+              attrName: '版本',
+              attrValue: '64GB'
+            }
+          ]
         },
         {
-          pro_name: '产品名称2', // 产品名称
-          pro_url: '#', // 产品链接
-          pro_dec: '颜色：红色', // 产品参数
-          pro_person: '王某某', // 收货人
-          pro_img: 'images/test1.jpg', // 图片链接
-          pro_price: 120 // 单价
+          skuId: 1,
+          brandId: 1,
+          spuBrand: 'Apple',
+          skuName: 'iphone12',
+          image: require('../style/img/test1.jpg'), // 图片链接
+          count: 3, // 数量
+          price: 800, // 单价
+          skuAttrsVals: [
+            {
+              attrName: '颜色',
+              attrValue: '红色'
+            },
+            {
+              attrName: '版本',
+              attrValue: '64GB'
+            }
+          ]
         }
       ],
       addressList: [

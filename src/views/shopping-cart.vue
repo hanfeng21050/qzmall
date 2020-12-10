@@ -1,60 +1,61 @@
 <template>
   <div class="page-shopping-cart" id="shopping-cart">
-        <h4 class="cart-title">购物清单</h4>
-        <div class="cart-product clearfix">
-            <table>
-                <thead>
-                    <tr class="cart-product-title">
-                        <th class="td-check">
-                            <input type="checkbox" class="check-span fl check-all"  :class="{'check-true':isSelectAll}" @click="selectProduct(isSelectAll)" :checked="isSelectAll" id="checkAll">全选</th>
-                        <th class="td-product">商品</th>
-                        <th class="td-num">数量</th>
-                        <th class="td-price">单价(元)</th>
-                        <th class="td-total">金额(元)</th>
-                        <th class="td-do">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item,index) in productList" :key="index">
-                        <td class="td-check"><input type="checkbox" class="check-span"  @click="item.select=!item.select" :class="{'check-true':item.select}" :checked="item.select"></td>
-                        <td class="td-product">
-                          <img :src="item.image" width="98" height="98">
-                            <div class="product-info">
-                                <h3><a :title="item.pro_name">{{item.skuName}}</a></h3>
-                                <p>品牌：{{item.brandName}}</p>
-                                <p>规格:{{item.pro_purity}}</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </td>
-                        <td class="td-num">
-                            <div class="product-num">
-                                <a href="javascript:;" class="num-reduce num-do fl" @click="minus(index)"><span></span></a>
-                                <input type="text" class="num-input" v-model="item.count" @input="search($event,index)" @blur="check($event,index)">
-                                <a href="javascript:;" class="num-add num-do fr" @click="add(index)"><span></span></a>
-                            </div>
-                        </td>
-                        <td class="td-price">
-                            <p class="red-text">￥<span class="price-text">{{item.price.toFixed(2)}}</span></p>
-                        </td>
-                        <td class="td-total">
-                            <p class="red-text">￥<span class="total-text">{{(item.price*item.count).toFixed(2)}}</span></p>
-                        </td>
-                        <td class="td-do"><a href="javascript:;" class="product-delect"  @click="deleteOneProduct(index)">删除</a></td>
-                    </tr>
-                </tbody></table>
-        </div>
-        <div class="cart-product-info">
-            <a class="delect-product" href="javascript:;" @click="deleteProduct">删除所选商品</a>
-            <a class="keep-shopping" href="#">继续购物</a>
-            <a class="btn-buy fr" href="javascript:;">去结算</a>
-            <p class="fr product-total">￥<span>{{getTotal.totalPrice}}</span></p>
-            <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
-        </div>
+    <h4 class="cart-title">购物清单</h4>
+    <div class="cart-product clearfix">
+      <table>
+        <thead>
+          <tr class="cart-product-title">
+            <th class="td-check">
+              <input type="checkbox" class="check-span fl check-all" :class="{'check-true':isSelectAll}" @click="selectProduct(isSelectAll)" :checked="isSelectAll" id="checkAll">全选
+            </th>
+            <th class="td-product">商品</th>
+            <th class="td-num">数量</th>
+            <th class="td-price">单价(元)</th>
+            <th class="td-total">金额(元)</th>
+            <th class="td-do">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item,index) in productList" :key="index">
+            <td class="td-check"><input type="checkbox" class="check-span" @click="item.select=!item.select" :class="{'check-true':item.select}" :checked="item.select"></td>
+            <td class="td-product">
+              <img :src="item.image" width="98" height="98">
+              <div class="product-info">
+                <h3><a :title="item.pro_name">{{item.skuName}}</a></h3>
+                <p>品牌：{{item.spuBrand}}</p>
+                <p v-for="(attr, index) in item.skuAttrsVals" :key="index">{{attr.attrName}}:{{attr.attrValue}}</p>
+              </div>
+              <div class="clearfix"></div>
+            </td>
+            <td class="td-num">
+              <div class="product-num">
+                <a href="javascript:;" class="num-reduce num-do fl" @click="minus(index)"><span></span></a>
+                <input type="text" class="num-input" v-model="item.count" @input="search($event,index)" @blur="check($event,index)">
+                <a href="javascript:;" class="num-add num-do fr" @click="add(index)"><span></span></a>
+              </div>
+            </td>
+            <td class="td-price">
+              <p class="red-text">￥<span class="price-text">{{item.price.toFixed(2)}}</span></p>
+            </td>
+            <td class="td-total">
+              <p class="red-text">￥<span class="total-text">{{(item.price*item.count).toFixed(2)}}</span></p>
+            </td>
+            <td class="td-do"><a href="javascript:;" class="product-delect" @click="deleteOneProduct(index)">删除</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <div class="cart-product-info">
+      <a class="delect-product" href="javascript:;" @click="deleteProduct">删除所选商品</a>
+      <a class="keep-shopping" href="#">继续购物</a>
+      <a class="btn-buy fr" href="javascript:;">去结算</a>
+      <p class="fr product-total">￥<span>{{getTotal.totalPrice}}</span></p>
+      <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
+    </div>
+  </div>
 </template>
 
 <script>
-import '@/style/iconfont/iconfont.css'
 export default {
   components: {},
   data () {
@@ -62,23 +63,40 @@ export default {
       productList: [
         {
           skuId: 1,
-          brandId: 1,
-          brandName: 'Apple',
           skuName: 'iphone12',
-          saleAttr: '红色;256GB', // 规格
+          spuBrand: 'Apple',
           image: require('../style/img/test1.jpg'), // 图片链接
           count: 3, // 数量
-          price: 800// 单价
+          price: 800, // 单价
+          skuAttrsVals: [
+            {
+              attrName: '颜色',
+              attrValue: '红色'
+            },
+            {
+              attrName: '版本',
+              attrValue: '64GB'
+            }
+          ]
         },
         {
           skuId: 1,
           brandId: 1,
-          brandName: 'Apple',
+          spuBrand: 'Apple',
           skuName: 'iphone12',
-          saleAttr: '红色;256GB', // 规格
           image: require('../style/img/test1.jpg'), // 图片链接
           count: 3, // 数量
-          price: 800// 单价
+          price: 800, // 单价
+          skuAttrsVals: [
+            {
+              attrName: '颜色',
+              attrValue: '红色'
+            },
+            {
+              attrName: '版本',
+              attrValue: '64GB'
+            }
+          ]
         }
       ]
 
@@ -161,5 +179,4 @@ export default {
 }
 </script>
 <style scoped src="../style/css/shopping-cart.css">
-
 </style>

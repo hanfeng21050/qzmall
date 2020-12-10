@@ -293,6 +293,7 @@ textarea {
   width: 100%;
   text-align: center;
   font-size: 14px;
+  border-collapse: collapse
 }
 
 .page-shopping-cart .cart-product table th {
@@ -303,8 +304,8 @@ textarea {
   padding: 20px 10px;
 }
 
-.page-shopping-cart .cart-product table tr {
-  border-bottom: 1px dashed #e3e3e3;
+.page-shopping-cart .cart-product table tbody tr {
+  border-bottom: 1px solid #e3e3e3;
 }
 
 .page-shopping-cart .cart-product table tr:last-child {
