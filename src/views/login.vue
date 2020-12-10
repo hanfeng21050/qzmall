@@ -68,6 +68,7 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    // 发送验证码
     send () {
       const interval = setInterval(() => {
         this.countdown--
@@ -79,9 +80,8 @@ export default {
         }
         this.sendLoading = true
       }, 1000)
-
-      // todo regist
     },
+    // 登录
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -93,7 +93,7 @@ export default {
           }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$notify({
-                message: '操作成功',
+                title: '登录成功',
                 type: 'success',
                 duration: 1500
               })

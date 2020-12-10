@@ -284,6 +284,7 @@ export default {
           type: 'error',
           duration: 1500
         })
+        return
       }
 
       const data = {
@@ -308,6 +309,7 @@ export default {
             .then(() => {
               // 跳转到购物车
               console.log('跳转到购物车')
+              this.$router.push('/shoppingcart')
             })
             .catch((action) => {
               // 留在当前页面
@@ -315,14 +317,13 @@ export default {
             })
         } else {
           this.$notify({
-            title: 'data.code',
-            message: 'data.msg',
+            title: data.code,
+            message: data.msg,
             type: 'error',
             duration: 1500
           })
         }
       })
-      console.log(this.sku.skuId + '添加到购物车', '数量' + this.count)
     },
 
     changeBuyNum (val) {
