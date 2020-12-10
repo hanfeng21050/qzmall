@@ -64,15 +64,20 @@ export default {
         this.userNameCheck = false
         callback(new Error('请输入用户名'))
       } else {
-        const flag = true
-        setTimeout(() => {
-          if (flag) {
+        this.$http({
+          url: this.$http.adornUrl('/member/member/hasUsername'),
+          method: 'get',
+          params: this.$http.adornParams({
+            username: this.form.username
+          })
+        }).then(({ data }) => {
+          if (data && data.code !== 0) {
             callback()
           } else {
             this.userNameCheck = false
             callback(new Error('用户名已存在'))
           }
-        }, 1000)
+        })
       }
     }
 
@@ -130,22 +135,60 @@ export default {
         if (this.countdown === 0) {
           clearInterval(interval)
           this.sendLoading = false
-          this.countdown = 10
+          this.countdown = 60
           return
         }
         this.sendLoading = true
       }, 1000)
 
       // todo regist
+      this.$http({
+        url: this.$http.adornUrl('/auth/sms/sendCode'),
+        method: 'get',
+        params: this.$http.adornParams({
+          phone: this.form.mobile
+        })
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.$notify({
+            title: '注册成功',
+            type: 'success',
+            duration: 1500
+          })
+        } else {
+          this.$notify({
+            title: 'data.code',
+            message: 'data.msg',
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.registLoading = true
-          setTimeout(() => {
-            this.registLoading = false
-            alert('submit!')
-          }, 1000)
+          this.$http({
+            url: this.$http.adornUrl('/auth/register'),
+            method: 'post',
+            data: this.$http.adornData(this.form, false)
+          }).then(({ data }) => {
+            if (data && data.code === 0) {
+              this.$notify({
+                title: '注册成功',
+                type: 'success',
+                duration: 1500
+              })
+              this.$router.push('/login')
+            } else {
+              this.$notify({
+                title: data.code,
+                message: data.msg,
+                type: 'error',
+                duration: 1500
+              })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
