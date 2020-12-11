@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import ElementUI from 'element-ui'
 import { clearLoginInfo } from '@/utils/utils'
 
 Vue.use(VueRouter)
@@ -74,7 +75,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.isLogin) { // 判断页面是否需要登录才可操作
     if (!Vue.cookie.get('token')) { // 判断用户是否登录，值为true，代表登录了
-      debugger
+      ElementUI.Message({
+        title: '提示',
+        message: '请先登录',
+        type: 'error'
+      })
       clearLoginInfo()
       next('/login')
     }

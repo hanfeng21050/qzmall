@@ -17,6 +17,7 @@
             <router-link to="/login">登录</router-link>
             <span>|</span>
             <router-link to="/regist">注册</router-link>
+            <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</router-link>
           </div>
         </div>
       </div>
@@ -81,14 +82,12 @@ export default {
   },
   methods: {
     search () {
-      this.$router.push(
-        {
-          path: '/product/list',
-          query: {
-            spuName: this.searchText
-          }
+      this.$router.push({
+        path: '/product/list',
+        query: {
+          spuName: this.searchText
         }
-      )
+      })
     },
     logout () {
       this.username = ''
