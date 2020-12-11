@@ -87,7 +87,7 @@ export default {
   watch: {},
   methods: {
     getCartList () {
-      const token = this.$cookies.get('token')
+      const token = this.$cookie.get('token')
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/getListByMemberId'),
         method: 'get',

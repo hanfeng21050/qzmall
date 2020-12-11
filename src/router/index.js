@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import VueCookies from 'vue-cookies'
 import VueRouter from 'vue-router'
+import { clearLoginInfo } from '@/utils/utils'
 
 Vue.use(VueRouter)
 
@@ -70,17 +70,16 @@ const router = new VueRouter({
   }
 })
 
+/* 全局路由守卫 */
 router.beforeEach((to, from, next) => {
   if (to.meta.isLogin) { // 判断页面是否需要登录才可操作
-    if (VueCookies.get('token')) { // 判断用户是否登录，值为true，代表登录了
-      next()
-    } else {
-      console.log('未登录, 跳转到登录页面')
-      router.push('/login')
+    if (!Vue.cookie.get('token')) { // 判断用户是否登录，值为true，代表登录了
+      debugger
+      clearLoginInfo()
+      next('/login')
     }
-  } else {
-    next()
   }
+  next()
 })
 
 export default router

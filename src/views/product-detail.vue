@@ -277,7 +277,7 @@ export default {
 
     // 添加到购物车
     addToCart () {
-      const token = this.$cookies.get('token')
+      const token = this.$cookie.get('token')
       if (token === null) {
         this.$notify({
           title: '请先登录!',

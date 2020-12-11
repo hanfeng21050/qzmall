@@ -97,8 +97,9 @@ export default {
                 type: 'success',
                 duration: 1500
               })
-              this.$cookies.set('token', data.token)
-              this.$cookies.set('user', data.user)
+              this.$cookie.set('token', data.token, 1)
+              this.$store.commit('updateName', data.user.username)
+              this.$store.commit('updateId', data.user.id)
               this.$router.go(-1)
             } else {
               this.$notify.error(data.msg)

@@ -9,7 +9,7 @@
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <div class="inter_right">
           <div v-if="login">
-            <router-link to="/">欢迎你: <span>{{username}}</span></router-link>
+            <router-link to="/">欢迎你: <span>{{$store.state.name}}</span></router-link>
             <a style="cursor:pointer" @click="logout">退出登录</a>
             <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</router-link>
           </div>
@@ -71,7 +71,6 @@ export default {
   data () {
     return {
       searchText: '',
-      username: '',
       login: false
     }
   },
@@ -94,16 +93,15 @@ export default {
     logout () {
       this.username = ''
       this.login = false
-      this.$cookies.remove('token')
-      this.$cookies.remove('user')
+      this.$cookie.delete('token')
+      this.$store.commit('clear')
       this.$notify.success('退出登录成功')
     },
     checkLogin () {
-      const token = this.$cookies.get('token')
+      const token = this.$cookie.get('token')
       // todo 去后台验证token
       if (token !== null) {
         this.login = true
-        this.username = this.$cookies.get('user').username
       } else {
         this.login = false
       }
