@@ -8,7 +8,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueCookie from 'vue-cookie'
 import httpRequest from '@/utils/httpRequest'
-// import cloneDeep from 'lodash/cloneDeep'
+import 'default-passive-events'
 
 Vue.use(ElementUI, VueAxios, axios)
 Vue.use(VueCookie)
