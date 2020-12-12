@@ -15,7 +15,6 @@ const http = axios.create({
  */
 http.interceptors.request.use(config => {
   // config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
-  console.log('请求拦截')
 
   /* 如果get请求中带有数组,则需要处理一下 */
   if (config.method === 'get') {
@@ -36,7 +35,6 @@ http.interceptors.response.use(response => {
     clearLoginInfo()
     router.push({ name: 'login' })
   } */
-  console.log('响应拦截')
   return response
 }, error => {
   return Promise.reject(error)

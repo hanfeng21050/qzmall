@@ -313,37 +313,6 @@ textarea {
 }
 
 .page-shopping-cart .cart-product table .product-num {
-  border: 1px solid #e3e3e3;
-  display: inline-block;
-  text-align: center;
-}
-
-.page-shopping-cart .cart-product table .product-num .num-do {
-  width: 24px;
-  height: 28px;
-  display: block;
-  background: #f7f7f7;
-}
-
-.page-shopping-cart .cart-product table .product-num .num-reduce span {
-  background: url("../img/minus.png") no-repeat center;
-  display: block;
-  width: 24px;
-  height: 28px;
-}
-
-.page-shopping-cart .cart-product table .product-num .num-add span {
-  background: url("../img/add.png") no-repeat center;
-  display: block;
-  width: 24px;
-  height: 28px;
-}
-
-.page-shopping-cart .cart-product table .product-num .num-input {
-  width: 42px;
-  height: 28px;
-  line-height: 28px;
-  border: none;
   text-align: center;
 }
 

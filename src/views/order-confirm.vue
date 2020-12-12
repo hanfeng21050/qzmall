@@ -1,18 +1,49 @@
 <template>
   <div class="page-order-comfirm">
-    <el-steps :active="2" finish-status="success" align-center>
+    <el-steps :active="step" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
-      <el-step title="提交订单"></el-step>
+      <el-step title="支付订单"></el-step>
     </el-steps>
     <div class="section-con">
-      <div class="gray-box">
+      <div class="gray-box" v-show="step === 3">
+        <div class="sec-title-border clearfix">
+          <h3>支付订单</h3>
+        </div>
+        <div class="order-pay">
+          <div class="order-pay-title">
+            <dl>
+              <dt><img src="../assets/logo.png" alt=""></dt>
+              <dd>
+                <span>订单提交成功，请尽快付款！订单号：70715901829</span>
+                <span>应付金额<font>28.90</font>元</span>
+              </dd>
+              <dd>
+                <span>推荐使用</span>
+                <span>扫码支付请您在<font>24小时</font>内完成支付，否则订单会被自动取消(库存紧订单请参见详情页时限)</span>
+                <span>订单详细</span>
+              </dd>
+            </dl>
+          </div>
+          <div class="order-con">
+            <div class="pay-type">
+              <el-radio v-model="radio1" label="1" border>支付宝</el-radio>
+              <el-radio v-model="radio1" label="2" border>微信</el-radio>
+            </div>
+            <div class="qr-code">
+              <img src="../assets/logo.png">
+            </div>
+            <el-button type="warning" style="float: right">立即支付</el-button>
+          </div>
+        </div>
+      </div>
+      <div class="gray-box" v-show="step === 2">
         <div class="sec-title-border clearfix">
           <h3>添加收货地址</h3>
           <a class="right" @click="openForm('add')">新增地址</a>
         </div>
         <div class="addressBox clearfix">
-          <div class="address-item" v-for="(item,index) in addressList" :key="index" :class="{'selected':item.defaultStatus}" @click="selecteAddr(index)">
+          <div class="address-item" v-for="(item,index) in addressList" :key="index" :class="{'selected':item.defaultStatus}" @click="selectAddr(index)">
             <div class="address-item-in">
               <div>收货人：{{item.name}}</div>
               <div :title="item.province + item.city + item.region + item.detailAddress">收货地址：{{item.province + item.city + item.region + item.detailAddress}}</div>
@@ -25,7 +56,16 @@
           </div>
         </div>
       </div>
-      <div class="gray-box">
+      <div class="gray-box" v-show="step === 2">
+        <div class="sec-title-border clearfix">
+          <h3>支付方式</h3>
+        </div>
+        <div class="pay-mod">
+          <div class="pay-item" v-for="(pay, index) in payMod" @click="selectPayment(index)" :key="index" :class="{'selected':pay.selected}">{{pay.payName}}</div>
+        </div>
+      </div>
+
+      <div class="gray-box" v-show="step === 2">
         <div class="sec-title-border mb0 clearfix">
           <h3>商品清单</h3>
         </div>
@@ -43,34 +83,34 @@
               <tbody>
                 <tr v-for="(item,index) in productList" :key="index">
                   <td class="td-product">
-                    <img :src="item.image" width="98" height="98">
+                    <img :src="item.skuPic" width="98" height="98">
                     <div class="product-info">
                       <h3><a :title="item.pro_name">{{item.skuName}}</a></h3>
                       <p>品牌：{{item.spuBrand}}</p>
-                      <p v-for="(attr, index) in item.skuAttrsVals" :key="index">{{attr.attrName}}:{{attr.attrValue}}</p>
+                      <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrValue}} : {{attr.attrName}}</p>
                     </div>
                     <div class="clearfix"></div>
                   </td>
                   <td class="td-num">
                     <div class="product-num">
-                      <p>{{item.count}}</p>
+                      <p>{{item.skuQuantity}}</p>
                     </div>
                   </td>
                   <td class="td-price">
-                    <p class="red-text">￥<span class="price-text">{{item.price.toFixed(2)}}</span></p>
+                    <p class="red-text">￥<span class="price-text">{{item.skuPrice.toFixed(2)}}</span></p>
                   </td>
                   <td class="td-total">
-                    <p class="red-text">￥<span class="total-text">{{(item.price*item.count).toFixed(2)}}</span></p>
+                    <p class="red-text">￥<span class="total-text">{{(item.skuPrice*item.skuQuantity).toFixed(2)}}</span></p>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="cart-product-info">
-            <a class="keep-shopping" href="#">返回</a>
-            <a class="btn-buy fr" href="javascript:;">结算</a>
-            <p class="fr product-total">￥<span>100</span></p>
-            <p class="fr check-num"><span>100</span>件商品总计（不含运费）：</p>
+            <router-link class="keep-shopping" to="/shoppingcart" replace>返回</router-link>
+            <a class="btn-buy fr" href="javascript:;" @click="submitOrder">提交订单</a>
+            <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
+            <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
           </div>
         </div>
       </div>
@@ -97,7 +137,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">取 消</el-button>
-        <el-button type="warning" @click="addAddress('form')">确 定</el-button>
+        <el-button type="warning" @click="saveAddress('form')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -118,6 +158,8 @@ export default {
       }
     }
     return {
+      radio1: '1',
+      step: 2,
       props: {
         value: 'value',
         label: 'value'
@@ -125,6 +167,18 @@ export default {
       mod: '',
       areaList: [],
       formVisible: false,
+      payMod: [
+        {
+          payType: 0,
+          payName: '在线支付',
+          selected: true
+        },
+        {
+          payType: 1,
+          payName: '货到付款',
+          selected: false
+        }
+      ],
       addrForm: {
         name: '',
         phone: '',
@@ -144,74 +198,13 @@ export default {
           { required: true, message: '请输入收货人姓名', trigger: 'blur' },
           { validator: validateMobile, trigger: 'blur' }
         ],
-        postCode: [
-          { required: true, message: '请输入邮编', trigger: 'blur' }
-        ],
-        addr: [
-          { required: true, message: '请输入地址', trigger: 'change' }
-        ],
+        postCode: [{ required: true, message: '请输入邮编', trigger: 'blur' }],
+        addr: [{ required: true, message: '请输入地址', trigger: 'change' }],
         detailAddress: [
           { required: true, message: '请输入详细地址', trigger: 'blur' }
         ]
       },
-      productList: [
-        {
-          skuId: 1,
-          skuName: 'iphone12',
-          spuBrand: 'Apple',
-          image: require('../style/img/test1.jpg'), // 图片链接
-          count: 3, // 数量
-          price: 800, // 单价
-          skuAttrsVals: [
-            {
-              attrName: '颜色',
-              attrValue: '红色'
-            },
-            {
-              attrName: '版本',
-              attrValue: '64GB'
-            }
-          ]
-        },
-        {
-          skuId: 1,
-          brandId: 1,
-          spuBrand: 'Apple',
-          skuName: 'iphone12',
-          image: require('../style/img/test1.jpg'), // 图片链接
-          count: 3, // 数量
-          price: 800, // 单价
-          skuAttrsVals: [
-            {
-              attrName: '颜色',
-              attrValue: '红色'
-            },
-            {
-              attrName: '版本',
-              attrValue: '64GB'
-            }
-          ]
-        },
-        {
-          skuId: 1,
-          brandId: 1,
-          spuBrand: 'Apple',
-          skuName: 'iphone12',
-          image: require('../style/img/test1.jpg'), // 图片链接
-          count: 3, // 数量
-          price: 800, // 单价
-          skuAttrsVals: [
-            {
-              attrName: '颜色',
-              attrValue: '红色'
-            },
-            {
-              attrName: '版本',
-              attrValue: '64GB'
-            }
-          ]
-        }
-      ],
+      productList: [],
       addressList: [
         {
           id: 1,
@@ -242,6 +235,17 @@ export default {
     }
   },
   computed: {
+    getTotal: function () {
+      // 获取productList中select为true的数据。
+      var _proList = this.productList
+      var totalPrice = 0
+      for (var i = 0, len = _proList.length; i < len; i++) {
+        // 总价累加
+        totalPrice += _proList[i].skuQuantity * _proList[i].skuPrice
+      }
+      // 选择产品的件数就是_proList.length，总价就是totalPrice
+      return { totalNum: _proList.length, totalPrice: totalPrice }
+    }
   },
   watch: {},
   methods: {
@@ -275,9 +279,12 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
+    // 获取地址
     getAddrList () {
       this.$http({
-        url: this.$http.adornUrl('/member/memberreceiveaddress/getAddrByMemberId'),
+        url: this.$http.adornUrl(
+          '/member/memberreceiveaddress/getAddrByMemberId'
+        ),
         method: 'get',
         headers: {
           token: this.$cookie.get('token')
@@ -295,13 +302,44 @@ export default {
         }
       })
     },
+    // 获取选中产品
+    getProductList () {
+      this.$http({
+        url: this.$http.adornUrl('/member/cartinfo/getListByIds'),
+        method: 'get',
+        headers: {
+          token: this.$cookie.get('token')
+        },
+        params: this.$http.adornParams({
+          ids: this.$cookie.get('payList')
+        })
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.productList = data.data
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
+    },
     // 选中地址
-    selecteAddr: function (index) {
+    selectAddr: function (index) {
       // 遍历addressList
       for (var i = 0, len = this.addressList.length; i < len; i++) {
         this.addressList[i].defaultStatus = false
       }
       this.addressList[index].defaultStatus = true
+    },
+    // 选中支付方式
+    selectPayment (index) {
+      for (var i = 0; i < this.payMod.length; i++) {
+        this.payMod[i].selected = false
+      }
+      this.payMod[index].selected = true
     },
     // 删除地址
     deleteAddress: function (e, id) {
@@ -333,12 +371,15 @@ export default {
       })
     },
     // 添加地址
-    addAddress (formName) {
+    saveAddress (formName) {
       this.$refs[formName].validate((valid) => {
         this.addrForm.province = this.addrForm.addr[0]
         this.addrForm.city = this.addrForm.addr[1]
         this.addrForm.region = this.addrForm.addr[2]
-        const url = this.mod === 'add' ? '/member/memberreceiveaddress/save' : '/member/memberreceiveaddress/update'
+        const url =
+          this.mod === 'add'
+            ? '/member/memberreceiveaddress/save'
+            : '/member/memberreceiveaddress/update'
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(url),
@@ -371,13 +412,14 @@ export default {
         }
       })
     },
-    // 更新地址
-    updateAddress () {
+    submitOrder () {
+      this.step = 3
     }
   },
   created () {
     this.areaList = areaData.getAreaList()
     this.getAddrList()
+    this.getProductList()
   },
   mounted () {},
   beforeCreate () {},

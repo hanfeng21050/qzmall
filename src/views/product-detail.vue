@@ -1,5 +1,6 @@
 <template>
   <div class="detail-body">
+    <el-backtop></el-backtop>
     <div class="crumb-wrap">
       <div class="crumb-item"><a href="">数码</a></div>
       <div class="crumb-item"><a href="">></a></div>
@@ -52,8 +53,7 @@
           </div>
           <div class="box-btns clear">
             <div class="box-btns-one">
-              <!-- <input el-in type="text" name="" id="" v-model="buyNum" max="999"> -->
-              <el-input class="buyNumInput" @change="changeBuyNum" v-model="count" type="number"></el-input>
+               <el-input-number v-model="count" controls-position="right" :min="1" :max="999"></el-input-number>
             </div>
             <div class="box-btns-two" @click="addToCart">
               <a>
@@ -324,14 +324,6 @@ export default {
           })
         }
       })
-    },
-
-    changeBuyNum (val) {
-      if (val > 999) {
-        this.count = 999
-      } else if (val < 1) {
-        this.count = 1
-      }
     },
     /**
      * 计算属性选择的交集,得到skuid

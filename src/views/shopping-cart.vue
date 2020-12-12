@@ -23,15 +23,16 @@
               <div class="product-info">
                 <h3><router-link :to="{path:'product/detail', query: {'skuId':item.skuId}}" :title="item.skuName">{{item.skuName}}</router-link></h3>
                 <p>品牌：{{item.spuBrand}}</p>
-                <p v-for="(attr, index) in item.skuAttrsValList" :key="index">{{attr.attrName}}:{{attr.attrValue}}</p>
+                <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}:{{attr.attrValue}}</p>
               </div>
               <div class="clearfix"></div>
             </td>
             <td class="td-num">
               <div class="product-num">
-                <a href="javascript:;" class="num-reduce num-do fl" @click="changeQuantity(item.id, parseInt(item.skuQuantity) - 1)"><span></span></a>
+                <!-- <a href="javascript:;" class="num-reduce num-do fl" @click="changeQuantity(item.id, parseInt(item.skuQuantity) - 1)"><span></span></a>
                 <input type="text" disabled class="num-input" v-model="item.skuQuantity" @blur="changeQuantity(item.id, parseInt(item.skuQuantity))">
-                <a href="javascript:;" class="num-add num-do fr" @click="changeQuantity(item.id, parseInt(item.skuQuantity) + 1)"><span></span></a>
+                <a href="javascript:;" class="num-add num-do fr" @click="changeQuantity(item.id, parseInt(item.skuQuantity) + 1)"><span></span></a> -->
+                <el-input-number v-model="item.skuQuantity" @change="changeQuantity($event,item.id)" :min="1" :max="999" size="mini"></el-input-number>
               </div>
             </td>
             <td class="td-price">
@@ -52,7 +53,7 @@
     <div class="cart-product-info">
       <a class="delect-product" href="javascript:;" @click="deleteProduct">移除所选商品</a>
       <router-link class="keep-shopping" to="/product/list">继续购物</router-link>
-      <router-link to="/orderConfirm" class="btn-buy fr">去结算</router-link>
+      <a to="/orderConfirm" class="btn-buy fr"  href="javascript:;" @click="orderConfirm">去结算</a>
       <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
       <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
     </div>
@@ -111,13 +112,11 @@ export default {
               duration: 1500
             })
             this.productList = data.shoppingCart
-
+            console.log(data.shoppingCart)
             const cart = this.productList.map(item => {
               return item.id
             })
-            console.log(cart)
             this.$store.commit('user/updateCart', cart)
-
             // 为productList添加select（是否选中）字段，初始值为true
             var _this = this
             // 为productList添加select（是否选中）字段，初始值为true
@@ -133,8 +132,7 @@ export default {
             })
           }
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
           this.$notify({
             title: '网络错误',
             type: 'error',
@@ -232,15 +230,10 @@ export default {
       }
     },
     // 改变购物车商品数量
-    changeQuantity: function (id, quantity) {
-      const flag = new RegExp('^[1-9]([0-9])*$').test(quantity)
-      if (!flag) {
-        return
-      }
-
+    changeQuantity: function (val, id) {
       const data = {
         id: id,
-        skuQuantity: quantity
+        skuQuantity: val
       }
 
       this.$http({
@@ -253,11 +246,22 @@ export default {
       }).then((data) => {
         this.getCartList()
       })
+    },
+    orderConfirm () {
+      const ids = this.productList.filter(item => { return item.select }).map(item => item.id)
+      if (ids.length > 0) {
+        this.$cookie.set('payList', ids)
+        this.$router.push('/orderConfirm')
+      } else {
+        this.$notify({
+          title: '至少选择一项',
+          type: 'error'
+        })
+      }
     }
   },
   created () {
     this.getCartList()
-    console.log(this.$store.state.user.cart.length)
   },
   mounted () {},
   beforeCreate () {},
