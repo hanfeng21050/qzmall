@@ -8,7 +8,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueCookie from 'vue-cookie'
 import httpRequest from '@/utils/httpRequest'
-import 'default-passive-events'
 
 Vue.use(ElementUI, VueAxios, axios)
 Vue.use(VueCookie)

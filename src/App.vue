@@ -9,9 +9,9 @@
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <div class="inter_right">
           <div v-if="login">
-            <router-link to="/">欢迎你: <span>{{$store.state.name}}</span></router-link>
+            <router-link to="/">欢迎你: <span>{{username}}</span></router-link>
             <a style="cursor:pointer" @click="logout">退出登录</a>
-            <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</router-link>
+            <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" style="margin-right:2px" id="shop"></i>{{cart.length}}</router-link>
           </div>
           <div v-else>
             <router-link to="/login">登录</router-link>
@@ -75,12 +75,49 @@ export default {
       login: false
     }
   },
+  computed: {
+    userId: {
+      get () { return this.$store.state.user.id },
+      set (val) { this.$store.commit('user/updateId', val) }
+    },
+    username: {
+      get () { return this.$store.state.user.name },
+      set (val) { this.$store.commit('user/updateName', val) }
+    },
+    cart: {
+      get () { return this.$store.state.user.cart },
+      set (val) { this.$store.commit('user/updateCart', val) }
+    }
+  },
   watch: {
     $route (to, from) {
       this.checkLogin()
     }
   },
   methods: {
+    getMemberInfo () {
+      this.$http({
+        url: this.$http.adornUrl('/member/member/baseInfo'),
+        method: 'get',
+        headers: {
+          token: this.$cookie.get('token')
+        }
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          console.log(data)
+          this.userId = data.member.id
+          this.username = data.member.username
+          this.cart = data.member.carts
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
+    },
     search () {
       this.$router.push({
         path: '/product/list',
@@ -108,6 +145,7 @@ export default {
   },
   created () {
     this.checkLogin()
+    this.getMemberInfo()
   }
 }
 </script>

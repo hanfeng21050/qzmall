@@ -52,7 +52,7 @@
     <div class="cart-product-info">
       <a class="delect-product" href="javascript:;" @click="deleteProduct">移除所选商品</a>
       <router-link class="keep-shopping" to="/product/list">继续购物</router-link>
-      <a class="btn-buy fr" href="javascript:;">去结算</a>
+      <router-link to="/orderConfirm" class="btn-buy fr">去结算</router-link>
       <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
       <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
     </div>
@@ -111,6 +111,13 @@ export default {
               duration: 1500
             })
             this.productList = data.shoppingCart
+
+            const cart = this.productList.map(item => {
+              return item.id
+            })
+            console.log(cart)
+            this.$store.commit('user/updateCart', cart)
+
             // 为productList添加select（是否选中）字段，初始值为true
             var _this = this
             // 为productList添加select（是否选中）字段，初始值为true
@@ -194,7 +201,6 @@ export default {
 
     // 删除单条产品
     deleteOneProduct: function (id) {
-      debugger
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/delete'),
         method: 'post',
@@ -251,6 +257,7 @@ export default {
   },
   created () {
     this.getCartList()
+    console.log(this.$store.state.user.cart.length)
   },
   mounted () {},
   beforeCreate () {},
