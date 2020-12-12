@@ -91,6 +91,9 @@ export default {
   },
   watch: {
     $route (to, from) {
+      if (from.name === 'OrderConfirm') {
+        this.$cookie.delete('payList')
+      }
       this.checkLogin()
     }
   },

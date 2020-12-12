@@ -111,8 +111,8 @@ export default {
               type: 'success',
               duration: 1500
             })
-            this.productList = data.shoppingCart
-            console.log(data.shoppingCart)
+            this.productList = data.data
+            console.log(data.data)
             const cart = this.productList.map(item => {
               return item.id
             })

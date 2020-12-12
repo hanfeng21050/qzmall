@@ -315,6 +315,7 @@ export default {
         })
       }).then(({ data }) => {
         if (data && data.code === 0) {
+          console.log(data)
           this.productList = data.data
         } else {
           this.$notify({
