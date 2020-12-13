@@ -1,43 +1,12 @@
 <template>
-  <div class="page-order-comfirm">
-    <el-steps :active="step" finish-status="success" align-center>
+  <div class="page-order-comfirm"  v-loading="submitLoading" element-loading-text="生成订单中, 请稍等">
+    <el-steps :active="2" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
       <el-step title="支付订单"></el-step>
     </el-steps>
     <div class="section-con">
-      <div class="gray-box" v-show="step === 3">
-        <div class="sec-title-border clearfix">
-          <h3>支付订单</h3>
-        </div>
-        <div class="order-pay">
-          <div class="order-pay-title">
-            <dl>
-              <dt><img src="../assets/logo.png" alt=""></dt>
-              <dd>
-                <span>订单提交成功，请尽快付款！订单号：70715901829</span>
-                <span>应付金额<font>28.90</font>元</span>
-              </dd>
-              <dd>
-                <span>推荐使用</span>
-                <span>扫码支付请您在<font>24小时</font>内完成支付，否则订单会被自动取消(库存紧订单请参见详情页时限)</span>
-                <span>订单详细</span>
-              </dd>
-            </dl>
-          </div>
-          <div class="order-con">
-            <div class="pay-type">
-              <el-radio v-model="radio1" label="1" border>支付宝</el-radio>
-              <el-radio v-model="radio1" label="2" border>微信</el-radio>
-            </div>
-            <div class="qr-code">
-              <img src="../assets/logo.png">
-            </div>
-            <el-button type="warning" style="float: right">立即支付</el-button>
-          </div>
-        </div>
-      </div>
-      <div class="gray-box" v-show="step === 2">
+      <div class="gray-box">
         <div class="sec-title-border clearfix">
           <h3>添加收货地址</h3>
           <a class="right" @click="openForm('add')">新增地址</a>
@@ -56,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div class="gray-box" v-show="step === 2">
+      <div class="gray-box">
         <div class="sec-title-border clearfix">
           <h3>支付方式</h3>
         </div>
@@ -65,7 +34,7 @@
         </div>
       </div>
 
-      <div class="gray-box" v-show="step === 2">
+      <div class="gray-box">
         <div class="sec-title-border mb0 clearfix">
           <h3>商品清单</h3>
         </div>
@@ -83,11 +52,11 @@
               <tbody>
                 <tr v-for="(item,index) in productList" :key="index">
                   <td class="td-product">
-                    <img :src="item.skuPic" width="98" height="98">
+                    <img :src="item.skuPic">
                     <div class="product-info">
                       <h3><a :title="item.pro_name">{{item.skuName}}</a></h3>
                       <p>品牌：{{item.spuBrand}}</p>
-                      <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrValue}} : {{attr.attrName}}</p>
+                      <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
                     </div>
                     <div class="clearfix"></div>
                   </td>
@@ -116,7 +85,7 @@
       </div>
     </div>
 
-    <el-dialog title="收货地址" :visible.sync="formVisible" width="30%" @closed="resetForm('form')">
+    <el-dialog  title="收货地址" :visible.sync="formVisible" width="30%" @closed="resetForm('form')">
       <el-form :model="addrForm" :rules="rules" ref="form" label-width="80px" label-position="left" size="small">
         <el-form-item label="收货人" prop="name">
           <el-input v-model="addrForm.name"></el-input>
@@ -158,8 +127,8 @@ export default {
       }
     }
     return {
-      radio1: '1',
-      step: 2,
+      submitLoading: false,
+      step: 3,
       props: {
         value: 'value',
         label: 'value'
@@ -205,33 +174,10 @@ export default {
         ]
       },
       productList: [],
-      addressList: [
-        {
-          id: 1,
-          memberId: 1,
-          name: '某某1',
-          phone: '12345678901',
-          postCode: '12345',
-          province: '浙江省',
-          city: '杭州市',
-          region: '江干区',
-          detailAddress: '浙江理工大学',
-          defaultStatus: true
-        },
-        {
-          id: 2,
-          memberId: 2,
-          name: '某某2',
-          phone: '12345678901',
-          postCode: '12345',
-          province: '浙江省',
-          city: '杭州市',
-          region: '江干区',
-          detailAddress: '浙江理工大学',
-          defaultStatus: false
-        }
-      ],
-      countNum1: 0
+      addressList: [],
+      orderToken: '',
+      // 生成的订单
+      order: {}
     }
   },
   computed: {
@@ -279,6 +225,27 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
+    getOrderToken () {
+      this.$http({
+        url: this.$http.adornUrl('/member/cartinfo/getOrderToken'),
+        method: 'get',
+        headers: {
+          token: this.$cookie.get('token')
+        }
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          console.log(data)
+          this.orderToken = data.orderToken
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
+    },
     // 获取地址
     getAddrList () {
       this.$http({
@@ -291,6 +258,7 @@ export default {
         }
       }).then(({ data }) => {
         if (data && data.code === 0) {
+          console.log(data)
           this.addressList = data.data
         } else {
           this.$notify({
@@ -304,15 +272,14 @@ export default {
     },
     // 获取选中产品
     getProductList () {
+      const payList = this.$cookie.get('payList').split(',')
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/getListByIds'),
-        method: 'get',
+        method: 'post',
         headers: {
           token: this.$cookie.get('token')
         },
-        params: this.$http.adornParams({
-          ids: this.$cookie.get('payList')
-        })
+        data: this.$http.adornData(payList, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
           console.log(data)
@@ -331,9 +298,9 @@ export default {
     selectAddr: function (index) {
       // 遍历addressList
       for (var i = 0, len = this.addressList.length; i < len; i++) {
-        this.addressList[i].defaultStatus = false
+        this.addressList[i].defaultStatus = 0
       }
-      this.addressList[index].defaultStatus = true
+      this.addressList[index].defaultStatus = 1
     },
     // 选中支付方式
     selectPayment (index) {
@@ -414,11 +381,40 @@ export default {
       })
     },
     submitOrder () {
-      this.step = 3
+      const data = {
+        addrId: this.addressList.filter(item => { return item.defaultStatus === 1 })[0].id,
+        payType: this.payMod.filter(item => { return item.selected })[0].payType,
+        cartIdList: this.$cookie.get('payList').split(','),
+        payPrice: this.getTotal.totalPrice,
+        orderToken: this.orderToken
+      }
+      this.submitLoading = true
+      this.$http({
+        url: this.$http.adornUrl('/order/order/submitOrder'),
+        method: 'post',
+        headers: {
+          token: this.$cookie.get('token')
+        },
+        data: this.$http.adornData(data, false)
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.$router.push({ path: '/orderpay', query: { orderId: data.data.id } })
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      }).finally(() => {
+        this.submitLoading = false
+      })
     }
   },
   created () {
     this.areaList = areaData.getAreaList()
+    this.getOrderToken()
     this.getAddrList()
     this.getProductList()
   },

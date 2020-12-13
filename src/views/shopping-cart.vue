@@ -19,20 +19,21 @@
           <tr v-for="(item,index) in productList" :key="index">
             <td class="td-check"><input type="checkbox" class="check-span" @click="item.select=!item.select" :class="{'check-true':item.select}" :checked="item.select"></td>
             <td class="td-product">
-              <img :src="item.skuPic" width="98" height="98">
+              <div class="img">
+                <img :src="item.skuPic">
+                <div v-if="item.hasStock === 0" class="img-mask">缺货</div>
+              </div>
               <div class="product-info">
                 <h3><router-link :to="{path:'product/detail', query: {'skuId':item.skuId}}" :title="item.skuName">{{item.skuName}}</router-link></h3>
-                <p>品牌：{{item.spuBrand}}</p>
-                <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}:{{attr.attrValue}}</p>
+                <p>品牌: {{item.spuBrand}}</p>
+                <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
               </div>
               <div class="clearfix"></div>
             </td>
             <td class="td-num">
               <div class="product-num">
-                <!-- <a href="javascript:;" class="num-reduce num-do fl" @click="changeQuantity(item.id, parseInt(item.skuQuantity) - 1)"><span></span></a>
-                <input type="text" disabled class="num-input" v-model="item.skuQuantity" @blur="changeQuantity(item.id, parseInt(item.skuQuantity))">
-                <a href="javascript:;" class="num-add num-do fr" @click="changeQuantity(item.id, parseInt(item.skuQuantity) + 1)"><span></span></a> -->
-                <el-input-number v-model="item.skuQuantity" @change="changeQuantity($event,item.id)" :min="1" :max="999" size="mini"></el-input-number>
+                <el-input-number v-model="item.skuQuantity" :disabled="item.hasStock === 0" @change="changeQuantity($event,item.id)" :min="1" :max="999" size="mini"></el-input-number>
+                <p>库存数量:1</p>
               </div>
             </td>
             <td class="td-price">
@@ -46,6 +47,7 @@
                 <el-button slot="reference" type="warning" size="mini" plain>删除</el-button>
               </el-popconfirm>
             </td>
+
           </tr>
         </tbody>
       </table>
@@ -55,7 +57,7 @@
       <router-link class="keep-shopping" to="/product/list">继续购物</router-link>
       <a to="/orderConfirm" class="btn-buy fr"  href="javascript:;" @click="orderConfirm">去结算</a>
       <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
-      <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
+      <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品   总计（不含运费）：</p>
     </div>
   </div>
 </template>
@@ -83,12 +85,16 @@ export default {
         return val.select
       })
       var totalPrice = 0
+      var totalNum = 0
       for (var i = 0, len = _proList.length; i < len; i++) {
         // 总价累加
-        totalPrice += _proList[i].skuQuantity * _proList[i].skuPrice
+        if (_proList[i].hasStock === 1) {
+          totalPrice += _proList[i].skuQuantity * _proList[i].skuPrice
+          totalNum++
+        }
       }
       // 选择产品的件数就是_proList.length，总价就是totalPrice
-      return { totalNum: _proList.length, totalPrice: totalPrice }
+      return { totalNum: totalNum, totalPrice: totalPrice }
     }
   },
   watch: {},
@@ -106,11 +112,6 @@ export default {
       })
         .then(({ data }) => {
           if (data && data.code === 0) {
-            this.$notify({
-              title: '获取数据成功',
-              type: 'success',
-              duration: 1500
-            })
             this.productList = data.data
             console.log(data.data)
             const cart = this.productList.map(item => {
@@ -121,7 +122,7 @@ export default {
             var _this = this
             // 为productList添加select（是否选中）字段，初始值为true
             this.productList.map(function (item) {
-              _this.$set(item, 'select', true)
+              _this.$set(item, 'select', false)
             })
           } else {
             this.$notify({
@@ -144,6 +145,7 @@ export default {
         })
     },
     selectProduct: function (_isSelect) {
+      console.log(_isSelect)
       // 遍历productList，全部取反
       for (var i = 0, len = this.productList.length; i < len; i++) {
         this.productList[i].select = !_isSelect
@@ -248,7 +250,7 @@ export default {
       })
     },
     orderConfirm () {
-      const ids = this.productList.filter(item => { return item.select }).map(item => item.id)
+      const ids = this.productList.filter(item => { return item.select && item.hasStock === 1 }).map(item => item.id)
       if (ids.length > 0) {
         this.$cookie.set('payList', ids)
         this.$router.push('/orderConfirm')

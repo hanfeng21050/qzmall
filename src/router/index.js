@@ -61,6 +61,14 @@ const routes = [
     meta: {
       isLogin: true
     }
+  },
+  {
+    path: '/orderpay',
+    name: 'OrderPay',
+    component: () => import(/* webpackChunkName: "productlist" */ '../views/order-pay.vue'),
+    meta: {
+      isLogin: true
+    }
   }
 ]
 
