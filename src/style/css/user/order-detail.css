@@ -1,0 +1,145 @@
+.s_content {
+  color: #666;
+  background: #fff;
+}
+
+.order-status {
+  padding: 50px 0 10px 0;
+}
+
+.status-now {
+  background: #f6f6f6;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  padding: 22px 30px 20px;
+  margin: 30px;
+  line-height: 38px;
+  box-sizing: border-box;
+}
+
+.status-title {
+  font-size: 18px;
+  color: #666;
+}
+
+.realtime {
+  border-top: 1px solid #dcdcdc;
+  margin-top: 20px;
+  padding-top: 26px;
+}
+
+.gray-sub-title {
+  height: 38px;
+  padding: 0 24px;
+  background: #eee;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  line-height: 38px;
+  font-size: 12px;
+  color: #666;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.gray-sub-title .first {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.gray-sub-title .first .f-bc>span {
+  width: 130px;
+  text-align: center;
+}
+
+.gray-sub-title span {
+  display: inline-block;
+  height: 100%;
+}
+
+.goods-table .cart-items {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 90px;
+  padding: 5px 0 5px 111px;
+  border-bottom: 1px solid #efefef;
+}
+
+.goods-table .cart-items a {
+  color: #333;
+}
+
+.img-box {
+  border: 1px solid #ebebeb;
+  margin-left: -80px;
+}
+
+.img-box img {
+  display: block;
+  width: 80px;
+  height: 80px;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.goods-table .n-b {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.goods-table .n-b>div {
+  color: #626262;
+  font-weight: 700;
+  width: 165px;
+  text-align: center;
+}
+
+.goods-table .price {
+  box-sizing: border-box;
+  padding-left: 107px;
+  box-sizing: border-box;
+}
+
+.goods-table .goods-num {
+  padding-left: 60px;
+  box-sizing: border-box;
+}
+
+.order-discount-line {
+  padding: 22px 30px 20px;
+  line-height: 24px;
+  text-align: right;
+  font-size: 12px;
+}
+.price-total {
+  height: 54px;
+  line-height: 54px;
+  font-size: 18px;
+}
+.price-red {
+  font-weight: 700;
+  color: #d44d44;
+}
+
+.address  {
+  line-height: 38px;
+  word-wrap: break-word;
+  word-spacing: normal;
+  word-break: break-all;
+  color: #626262;
+}

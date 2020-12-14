@@ -76,8 +76,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'Order',
-        component: () => import(/* webpackChunkName: "order" */ '../views/user/order.vue'),
+        component: () => import(/* webpackChunkName: "" */ '../views/user/order.vue'),
         meta: {
           isLogin: true
         }
@@ -86,6 +85,14 @@ const routes = [
         path: 'order',
         name: 'Order',
         component: () => import(/* webpackChunkName: "order" */ '../views/user/order.vue'),
+        meta: {
+          isLogin: true
+        }
+      },
+      {
+        path: 'orderDetail',
+        name: 'OrderDetail',
+        component: () => import(/* webpackChunkName: "orderDetail" */ '../views/user/order-detail.vue'),
         meta: {
           isLogin: true
         }

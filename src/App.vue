@@ -5,19 +5,37 @@
         <router-link to="/" class="logo"><img src="./style/images/logo.png" alt=""></router-link>
         <router-link to="/" class="inter-i">首页</router-link>
         <router-link to="/product/list" class="inter-i">查看所有类别</router-link>
-        <el-input @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;"></el-input>
+        <el-input @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;">
+        </el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
+        <router-link to="/product/list" class="inter-i">查看所有商品</router-link>
         <div class="inter_right">
-          <div v-if="login">
-            <router-link to="/">欢迎你: <router-link to="/user">{{username}}</router-link></router-link>
-            <a style="cursor:pointer" @click="logout">退出登录</a>
-            <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" style="margin-right:2px" id="shop"></i>{{cart.length}}</router-link>
+          <router-link to="/shoppingcart"><i style="font-size:20px;margin-right:2px" class="icon iconfont icon-gouwuche" id="shop"></i>{{cart.length}}</router-link>
+        </div>
+        <div class="inter_right">
+          <div v-if="login" class="pr">
+            <a style="cursor:pointer;" class="nav-user"><i style="font-size:22px;" class="el-icon-user-solid"></i></a>
+            <div class="nav-user-wrapper pa">
+              <div class="nav-user-list">
+                <ul>
+                  <li class="nav-user-avatar">
+                    <div><span class="avatar" style="background-image: url(https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg);"></span></div>
+                    <p class="name">{{username}}</p>
+                  </li>
+                  <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
+                  <li>账号资料</li>
+                  <li href="#/user/addressList" class="">收货地址</li>
+                  <li href="#/user/support" class="">售后服务</li>
+                  <li href="#/user/coupon" class="">我的优惠</li>
+                  <li @click="logout">退出</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div v-else>
             <router-link to="/login">登录</router-link>
             <span>|</span>
             <router-link to="/regist">注册</router-link>
-            <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</router-link>
           </div>
         </div>
       </div>
@@ -78,16 +96,28 @@ export default {
   },
   computed: {
     userId: {
-      get () { return this.$store.state.user.id },
-      set (val) { this.$store.commit('user/updateId', val) }
+      get () {
+        return this.$store.state.user.id
+      },
+      set (val) {
+        this.$store.commit('user/updateId', val)
+      }
     },
     username: {
-      get () { return this.$store.state.user.name },
-      set (val) { this.$store.commit('user/updateName', val) }
+      get () {
+        return this.$store.state.user.name
+      },
+      set (val) {
+        this.$store.commit('user/updateName', val)
+      }
     },
     cart: {
-      get () { return this.$store.state.user.cart },
-      set (val) { this.$store.commit('user/updateCart', val) }
+      get () {
+        return this.$store.state.user.cart
+      },
+      set (val) {
+        this.$store.commit('user/updateCart', val)
+      }
     }
   },
   watch: {
@@ -207,20 +237,6 @@ export default {
   color: #c78a49;
 }
 
-.header .inter ul li {
-  float: left;
-  list-style: none;
-  padding: 0 28px;
-  height: 68px;
-  line-height: 68px;
-}
-.header .inter ul li:hover a {
-  color: #c78a49;
-}
-.header .inter ul li a {
-  font-size: 14px;
-  color: #333;
-}
 .header .inter .inter_right {
   float: right;
 }
@@ -316,4 +332,92 @@ export default {
 .footer hr {
   border: 0.5px solid #e6e6e6;
 }
+.pr {
+  position: relative;
+  line-height: 75px;
+}
+.nav-user {
+  margin-top: 20px;
+  line-height: 75px;
+}
+
+.nav-user-wrapper {
+  width: 168px;
+  transform: translate(-50%);
+  left: 50%;
+  visibility: hidden;
+}
+.nav-user-wrapper {
+  position: absolute;
+  z-index: 30;
+}
+.nav-user-list {
+  width: 168px;
+  position: relative;
+  padding-top: 20px;
+  background: #fff;
+  border: 1px solid #d6d6d6;
+  border-color: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgb(0 0 0 / 15%);
+  z-index: 10;
+}
+.nav-user-list:before {
+  left: 50%;
+}
+.nav-user-avatar > div {
+  position: relative;
+  margin: 0 auto 8px;
+  width: 46px;
+  height: 46px;
+  text-align: center;
+}
+.nav-user-avatar > div .avatar {
+  border-radius: 50%;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.nav-user-avatar .name {
+  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  color: #757575;
+}
+.nav-user-list ul li {
+  cursor: pointer;
+}
+.nav-user-list ul li:first-child:hover {
+  background-color: transparent;
+}
+.nav-user-list ul li:hover {
+  background-color: #f5f5f5;
+}
+
+.nav-user-list li + li {
+  text-align: center;
+  position: relative;
+  border-top: 1px solid #f5f5f5;
+  line-height: 44px;
+  height: 44px;
+  color: #616161;
+  font-size: 12px;
+}
+
+.nav-user-list li a{
+  line-height: 44px !important;
+  height: 44px !important;
+  font-size: 12px !important;
+}
+
+.nav-user:hover i {
+  color: #c78a49;
+}
+.pr:hover .nav-user-wrapper {
+  visibility: visible;
+}
+
 </style>

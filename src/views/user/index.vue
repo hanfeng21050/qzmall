@@ -22,7 +22,7 @@
       <div class="account-content">
         <div class="gray-box">
           <div class="title">
-            <h2>我的订单</h2>
+            <div>我的订单</div>
             <div></div>
           </div>
         </div>
