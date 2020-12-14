@@ -83,10 +83,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.isLogin) { // 判断页面是否需要登录才可操作
     if (!Vue.cookie.get('token')) { // 判断用户是否登录，值为true，代表登录了
-      ElementUI.Message({
+      ElementUI.Notification({
         title: '提示',
         message: '请先登录',
-        type: 'error'
+        type: 'error',
+        duration: 1500
       })
       clearLoginInfo()
       next('/login')

@@ -1,4 +1,5 @@
-import Vue from 'vue'
+import store from '@/store'
+import VueCookie from 'vue-cookie'
 
 /**
  * 移除对象的指定属性
@@ -16,7 +17,8 @@ const omit = (obj, uselessKeys) => {
  * 清除登录信息
  */
 export function clearLoginInfo () {
-  Vue.cookie.delete('token')
+  VueCookie.delete('token')
+  store.commit('clear')
 }
 
 export {

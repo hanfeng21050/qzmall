@@ -5,7 +5,7 @@
         <router-link to="/" class="logo"><img src="./style/images/logo.png" alt=""></router-link>
         <router-link to="/" class="inter-i">首页</router-link>
         <router-link to="/product/list" class="inter-i">查看所有类别</router-link>
-        <el-input v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;"></el-input>
+        <el-input @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;"></el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <div class="inter_right">
           <div v-if="login">
@@ -68,6 +68,7 @@
 <script>
 import '@/style/css/common.css'
 import '@/style/iconfont/iconfont.css'
+import { clearLoginInfo } from '@/utils/utils'
 export default {
   data () {
     return {
@@ -107,19 +108,24 @@ export default {
         }
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          console.log(data)
           this.userId = data.member.id
           this.username = data.member.username
           this.cart = data.member.carts
+          this.login = true
         } else {
           this.$notify({
-            title: data.code,
-            message: data.msg,
+            title: '登录失效, 请重新登录',
             type: 'error',
             duration: 1500
           })
+          clearLoginInfo()
         }
       })
+    },
+    doSearch (e) {
+      if (e.keyCode === 13) {
+        this.search()
+      }
     },
     search () {
       this.$router.push({
@@ -130,17 +136,19 @@ export default {
       })
     },
     logout () {
-      this.username = ''
+      clearLoginInfo()
       this.login = false
-      this.$cookie.delete('token')
-      this.$store.commit('clear')
-      this.$notify.success('退出登录成功')
+      this.$notify.success({
+        title: '退出登录成功',
+        type: 'error',
+        duration: 1500
+      })
     },
     checkLogin () {
       const token = this.$cookie.get('token')
-      // todo 去后台验证token
       if (token !== null) {
-        this.login = true
+        // todo 去后台验证token
+        this.getMemberInfo()
       } else {
         this.login = false
       }
@@ -148,7 +156,6 @@ export default {
   },
   created () {
     this.checkLogin()
-    this.getMemberInfo()
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-order-comfirm"  v-loading="submitLoading" element-loading-text="生成订单中, 请稍等">
+  <div class="page-order-comfirm" v-loading="submitLoading" element-loading-text="生成订单中, 请稍等">
     <el-steps :active="2" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
@@ -52,7 +52,10 @@
               <tbody>
                 <tr v-for="(item,index) in productList" :key="index">
                   <td class="td-product">
-                    <img :src="item.skuPic">
+                    <div class="img">
+                      <img :src="item.skuPic">
+                      <div v-if="item.hasStock === 0" class="img-mask">缺货</div>
+                    </div>
                     <div class="product-info">
                       <h3><a :title="item.pro_name">{{item.skuName}}</a></h3>
                       <p>品牌：{{item.spuBrand}}</p>
@@ -85,7 +88,7 @@
       </div>
     </div>
 
-    <el-dialog  title="收货地址" :visible.sync="formVisible" width="30%" @closed="resetForm('form')">
+    <el-dialog title="收货地址" :visible.sync="formVisible" width="30%" @closed="resetForm('form')">
       <el-form :model="addrForm" :rules="rules" ref="form" label-width="80px" label-position="left" size="small">
         <el-form-item label="收货人" prop="name">
           <el-input v-model="addrForm.name"></el-input>
@@ -382,12 +385,19 @@ export default {
     },
     submitOrder () {
       const data = {
-        addrId: this.addressList.filter(item => { return item.defaultStatus === 1 })[0].id,
-        payType: this.payMod.filter(item => { return item.selected })[0].payType,
+        addrId: this.addressList.filter((item) => {
+          return item.defaultStatus === 1
+        })[0].id,
+        payType: this.payMod.filter((item) => {
+          return item.selected
+        })[0].payType,
         cartIdList: this.$cookie.get('payList').split(','),
         payPrice: this.getTotal.totalPrice,
         orderToken: this.orderToken
       }
+
+      // TODO 判断是否有缺货商品
+
       this.submitLoading = true
       this.$http({
         url: this.$http.adornUrl('/order/order/submitOrder'),
@@ -396,20 +406,25 @@ export default {
           token: this.$cookie.get('token')
         },
         data: this.$http.adornData(data, false)
-      }).then(({ data }) => {
-        if (data && data.code === 0) {
-          this.$router.push({ path: '/orderpay', query: { orderId: data.data.id } })
-        } else {
-          this.$notify({
-            title: data.code,
-            message: data.msg,
-            type: 'error',
-            duration: 1500
-          })
-        }
-      }).finally(() => {
-        this.submitLoading = false
       })
+        .then(({ data }) => {
+          if (data && data.code === 0) {
+            this.$router.push({
+              path: '/orderpay',
+              query: { orderId: data.data.id }
+            })
+          } else {
+            this.$notify({
+              title: data.code,
+              message: data.msg,
+              type: 'error',
+              duration: 1500
+            })
+          }
+        })
+        .finally(() => {
+          this.submitLoading = false
+        })
     }
   },
   created () {
@@ -428,5 +443,5 @@ export default {
   activated () {}
 }
 </script>
-<style scoped src="../style/css/order-confirm.css">
+<style src="../style/css/order-confirm.css">
 </style>

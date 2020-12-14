@@ -4,6 +4,7 @@ html {
 
 body {
   margin: 0;
+  padding-right: 0 !important;/* 解决dialog偏移 */
   font-size: 14px;
   line-height: 1.5;
   font-family: "微软雅黑", microsoft yahei;
@@ -360,6 +361,25 @@ img {
   height: 100px;
   border: 1px solid #e3e3e3;
   margin-right: 10px;
+}
+.page-shopping-cart .cart-product table .td-product .img {
+  display: inline-block;
+  position: relative;
+}
+
+.page-shopping-cart .cart-product table .td-product .img .img-mask{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(235, 228, 228);
+  top: 0;
+  left: 0;
+  background-color: rgba(5, 0, 0, 0.6);
 }
 
 .page-shopping-cart .cart-product table .td-product .product-info {

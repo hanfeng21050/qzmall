@@ -32,8 +32,8 @@
             </td>
             <td class="td-num">
               <div class="product-num">
-                <el-input-number v-model="item.skuQuantity" :disabled="item.hasStock === 0" @change="changeQuantity($event,item.id)" :min="1" :max="999" size="mini"></el-input-number>
-                <p>库存数量:1</p>
+                <el-input-number v-model="item.skuQuantity" :disabled="item.hasStock === 0" @change="changeQuantity($event,item.id)" :min="1" :max="item.stockNum" size="mini"></el-input-number>
+                <p>库存数量:<span :style="item.hasStock ? 'color:green':'color:red'">{{item.stockNum}}</span>  </p>
               </div>
             </td>
             <td class="td-price">
