@@ -1,0 +1,87 @@
+.s_content {
+  width: 100%;
+  background: #f5f8fa none repeat scroll 0% 0%;
+  color: #666;
+  font-size: 14px;
+}
+.content {
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 1140px;
+  display: flex;
+  height: 100%;
+  padding-top: 90px;
+  padding-bottom: 20px;
+}
+.account-sidebar {
+  width: 210px;
+  border-radius: 6px;
+}
+.account-sidebar .avatar {
+  padding-top: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.gray-box {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
+}
+.account-sidebar .avatar img {
+  width: 168px;
+  height: 168px;
+}
+.account-sidebar .avatar h5 {
+  font-size: 18px;
+  line-height: 48px;
+  font-weight: 700;
+}
+.account-sidebar .account-nav {
+  padding-top: 15px;
+}
+.account-sidebar .account-nav li {
+  position: relative;
+  height: 48px;
+  border-top: 1px solid #ebebeb;
+  line-height: 48px;
+}
+
+
+.account-sidebar .account-nav li a {
+  display: block;
+}
+.account-sidebar .account-nav li.current a {
+  position: relative;
+  z-index: 1;
+  height: 50px;
+  background-color: #98afee;
+  line-height: 50px;
+  color: #fff;
+  cursor: pointer;
+  transition: all .15s ease-out;
+}
+
+
+.account-sidebar .account-nav li a:hover {
+  background-color: #98afee;
+  color: #fff;
+}
+.account-content {
+  margin-left: 20px;
+  -ms-flex: 1;
+  flex: 1;
+  background: none;
+}
+.gray-box .title {
+  padding-left: 30px;
+  position: relative;
+  z-index: 10;
+  height: 50px;
+  padding: 0 10px 0 24px;
+  line-height: 50px;
+  font-size: 13px;
+  color: #333;
+  align-items: center;
+}

@@ -9,7 +9,7 @@
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <div class="inter_right">
           <div v-if="login">
-            <router-link to="/">欢迎你: <span>{{username}}</span></router-link>
+            <router-link to="/">欢迎你: <router-link to="/user">{{username}}</router-link></router-link>
             <a style="cursor:pointer" @click="logout">退出登录</a>
             <router-link to="/shoppingcart"><i class="icon iconfont icon-gouwuche" style="margin-right:2px" id="shop"></i>{{cart.length}}</router-link>
           </div>
@@ -118,6 +118,7 @@ export default {
             type: 'error',
             duration: 1500
           })
+          this.login = false
           clearLoginInfo()
         }
       })

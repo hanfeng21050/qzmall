@@ -57,7 +57,7 @@ const routes = [
   {
     path: '/orderconfirm',
     name: 'OrderConfirm',
-    component: () => import(/* webpackChunkName: "productlist" */ '../views/order-confirm.vue'),
+    component: () => import(/* webpackChunkName: "orderconfirm" */ '../views/order-confirm.vue'),
     meta: {
       isLogin: true
     }
@@ -65,10 +65,32 @@ const routes = [
   {
     path: '/orderpay',
     name: 'OrderPay',
-    component: () => import(/* webpackChunkName: "productlist" */ '../views/order-pay.vue'),
+    component: () => import(/* webpackChunkName: "orderpay" */ '../views/order-pay.vue'),
     meta: {
       isLogin: true
     }
+  },
+  {
+    path: '/user',
+    component: () => import(/* webpackChunkName: "user" */ '../views/user/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Order',
+        component: () => import(/* webpackChunkName: "order" */ '../views/user/order.vue'),
+        meta: {
+          isLogin: true
+        }
+      },
+      {
+        path: 'order',
+        name: 'Order',
+        component: () => import(/* webpackChunkName: "order" */ '../views/user/order.vue'),
+        meta: {
+          isLogin: true
+        }
+      }
+    ]
   }
 ]
 

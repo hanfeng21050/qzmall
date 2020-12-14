@@ -1,63 +1,67 @@
 <template>
-  <div class="page-shopping-cart" id="shopping-cart">
-    <h4 class="cart-title">购物清单</h4>
-    <div class="cart-product clearfix">
-      <table v-loading="loading">
-        <thead>
-          <tr class="cart-product-title">
-            <th class="td-check">
-              <input type="checkbox" class="check-span fl check-all" :class="{'check-true':isSelectAll}" @click="selectProduct(isSelectAll)" :checked="isSelectAll" id="checkAll">全选
-            </th>
-            <th class="td-product">商品</th>
-            <th class="td-num">数量</th>
-            <th class="td-price">单价(元)</th>
-            <th class="td-total">金额(元)</th>
-            <th class="td-do">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item,index) in productList" :key="index">
-            <td class="td-check"><input type="checkbox" class="check-span" @click="item.select=!item.select" :class="{'check-true':item.select}" :checked="item.select"></td>
-            <td class="td-product">
-              <div class="img">
-                <img :src="item.skuPic">
-                <div v-if="item.hasStock === 0" class="img-mask">缺货</div>
-              </div>
-              <div class="product-info">
-                <h3><router-link :to="{path:'product/detail', query: {'skuId':item.skuId}}" :title="item.skuName">{{item.skuName}}</router-link></h3>
-                <p>品牌: {{item.spuBrand}}</p>
-                <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
-              </div>
-              <div class="clearfix"></div>
-            </td>
-            <td class="td-num">
-              <div class="product-num">
-                <el-input-number v-model="item.skuQuantity" :disabled="item.hasStock === 0" @change="changeQuantity($event,item.id)" :min="1" :max="item.stockNum" size="mini"></el-input-number>
-                <p>库存数量:<span :style="item.hasStock ? 'color:green':'color:red'">{{item.stockNum}}</span>  </p>
-              </div>
-            </td>
-            <td class="td-price">
-              <p class="red-text">￥<span class="price-text">{{item.skuPrice.toFixed(2)}}</span></p>
-            </td>
-            <td class="td-total">
-              <p class="red-text">￥<span class="total-text">{{(item.skuPrice*item.skuQuantity).toFixed(2)}}</span></p>
-            </td>
-            <td class="td-do">
-              <el-popconfirm @confirm="deleteOneProduct(item.id)" confirm-button-text='好的' cancel-button-text='不用了' icon="el-icon-info" icon-color="red" title="移出购物车">
-                <el-button slot="reference" type="warning" size="mini" plain>删除</el-button>
-              </el-popconfirm>
-            </td>
+  <div class="s_content">
+    <div class="page-shopping-cart" id="shopping-cart">
+      <h4 class="cart-title">购物清单</h4>
+      <div class="cart-product clearfix">
+        <table v-loading="loading">
+          <thead>
+            <tr class="cart-product-title">
+              <th class="td-check">
+                <input type="checkbox" class="check-span fl check-all" :class="{'check-true':isSelectAll}" @click="selectProduct(isSelectAll)" :checked="isSelectAll" id="checkAll">全选
+              </th>
+              <th class="td-product">商品</th>
+              <th class="td-num">数量</th>
+              <th class="td-price">单价(元)</th>
+              <th class="td-total">金额(元)</th>
+              <th class="td-do">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item,index) in productList" :key="index">
+              <td class="td-check"><input type="checkbox" class="check-span" @click="item.select=!item.select" :class="{'check-true':item.select}" :checked="item.select"></td>
+              <td class="td-product">
+                <div class="img">
+                  <img :src="item.skuPic">
+                  <div v-if="item.hasStock === 0" class="img-mask">缺货</div>
+                </div>
+                <div class="product-info">
+                  <h3>
+                    <router-link :to="{path:'product/detail', query: {'skuId':item.skuId}}" :title="item.skuName">{{item.skuName}}</router-link>
+                  </h3>
+                  <p>品牌: {{item.spuBrand}}</p>
+                  <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
+                </div>
+                <div class="clearfix"></div>
+              </td>
+              <td class="td-num">
+                <div class="product-num">
+                  <el-input-number v-model="item.skuQuantity" :disabled="item.hasStock === 0" @change="changeQuantity($event,item.id)" :min="1" :max="item.stockNum" size="mini"></el-input-number>
+                  <p>库存数量:<span :style="item.hasStock ? 'color:green':'color:red'">{{item.stockNum}}</span> </p>
+                </div>
+              </td>
+              <td class="td-price">
+                <p class="red-text">￥<span class="price-text">{{item.skuPrice.toFixed(2)}}</span></p>
+              </td>
+              <td class="td-total">
+                <p class="red-text">￥<span class="total-text">{{(item.skuPrice*item.skuQuantity).toFixed(2)}}</span></p>
+              </td>
+              <td class="td-do">
+                <el-popconfirm @confirm="deleteOneProduct(item.id)" confirm-button-text='好的' cancel-button-text='不用了' icon="el-icon-info" icon-color="red" title="移出购物车">
+                  <el-button slot="reference" type="warning" size="mini" plain>删除</el-button>
+                </el-popconfirm>
+              </td>
 
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="cart-product-info">
-      <a class="delect-product" href="javascript:;" @click="deleteProduct">移除所选商品</a>
-      <router-link class="keep-shopping" to="/product/list">继续购物</router-link>
-      <a to="/orderConfirm" class="btn-buy fr"  href="javascript:;" @click="orderConfirm">去结算</a>
-      <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
-      <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品   总计（不含运费）：</p>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cart-product-info">
+        <a class="delect-product" href="javascript:;" @click="deleteProduct">移除所选商品</a>
+        <router-link class="keep-shopping" to="/product/list">继续购物</router-link>
+        <a to="/orderConfirm" class="btn-buy fr" href="javascript:;" @click="orderConfirm">去结算</a>
+        <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
+        <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品 总计（不含运费）：</p>
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +118,7 @@ export default {
           if (data && data.code === 0) {
             this.productList = data.data
             console.log(data.data)
-            const cart = this.productList.map(item => {
+            const cart = this.productList.map((item) => {
               return item.id
             })
             this.$store.commit('user/updateCart', cart)
@@ -179,23 +183,25 @@ export default {
             token: this.$cookie.get('token')
           },
           data: this.$http.adornData(ids, false)
-        }).then(({ data }) => {
-          if (data && data.code === 0) {
-            this.getCartList()
-            this.$notify({
-              title: '删除成功',
-              type: 'success',
-              duration: 1500
-            })
-          } else {
-            this.$notify({
-              title: data.code,
-              message: data.msg,
-              type: 'error',
-              duration: 1500
-            })
-          }
-        }).catch(() => {})
+        })
+          .then(({ data }) => {
+            if (data && data.code === 0) {
+              this.getCartList()
+              this.$notify({
+                title: '删除成功',
+                type: 'success',
+                duration: 1500
+              })
+            } else {
+              this.$notify({
+                title: data.code,
+                message: data.msg,
+                type: 'error',
+                duration: 1500
+              })
+            }
+          })
+          .catch(() => {})
       })
     },
 
@@ -250,7 +256,11 @@ export default {
       })
     },
     orderConfirm () {
-      const ids = this.productList.filter(item => { return item.select && item.hasStock === 1 }).map(item => item.id)
+      const ids = this.productList
+        .filter((item) => {
+          return item.select && item.hasStock === 1
+        })
+        .map((item) => item.id)
       if (ids.length > 0) {
         this.$cookie.set('payList', ids)
         this.$router.push('/orderConfirm')

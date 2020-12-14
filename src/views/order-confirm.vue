@@ -443,5 +443,5 @@ export default {
   activated () {}
 }
 </script>
-<style src="../style/css/order-confirm.css">
+<style src="../style/css/order-confirm.css" scoped>
 </style>
