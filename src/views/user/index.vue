@@ -5,16 +5,14 @@
         <div class="avatar gray-box ">
           <div><img src="@/assets/logo.png">
             <h5>
-              test</h5>
+              {{username}}
+            </h5>
           </div>
           <div class="box-inner">
             <ul class="account-nav">
-              <li class="current"><a href="javascript:;">我的订单</a></li>
-              <li class=""><a href="javascript:;">账户资料</a></li>
-              <li class=""><a href="javascript:;">收货地址</a></li>
-              <li class=""><a href="javascript:;">我的优惠</a></li>
-              <li class=""><a href="javascript:;">售后服务</a></li>
-              <li class=""><a href="javascript:;">以旧换新</a></li>
+              <li @click="menuClick(index)" v-for="(item, index) in menu" :key="index" :class="item.selected? 'current' : ''">
+                <router-link :to="item.path">{{item.name}}</router-link>
+              </li>
             </ul>
           </div>
         </div>
@@ -38,11 +36,63 @@
 export default {
   components: {},
   data () {
-    return {}
+    return {
+      menu: [
+        {
+          name: '我的订单',
+          path: '/user',
+          selected: true
+        },
+        {
+          name: '账户资料',
+          path: '/',
+          selected: false
+        },
+        {
+          name: '收货地址',
+          path: '/',
+          selected: false
+        },
+        {
+          name: '我的优惠',
+          path: '/',
+          selected: false
+        },
+        {
+          name: '售后夫妇',
+          path: '/',
+          selected: false
+        }
+      ]
+    }
   },
-  computed: {},
+  computed: {
+    userId: {
+      get () {
+        return this.$store.state.user.id
+      },
+      set (val) {
+        this.$store.commit('user/updateId', val)
+      }
+    },
+    username: {
+      get () {
+        return this.$store.state.user.name
+      },
+      set (val) {
+        this.$store.commit('user/updateName', val)
+      }
+    }
+  },
   watch: {},
-  methods: {},
+  methods: {
+    menuClick (index) {
+      this.menu.forEach((item) => {
+        item.selected = false
+      })
+      this.menu[index].selected = true
+    }
+  },
   created () {},
   mounted () {},
   beforeCreate () {},

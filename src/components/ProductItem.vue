@@ -2,20 +2,20 @@
   <div class="body">
     <p class="da">
       <a href="#" :title="spu.spuName">
-        <img class="dim" :src="this.spu.skuList[0].skuImg">
+        <img class="dim" :src="skuList[0].skuImg">
       </a>
     </p>
     <swiper class="swiper" ref="mySwiper" :options="swiperOption">
-      <swiper-slide class="swiper-slide" v-for="sku in spu.skuList" :key="sku.skuId" style="width:40px; height:45px; text-align:center;">
+      <swiper-slide class="swiper-slide" v-for="sku in skuList" :key="sku.skuId" style="width:40px; height:45px; text-align:center;">
         <img class="thumb" @click="toDetail(sku.skuId)" fit="cover" :src="sku.skuImg">
       </swiper-slide>
     </swiper>
     <p class="tab_R">
-      <span v-for="sku in spu.skuList" :key="sku.skuId">¥{{sku.skuPrice}}</span>
+      <span v-for="sku in skuList" :key="sku.skuId">¥{{sku.skuPrice}}</span>
     </p>
 
     <p class="tab_JE">
-      <a v-for="sku in spu.skuList" :key="sku.skuId" href="#" :title="sku.skuName" @click="toDetail(sku.skuId)">
+      <a v-for="sku in skuList" :key="sku.skuId" href="#" :title="sku.skuName" @click="toDetail(sku.skuId)">
         {{sku.skuName}}
       </a>
     </p>
@@ -24,6 +24,7 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { formatMoney } from '@/utils/utils'
 import 'swiper/swiper-bundle.css'
 import $ from 'jquery'
 export default {
@@ -49,6 +50,12 @@ export default {
     }
   },
   computed: {
+    skuList: function () {
+      return this.spu.skuList.map((item) => {
+        item.skuPrice = formatMoney(item.skuPrice)
+        return item
+      })
+    }
   },
   watch: {},
   methods: {

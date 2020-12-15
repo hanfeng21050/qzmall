@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <el-dialog title="收货地址" :visible.sync="formVisible" width="30%" @closed="resetForm('form')">
+    <el-dialog title="收货地址" :visible.sync="formVisible" width="30%" @closed="resetForm('form')" :lock-scroll="false">
       <el-form :model="addrForm" :rules="rules" ref="form" label-width="80px" label-position="left" size="small">
         <el-form-item label="收货人" prop="name">
           <el-input v-model="addrForm.name"></el-input>

@@ -1,16 +1,24 @@
+.s_content {
+  width: 100%;
+  background-color:#f5f8fa;
+  padding-top: 90px;
+}
+
 .clear {
   overflow: hidden;
 }
 
 .detail-body {
-  margin: 90px auto;
+  margin: 0 auto;
   width: 1140px;
   background-color: #ffffff;
 }
 
 .crumb-wrap {
   height: 44px;
-  background: #f2f2f2;
+  line-height: 44px;
+  padding-left: 10px;
+  border-bottom: 5px solid #f2f2f2;
 }
 
 .crumb-wrap .crumb-item {

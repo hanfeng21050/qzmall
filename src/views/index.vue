@@ -1,24 +1,17 @@
 <template>
-  <div>
+  <div class="s_content">
     <div class="carousel">
-      <el-carousel indicator-position="outside" height="460px" width="1226px" :autoplay="false">
+      <el-carousel height="360px" :autoplay="false">
         <el-carousel-item>
-          <el-image :src="require('@/style/images/start1.png')" style="height:100%" fit="scale-down"></el-image>
+          <el-image :src="require('@/style/images/start1.png')" style="width:100%; border-radius: 8px;" fit="cover"></el-image>
         </el-carousel-item>
         <el-carousel-item>
-          <el-image :src="require('@/style/images/start2.png')" style="height:100%" fit="scale-down"></el-image>
+          <el-image :src="require('@/style/images/start2.png')" style="width:100%; border-radius: 8px;" fit="cover"></el-image>
         </el-carousel-item>
         <el-carousel-item>
-          <el-image :src="require('@/style/images/start.png')" style="height:100%" fit="scale-down"></el-image>
+          <el-image :src="require('@/style/images/start.png')" style="width:100%; border-radius: 8px;" fit="cover"></el-image>
         </el-carousel-item>
       </el-carousel>
-    </div>
-    <div class="outer1">
-      <p class="title"><a href="">专题活动，现实促销</a></p>
-      <div class="subtitle">
-        <p>严选材质，用心设计，精致家居生活</p>
-      </div>
-      <carousel-slide :array="newProduct"></carousel-slide>
     </div>
 
     <div class="outer2">
@@ -54,7 +47,7 @@
             <a href="" class="a2"></a>
           </div>
           <div class="end">
-           <li><a href="查看详情.html"><img src="../style/images/png4.png" alt=""></a>
+            <li><a href="查看详情.html"><img src="../style/images/png4.png" alt=""></a>
               <p class="p11"><a href="">经典系列时钟</a></p>
               <p class="p22">¥580.00</p>
               <a href="" class="a11">
@@ -115,74 +108,12 @@
       </div>
 
     </div>
-    <div class="outer3">
-      <p class="p1"><a href="">全球大牌优选，买手用心挑选</a></p>
-      <div class="inter1">
-        <p>全球好货 原装正品 海外直邮 自有保税仓</p>
-      </div>
-      <div class="inter2">
-        <div class="left">
-          <a href=""><img src="../style/images/pic4.jpg" alt=""></a>
-          <span class="border1"></span>
-        </div>
-        <div class="mid">
-          <div class="mid1">
-            <a href=""><img src="../style/images/pic5.jpg" alt=""></a>
-            <span class="border2"></span>
-          </div>
-          <div class="mid2">
-            <a href=""><img src="../style/images/pic6.jpg" alt=""></a>
-            <span class="border3"></span>
-          </div>
-        </div>
-        <div class="right">
-          <a href=""><img src="../style/images/pic7.jpg" alt=""></a>
-          <span class="border4"></span>
-        </div>
-      </div>
-      <div class="inter3">
-        <ul>
-          <li>
-            <a href="" class="a1"><img src="../style/images/pic8.png" alt=""></a>
-            <a href="">
-              <p>自然生活，精选用料</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="a1"><img src="../style/images/pic9.png" alt=""></a>
-            <a href="">
-              <p>源点生活</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="a1"><img src="../style/images/pic10.png" alt=""></a>
-            <a href="">
-              <p>puree好设计好生活</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="a1"><img src="../style/images/pic11.png" alt=""></a>
-            <a href="">
-              <p>家居精品之选</p>
-            </a>
-          </li>
-          <li class="last">
-            <a href="" class="a1"><img src="../style/images/pic12.png" alt=""></a>
-            <a href="">
-              <p>木香，手工制作</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </template>
 <script>
-import CarouselSlide from '@/components/CarouselSlide'
 import ProductZoom from '@/components/ProductZoom'
 export default {
   components: {
-    CarouselSlide,
     ProductZoom
   },
   data () {

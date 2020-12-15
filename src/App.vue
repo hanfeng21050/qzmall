@@ -9,12 +9,10 @@
         </el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
         <router-link to="/product/list" class="inter-i">查看所有商品</router-link>
-        <div class="inter_right">
-          <router-link to="/shoppingcart"><i style="font-size:20px;margin-right:2px" class="icon iconfont icon-gouwuche" id="shop"></i>{{cart.length}}</router-link>
-        </div>
+
         <div class="inter_right">
           <div v-if="login" class="pr">
-            <a style="cursor:pointer;" class="nav-user"><i style="font-size:22px;" class="el-icon-user-solid"></i></a>
+            <a style="cursor:pointer;" class="nav-user"><i style="font-size:22px;margin-right:5px" class="el-icon-user-solid"></i><span>{{username}}</span> </a>
             <div class="nav-user-wrapper pa">
               <div class="nav-user-list">
                 <ul>
@@ -23,7 +21,7 @@
                     <p class="name">{{username}}</p>
                   </li>
                   <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
-                  <li>账号资料</li>
+                  <li><router-link to="/shoppingcart" class="nav-user-list-item">购物车({{cart.length}})</router-link></li>
                   <li href="#/user/addressList" class="">收货地址</li>
                   <li href="#/user/support" class="">售后服务</li>
                   <li href="#/user/coupon" class="">我的优惠</li>
@@ -413,7 +411,10 @@ export default {
   font-size: 12px !important;
 }
 
-.nav-user:hover i {
+.nav-user:hover i{
+  color: #c78a49;
+}
+.nav-user:hover span{
   color: #c78a49;
 }
 .pr:hover .nav-user-wrapper {

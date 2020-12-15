@@ -17,7 +17,7 @@
               <div class="label">
                 <span class="tag" v-for="(tag, index) in selectTags" :key="index">
                   <span class="span-text">{{tag.name}}:{{tag.flag === 2 ? tag.value.split("_")[1] : tag.value}}</span>
-                  <button class="tag-remove" @click="deleteTag(tag)">X</button>
+                  <div class="tag-remove" @click="deleteTag(tag)">X</div>
                 </span>
               </div>
             </div>
@@ -148,11 +148,6 @@ export default {
         ({ data }) => {
           console.log(data)
           if (data.code === 0) {
-            this.$notify({
-              title: '获取数据成功',
-              type: 'success',
-              duration: 1500
-            })
             const _data = data.page
             this.pageNum = _data.currentPage
             this.total = _data.totalCount

@@ -1,3 +1,9 @@
+.s_content {
+  background-color: #f5f8fa;
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+
 /* 标题和副标题 */
 .title {
   display: block;
@@ -36,19 +42,29 @@
 /* 轮播图 */
 .carousel {
   position: relative;
-  width: 1140px;
-  height: 460px;
-  margin: 80px auto;
+  background-color: #FFFFFF;
+  width: 1160px;
+  height: 360px;
+  margin: 0 auto;
+  border: 1px solid #dcdcdc;
+  border-color: rgba(0,0,0,.14);
+  border-radius: 8px;
+  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
+  overflow: hidden;
 }
 
-.outer1 span {
-  font-size: 14px;
-  color: #999999;
-}
 
 
 .outer2 {
   margin: 80px auto 15px;
+  width: 1140px;
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-color: rgba(0,0,0,.14);
+  border-radius: 8px;
+  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
+
 }
 
 .inter3 {
@@ -90,15 +106,23 @@
 
 
 .box {
-  margin: 50px auto;
+  border-radius: 8px;
+  margin: 50px auto 0;
+  width: 1140px;
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-color: rgba(0,0,0,.14);
+  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
 }
+
 
 .box2 {
   position: relative;
   height: 640px;
   width: 100%;
   max-width: 1140px;
-  margin: 15px auto;
+  margin: 0 auto;
 }
 
 .box2 ul li {
@@ -265,173 +289,4 @@
   border-radius: 5px;
 }
 
-
-.outer3 {
-  margin: 0px auto;
-}
-
-.outer3 .p1 {
-  display: block;
-  font-size: 24px;
-  /*background-color: palegoldenrod;*/
-  /*height: 31px;*/
-  text-align: center;
-  font-weight: bold;
-}
-
-.outer3 a {
-  color: #000;
-}
-
-.outer3 {
-  /*background-color: #cccccc;*/
-  font-size: 14px;
-  color: #999999;
-  text-align: center;
-  /*height: 35px;*/
-  line-height: 35px;
-  margin: 0 auto;
-  /*width: 100%;*/
-}
-
-.outer3 .inter2 {
-  width: 1140px;
-  height: 358px;
-  margin-top: 15px;
-  /*background-color: #e9e9e9;*/
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-.outer3 .inter2 .left {
-  position: relative;
-  float: left;
-  width: 504px;
-  height: 358px;
-  margin-bottom: 14px;
-  margin-right: 14px;
-  overflow: hidden;
-}
-
-.outer3 .inter2 .mid {
-  width: 411px;
-  float: left;
-}
-
-.outer3 .inter2 .mid1 {
-  position: relative;
-  width: 411px;
-  height: 172px;
-  margin-bottom: 14px;
-  margin-right: 14px;
-  overflow: hidden;
-}
-
-.outer3 .inter2 .mid2 {
-  position: relative;
-  width: 411px;
-  height: 172px;
-  margin-bottom: 14px;
-  margin-right: 14px;
-  overflow: hidden;
-}
-
-.outer3 .inter2 .right {
-  position: relative;
-  float: right;
-  width: 197px;
-  height: 358px;
-  margin-right: 0;
-  overflow: hidden;
-}
-
-.outer3 .inter2 .left .border1,
-.outer3 .inter2 .mid1 .border2,
-.outer3 .inter2 .mid2 .border3,
-.outer3 .inter2 .right .border4 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 99.3%;
-  height: 99%;
-  border: 2px solid #FFFFFF;
-  pointer-events: none;
-}
-
-.outer3 .inter2 .left:hover .border1 {
-  transform: scale(0.95, .94);
-  transition: 0.5s;
-}
-
-.outer3 .inter2 .mid1:hover .border2 {
-  transform: scale(0.95, .91);
-  transition: 0.5s;
-}
-
-.outer3 .inter2 .mid2:hover .border3 {
-  transform: scale(0.95, .9);
-  transition: 0.5s;
-}
-
-.outer3 .inter2 .right:hover .border4 {
-  transform: scale(0.9, .95);
-  transition: 0.5s;
-}
-
-.outer3 .inter2 img:hover {
-  transform: scale(1.2);
-  transition: 0.5s;
-}
-
-
-.outer3 .inter3 {
-  width: 1140px;
-  height: 167px;
-  /*background-color: #cccccc;*/
-  margin: 20px auto;
-  /*overflow: hidden;*/
-}
-
-.outer3 .inter3 ul li {
-  float: left;
-  list-style: none;
-  margin-right: 22px;
-  margin-bottom: 22px;
-  width: 210px;
-  height: 139px;
-
-}
-
-.outer3 .inter3 ul .last {
-  margin-right: 0;
-}
-
-.outer3 .inter3 ul li .a1 {
-  display: inline-block;
-  border: 1px solid #cccccc;
-  width: 208px;
-  height: 90px;
-  text-align: center;
-  /*background-color: #bd2c00;*/
-  overflow: hidden;
-}
-
-.outer3 .inter3 ul li img {
-  height: 88px;
-  width: 176px;
-  overflow: hidden;
-}
-
-.outer3 .inter3 ul li p {
-  margin: 15px;
-  text-align: center;
-  color: #5d5d5d;
-  font-size: 14px;
-  height: 15px;
-}
-
-.outer3 .inter3 ul a:hover img {
-  transform: translate(-50px, 0);
-  transition: 0.5s;
-}
 
