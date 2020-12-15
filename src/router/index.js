@@ -96,6 +96,14 @@ const routes = [
         meta: {
           isLogin: true
         }
+      },
+      {
+        path: 'address',
+        name: 'Address',
+        component: () => import(/* webpackChunkName: "address" */ '../views/user/address.vue'),
+        meta: {
+          isLogin: true
+        }
       }
     ]
   }

@@ -468,11 +468,12 @@
 }
 
 .detail .tab-con ul{
-  width: 927px;
+  width: 100%;
 }
 .jieshao{
   width: 100%;
   margin-top: 1px;
+  box-sizing: border-box;
 }
 .jieshao p a {
   font-size: 12px;

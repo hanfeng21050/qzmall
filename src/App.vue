@@ -8,7 +8,6 @@
         <el-input @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;">
         </el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
-        <router-link to="/product/list" class="inter-i">查看所有商品</router-link>
 
         <div class="inter_right">
           <div v-if="login" class="pr">
@@ -185,6 +184,7 @@ export default {
   },
   created () {
     this.checkLogin()
+    console.log(this.$cookie.get('token'))
   }
 }
 </script>

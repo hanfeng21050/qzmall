@@ -5,7 +5,7 @@ import router from '@/router'
 import { clearLoginInfo } from '@/utils/utils'
 
 const http = axios.create({
-  timeout: 1000 * 10,
+  timeout: 1000 * 30,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json; charset=utf-8'

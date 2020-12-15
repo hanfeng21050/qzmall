@@ -1,5 +1,5 @@
 <template>
-  <div class="page-order-pay" v-loading="loading">
+  <div class="page-order-pay" v-loading="loading" :element-loading-text="loadingText">
     <el-steps :active="3" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
@@ -49,7 +49,7 @@
             <div class="qr-code">
               <img src="../assets/logo.png">
             </div>
-            <el-button type="warning" style="float: right">立即支付</el-button>
+            <el-button type="warning" style="float: right" @click="pay()">立即支付</el-button>
           </div>
         </div>
       </div>
@@ -66,6 +66,7 @@ export default {
       radio1: '1',
       showDetail: false,
       loading: false,
+      loadingText: '',
       order: {},
       orderItemList: []
     }
@@ -82,27 +83,38 @@ export default {
         headers: {
           token: this.$cookie.get('token')
         }
-      }).then(({ data }) => {
-        if (data && data.code === 0) {
-          this.order = data.data.order
-          // 格式化
-          this.order.payAmount = formatMoney(this.order.payAmount, 2)
-          this.orderItemList = data.data.orderItemList.map((item) => {
-            item.skuPrice = formatMoney(item.skuPrice, 2)
-            item.realAmount = formatMoney(item.realAmount, 2)
-            return item
-          })
-        } else {
-          this.$notify({
-            title: data.code,
-            message: data.msg,
-            type: 'error',
-            duration: 1500
-          })
-        }
-      }).finally(() => {
-        this.loading = false
       })
+        .then(({ data }) => {
+          if (data && data.code === 0) {
+            if (data.data && data.data !== null) {
+              this.order = data.data.order
+              // 格式化
+              this.order.payAmount = formatMoney(this.order.payAmount, 2)
+              this.orderItemList = data.data.orderItemList.map((item) => {
+                item.skuPrice = formatMoney(item.skuPrice, 2)
+                item.realAmount = formatMoney(item.realAmount, 2)
+                return item
+              })
+            } else {
+              this.$alert('当前订单已支付', '提示', {
+                confirmButtonText: '确定',
+                callback: (action) => {
+                  this.$router.push({ name: 'Order' })
+                }
+              })
+            }
+          } else {
+            this.$notify({
+              title: data.code,
+              message: data.msg,
+              type: 'error',
+              duration: 1500
+            })
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     toProductDetail (id) {
       this.$router.push({
@@ -111,6 +123,38 @@ export default {
           skuId: id
         }
       })
+    },
+    pay () {
+      const orderId = this.$route.query.orderId
+      this.loadingText = '支付中,请稍等'
+      this.loading = true
+      this.$http({
+        url: this.$http.adornUrl('/order/order/pay/' + orderId),
+        method: 'post',
+        headers: {
+          token: this.$cookie.get('token')
+        }
+      })
+        .then(({ data }) => {
+          if (data && data.code === 0) {
+            this.$notify({
+              title: '支付成功',
+              type: 'success',
+              duration: 3000
+            })
+            this.$router.push({ name: 'Order' })
+          } else {
+            this.$notify({
+              title: data.code,
+              message: data.msg,
+              type: 'error',
+              duration: 1500
+            })
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   },
   created () {

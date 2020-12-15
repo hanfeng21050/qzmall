@@ -50,7 +50,7 @@ export default {
         },
         {
           name: '收货地址',
-          path: '/',
+          path: '/user/address',
           selected: false
         },
         {
@@ -59,7 +59,7 @@ export default {
           selected: false
         },
         {
-          name: '售后夫妇',
+          name: '售后服务',
           path: '/',
           selected: false
         }
