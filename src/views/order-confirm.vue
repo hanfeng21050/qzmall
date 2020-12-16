@@ -1,11 +1,11 @@
 <template>
-  <div class="page-order-comfirm" v-loading="submitLoading" element-loading-text="生成订单中, 请稍等">
+  <div class="page-order-comfirm" v-loading.fullscreen.lock="submitLoading"  element-loading-text="生成订单中, 请稍等" >
     <el-steps :active="2" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
       <el-step title="支付订单"></el-step>
     </el-steps>
-    <div class="section-con">
+    <div class="section-con ">
       <div class="gray-box">
         <div class="sec-title-border clearfix">
           <h3>添加收货地址</h3>
