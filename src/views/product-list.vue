@@ -77,7 +77,7 @@
         </div>
         <div class="swi">
           <span>仅显示有货：</span>
-          <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949">
+          <el-switch @change="changeSwitch" v-model="params.hasStock" active-value="1" inactive-value="0" active-color="#13ce66" inactive-color="#ff4949">
           </el-switch>
         </div>
         <div class="total">
@@ -103,7 +103,6 @@ export default {
   data () {
     return {
       loading: false,
-      value: false,
       pageNum: 1,
       pageSize: 16,
       total: 1000,
@@ -118,7 +117,8 @@ export default {
         pageNum: 1,
         pageSize: 16,
         brandId: [],
-        attrs: []
+        attrs: [],
+        hasStock: '0'
       }
     }
   },
@@ -132,7 +132,8 @@ export default {
         pageNum: 1,
         pageSize: 16,
         brandId: [],
-        attrs: []
+        attrs: [],
+        hasStock: ''
       }
       this.getSpuList()
     }
@@ -241,6 +242,9 @@ export default {
       } else if (tag.flag === 2) {
         this.params.attrs.splice((val) => val === tag.value)
       }
+      this.getSpuList()
+    },
+    changeSwitch () {
       this.getSpuList()
     }
   },

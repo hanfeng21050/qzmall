@@ -45,7 +45,7 @@ export default {
         },
         {
           name: '账户资料',
-          path: '/',
+          path: '/user/information',
           selected: false
         },
         {

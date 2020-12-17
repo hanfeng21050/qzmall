@@ -104,6 +104,14 @@ const routes = [
         meta: {
           isLogin: true
         }
+      },
+      {
+        path: 'information',
+        name: 'Information',
+        component: () => import(/* webpackChunkName: "information" */ '../views/user/information.vue'),
+        meta: {
+          isLogin: true
+        }
       }
     ]
   }

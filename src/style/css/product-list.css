@@ -105,9 +105,9 @@
 }
 
 .banner .nav .selector .condition .sl_value {
-	margin-left: 110px;
-	padding-right: 130px;
-	padding-left: 10px;
+	/* margin-left: 110px;
+	padding-right: 100px;
+	padding-left: 10px; */
 	overflow: hidden;
 }
 
@@ -125,9 +125,9 @@
 
 .banner .nav .selector .condition .JD_pre ul {
 	float: left;
-	overflow: hidden;
+	/* overflow: hidden;
 	position: relative;
-	height: 30px;
+	height: 30px; */
 	list-style-type: none;
 }
 

@@ -19,11 +19,10 @@
                     <div><span class="avatar" style="background-image: url(https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg);"></span></div>
                     <p class="name">{{username}}</p>
                   </li>
-                  <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
                   <li><router-link to="/shoppingcart" class="nav-user-list-item">购物车({{cart.length}})</router-link></li>
-                  <li href="#/user/addressList" class="">收货地址</li>
-                  <li href="#/user/support" class="">售后服务</li>
-                  <li href="#/user/coupon" class="">我的优惠</li>
+                  <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
+                  <li><router-link to="/user/information" class="nav-user-list-item">账户资料</router-link></li>
+                  <li><router-link to="/user/address" class="nav-user-list-item">收货地址</router-link> </li>
                   <li @click="logout">退出</li>
                 </ul>
               </div>

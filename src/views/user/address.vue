@@ -265,6 +265,10 @@ export default {
     }
   },
   created () {
+    this.$store.commit(
+      'user/updateUserMenuTitle',
+      '收货地址'
+    )
     this.areaList = areaData.getAreaList()
     this.getAddrList()
   },
