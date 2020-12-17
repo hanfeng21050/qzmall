@@ -20,7 +20,7 @@
       <div class="account-content">
         <div class="gray-box">
           <div class="title">
-            <div>我的订单</div>
+            <div>{{$store.state.user.userMenuTitle}}</div>
             <div></div>
           </div>
         </div>
@@ -51,16 +51,6 @@ export default {
         {
           name: '收货地址',
           path: '/user/address',
-          selected: false
-        },
-        {
-          name: '我的优惠',
-          path: '/',
-          selected: false
-        },
-        {
-          name: '售后服务',
-          path: '/',
           selected: false
         }
       ]

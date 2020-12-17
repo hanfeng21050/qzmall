@@ -3,7 +3,8 @@ export default {
   state: {
     name: '',
     id: 0,
-    cart: []
+    cart: [],
+    userMenuTitle: ''
   },
   mutations: {
     updateName (state, name) {
@@ -14,6 +15,9 @@ export default {
     },
     updateCart (state, cart) {
       state.cart = cart
+    },
+    updateUserMenuTitle (state, userMenuTitle) {
+      state.userMenuTitle = userMenuTitle
     }
   }
 }

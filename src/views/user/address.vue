@@ -1,16 +1,16 @@
 <template>
-  <div class="s_content">
+  <div class="s_content" v-loading="loading">
     <div class="gray-box">
       <div class="addressBox clearfix">
-        <div class="address-item" v-for="(item,index) in addressList" :key="index">
+        <div class="address-item" v-for="(item,index) in addressList" :key="index" @click="addressClick(index)">
           <div class="address-item-in">
             <div class="default-address" v-if="item.defaultStatus === 1">默认地址</div>
             <div>收货人：{{item.name}}</div>
             <div :title="item.province + item.city + item.region + item.detailAddress">收货地址：{{item.province + item.city + item.region + item.detailAddress}}</div>
             <div>电话号码：{{item.phone}}</div>
             <div class="optional-seletion">
-              <div class="btn" @click="openForm('update', item.id)">修改</div>
-              <div class="btn" @click="deleteAddress($event, item.id)">删除</div>
+              <div class="btn" @click.stop="openForm('update', item.id)">修改</div>
+              <div class="btn" @click.stop="deleteAddress($event, item.id)">删除</div>
             </div>
           </div>
         </div>
@@ -47,9 +47,6 @@
         <el-form-item label="邮政编码" prop="postCode">
           <el-input v-model="addrForm.postCode"></el-input>
         </el-form-item>
-        <el-form-item label="置为默认" v-if="mod !== 'add'">
-          <el-switch v-model="addrForm.defaultStatus" :active-value=1 :inactive-value=0></el-switch>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">取 消</el-button>
@@ -74,6 +71,7 @@ export default {
       }
     }
     return {
+      loading: false,
       areaList: [],
       addressList: [],
       formVisible: false,
@@ -114,6 +112,7 @@ export default {
   watch: {},
   methods: {
     getAddrList () {
+      this.loading = true
       this.$http({
         url: this.$http.adornUrl(
           '/member/memberreceiveaddress/getAddrByMemberId'
@@ -124,7 +123,6 @@ export default {
         }
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          console.log(data)
           this.addressList = data.data
         } else {
           this.$notify({
@@ -134,6 +132,8 @@ export default {
             duration: 1500
           })
         }
+      }).finally(() => {
+        this.loading = false
       })
     },
     openForm (mod, id) {
@@ -236,6 +236,32 @@ export default {
           return false
         }
       })
+    },
+    addressClick (index) {
+      const address = this.addressList[index]
+      const data = {
+        id: address.id,
+        defaultStatus: 1
+      }
+      this.$http({
+        url: this.$http.adornUrl('/member/memberreceiveaddress/update'),
+        method: 'post',
+        headers: {
+          token: this.$cookie.get('token')
+        },
+        data: this.$http.adornData(data, false)
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.getAddrList()
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
     }
   },
   created () {
@@ -269,6 +295,7 @@ export default {
   box-shadow: 0 3px 8px -6px rgb(0 0 0 / 50%);
   padding: 10px;
   box-sizing: border-box;
+  min-height: 450px;
 }
 .addressBox {
   margin-bottom: 15px;

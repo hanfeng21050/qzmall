@@ -88,6 +88,7 @@
 }
 
 .ellipsis {
+  width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -111,7 +112,7 @@
 
 .goods-table .price {
   box-sizing: border-box;
-  padding-left: 107px;
+  padding-left:100px;
   box-sizing: border-box;
 }
 

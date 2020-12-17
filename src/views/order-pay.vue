@@ -86,7 +86,15 @@ export default {
       })
         .then(({ data }) => {
           if (data && data.code === 0) {
-            if (data.data && data.data !== null) {
+            const order = data.data.order
+            if (order.status === 4) {
+              this.$alert('当前订单已取消', '提示', {
+                confirmButtonText: '确定',
+                callback: (action) => {
+                  this.$router.push({ name: 'Order' })
+                }
+              })
+            } else if (order.status === 0) {
               this.order = data.data.order
               // 格式化
               this.order.payAmount = formatMoney(this.order.payAmount, 2)

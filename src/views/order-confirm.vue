@@ -1,5 +1,5 @@
 <template>
-  <div class="page-order-comfirm" v-loading.fullscreen.lock="submitLoading"  element-loading-text="生成订单中, 请稍等" >
+  <div class="page-order-comfirm" v-loading.fullscreen.lock="submitLoading"  element-loading-text="订单生成中..." >
     <el-steps :active="2" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
@@ -397,7 +397,6 @@ export default {
       }
 
       // TODO 判断是否有缺货商品
-
       this.submitLoading = true
       this.$http({
         url: this.$http.adornUrl('/order/order/submitOrder'),
