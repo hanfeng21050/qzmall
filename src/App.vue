@@ -11,13 +11,13 @@
 
         <div class="inter_right">
           <div v-if="login" class="pr">
-            <a style="cursor:pointer;" class="nav-user"><i style="font-size:22px;margin-right:5px" class="el-icon-user-solid"></i><span>{{username}}</span> </a>
+            <a style="cursor:pointer;" class="nav-user"><i style="font-size:22px;margin-right:5px" class="el-icon-user-solid"></i><span>{{user.username}}</span> </a>
             <div class="nav-user-wrapper pa">
               <div class="nav-user-list">
                 <ul>
                   <li class="nav-user-avatar">
-                    <div><span class="avatar" style="background-image: url(https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg);"></span></div>
-                    <p class="name">{{username}}</p>
+                    <div><span class="avatar" :style="user.header ? 'background-image: url('+user.header+');':'background-image: url(https://coolmall-oss.oss-cn-hangzhou.aliyuncs.com/2020-12-18/01e615a1-9cc9-4c08-8686-30550325a8a4_logo.png);'"></span></div>
+                    <p class="name">{{user.username}}</p>
                   </li>
                   <li><router-link to="/shoppingcart" class="nav-user-list-item">购物车({{cart.length}})</router-link></li>
                   <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
@@ -91,20 +91,12 @@ export default {
     }
   },
   computed: {
-    userId: {
+    user: {
       get () {
-        return this.$store.state.user.id
+        return this.$store.state.user.user
       },
       set (val) {
-        this.$store.commit('user/updateId', val)
-      }
-    },
-    username: {
-      get () {
-        return this.$store.state.user.name
-      },
-      set (val) {
-        this.$store.commit('user/updateName', val)
+        this.$store.commit('user/updateUser', val)
       }
     },
     cart: {
@@ -134,8 +126,7 @@ export default {
         }
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.userId = data.member.id
-          this.username = data.member.username
+          this.user = data.member
           this.cart = data.member.carts
           this.login = true
         } else {

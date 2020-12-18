@@ -98,8 +98,7 @@ export default {
                 duration: 1500
               })
               this.$cookie.set('token', data.token, 1)
-              this.$store.commit('user/updateName', data.user.username)
-              this.$store.commit('user/updateId', data.user.id)
+              this.$store.commit('user/updateUser', data.user)
               this.$router.go(-1)
             } else {
               this.$notify.error(data.msg)

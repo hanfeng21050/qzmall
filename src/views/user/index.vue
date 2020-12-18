@@ -3,9 +3,9 @@
     <div class="content">
       <div class="account-sidebar">
         <div class="avatar gray-box ">
-          <div><img src="@/assets/logo.png">
+          <div><img :src="$store.state.user.user.header">
             <h5>
-              {{username}}
+              {{user.username}}
             </h5>
           </div>
           <div class="box-inner">
@@ -57,20 +57,12 @@ export default {
     }
   },
   computed: {
-    userId: {
+    user: {
       get () {
-        return this.$store.state.user.id
+        return this.$store.state.user.user
       },
       set (val) {
-        this.$store.commit('user/updateId', val)
-      }
-    },
-    username: {
-      get () {
-        return this.$store.state.user.name
-      },
-      set (val) {
-        this.$store.commit('user/updateName', val)
+        this.$store.commit('user/updateUser', val)
       }
     }
   },
