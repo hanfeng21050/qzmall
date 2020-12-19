@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <table class="td-void order-tb">
       <thead>
         <tr>
@@ -93,7 +93,7 @@
                 <div class="operate" v-else>
                   <router-link class="btn-5 order-confirm" :to="{path: '/orderpay',query: { orderId: order.order.id }}">去支付</router-link>
                   <br>
-                  <a class="a-link order-cancel" href="javascript:void(0);">取消订单</a><br>
+                  <a class="a-link order-cancel" @click="closeOrder(order.order.id)">取消订单</a><br>
                 </div>
               </td>
             </tr>
@@ -117,7 +117,9 @@ export default {
   },
   components: {},
   data () {
-    return {}
+    return {
+      loading: false
+    }
   },
   computed: {},
   watch: {},
@@ -141,6 +143,43 @@ export default {
         statusText = '无效订单'
       }
       return statusText
+    },
+    closeOrder (id) {
+      this.$confirm('此操作会取消当前订单, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.loading = true
+          this.$http({
+            url: this.$http.adornUrl('/order/order/closeOrder/' + id),
+            method: 'get',
+            headers: {
+              token: this.$cookie.get('token')
+            },
+            params: this.$http.adornParams({})
+          })
+            .then(({ data }) => {
+              if (data && data.code === 0) {
+                this.$notify({
+                  title: '取消订单成功',
+                  type: 'success',
+                  duration: 1500
+                })
+              } else {
+                this.$notify({
+                  title: data.code,
+                  message: data.msg,
+                  type: 'error',
+                  duration: 1500
+                })
+              }
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        }).catch(() => { })
     }
   },
   created () {

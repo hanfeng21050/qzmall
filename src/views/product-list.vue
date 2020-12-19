@@ -116,6 +116,7 @@ export default {
         spuName: '',
         pageNum: 1,
         pageSize: 16,
+        catelog3Id: '',
         brandId: [],
         attrs: [],
         hasStock: '0'
@@ -147,7 +148,6 @@ export default {
         params: this.$http.adornParams(this.params)
       }).then(
         ({ data }) => {
-          console.log(data)
           if (data.code === 0) {
             const _data = data.page
             this.pageNum = _data.currentPage
@@ -172,7 +172,6 @@ export default {
           })
           this.loading = false
         }
-
       )
     },
 
@@ -213,7 +212,9 @@ export default {
      */
     attrClick (id, name, value) {
       /* 防止重复点击 */
-      if (this.params.attrs.findIndex((val) => val === id + '_' + value) !== -1) {
+      if (
+        this.params.attrs.findIndex((val) => val === id + '_' + value) !== -1
+      ) {
         return
       }
 
@@ -233,10 +234,16 @@ export default {
     */
     deleteTag (tag) {
       this.selectTags.splice(
-        this.selectTags.findIndex((item) => item.name === tag.name && item.value === tag.value), 1
+        this.selectTags.findIndex(
+          (item) => item.name === tag.name && item.value === tag.value
+        ),
+        1
       )
       if (tag.flag === 0) {
-        this.params.brandId.splice(this.params.brandId.findIndex((item) => item === tag.value), 1)
+        this.params.brandId.splice(
+          this.params.brandId.findIndex((item) => item === tag.value),
+          1
+        )
       } else if (tag.flag === 1) {
         this.params = omit(this.params, ['catalog3Id'])
       } else if (tag.flag === 2) {
@@ -250,6 +257,32 @@ export default {
   },
   created () {
     this.params.spuName = this.$route.query.spuName
+    var catelog3Id = this.$route.params.catelog3Id
+    if (catelog3Id && catelog3Id !== '') {
+      this.params.catalog3Id = catelog3Id
+      this.$http({
+        url: this.$http.adornUrl('/product/category/info/' + catelog3Id),
+        method: 'get',
+        params: this.$http.adornParams({})
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          const tag = {
+            flag: 1,
+            name: '分类',
+            value: data.category.name
+          }
+          this.selectTags.push(tag)
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
+    }
+
     this.getSpuList()
   },
   mounted () {

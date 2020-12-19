@@ -37,24 +37,6 @@
 
 
 
-
-
-/* 轮播图 */
-.carousel {
-  position: relative;
-  background-color: #FFFFFF;
-  width: 1160px;
-  height: 360px;
-  margin: 0 auto;
-  border: 1px solid #dcdcdc;
-  border-color: rgba(0,0,0,.14);
-  border-radius: 8px;
-  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
-  overflow: hidden;
-}
-
-
-
 .outer2 {
   margin: 80px auto 15px;
   width: 1140px;
@@ -290,3 +272,144 @@
 }
 
 
+
+.menu {
+  width: 1160px;
+  height: 600px;
+  border-radius: 8px;
+  margin: 30px auto;
+  display: flex;
+}
+
+
+.menu ul {
+  width: 180px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
+  border: 1px solid #dcdcdc;
+  border-color: rgba(0,0,0,.14);
+}
+
+.menu .right {
+  flex:1;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+/* 轮播图 */
+.menu .right .carousel {
+  height: 600px;
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+
+.menu ul li {
+  height: 30px;
+  padding-left: 8px;
+  text-align: left;
+  line-height: 30px;
+  font-size: 13px;
+  z-index: 2;
+}
+
+.menu ul li a {
+  color: #707070;
+  text-decoration: none;
+}
+
+.menu ul li a:hover {
+  color:#E6A23C;
+  
+}
+
+.menu ul li:hover {
+  border-right: 0;
+  background-color: rgb(245, 245, 245);
+  background-image: none;
+  cursor: pointer;
+  
+}
+
+.menu ul li:hover .submenu,
+.menu ul li:hover .submenu .subleft
+{
+  display: block;
+  transform: scaleX(1);
+  transition: transform .3s ease-in-out;
+  transform-origin: 0 50%;
+}
+
+.menu ul li .submenu {
+  position: absolute;
+  border-radius: 8px;
+  left: 178px;
+  min-height: 600px;
+  top: 0;
+  width: 982px;
+  box-sizing: border-box;
+  border: 1px solid #DDD;
+  background-color: #FFF;
+  z-index: 99;
+  transform:scaleX(0);
+}
+
+.menu ul li .submenu .subleft {
+  margin-left: 0px;
+  width: 960px;
+  float: left;
+  padding: 15px;
+}
+
+.menu ul li .submenu .subleft dl {
+  overflow: hidden;
+  border-bottom: 1px solid #D1D1D1;
+  padding: 10px 0;
+  display: flex;
+  
+}
+
+.menu ul li .submenu .subleft dl dt {
+  height: 22px;
+  width: 60px;
+  line-height: 22px;
+  margin-right: 10px;
+  font-weight: bold;
+  color: #707070;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.menu ul li .submenu .subleft dl dd {
+  flex: 1;
+}
+
+.menu ul li .submenu .subleft dl dd a {
+  display: block;
+  float: left;
+  border-left: 1px solid #707070;
+  padding: 0 5px;
+  color: #707070;
+  height: 14px;
+  line-height: 14px;
+  margin: 3px 0;
+  font-size: 11px;
+}
+
+.menu ul li .submenu .subleft dl dd a:hover{
+  color:#E6A23C;
+}
+
+.menu ul li .submenu .subright {
+  width: 310px;
+  height: 300px;
+  background-color: blue;
+  float: left;
+}
