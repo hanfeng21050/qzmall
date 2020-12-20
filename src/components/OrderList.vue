@@ -82,18 +82,22 @@
                 </div>
               </td>
               <td :rowspan="order.orderItemList.length" v-if="index===0" width="15%">
-                <div class="operate" v-if="order.order.status!== 0">
-                  <template v-if="order.order.status === 4">
-                    <span class="a-link order-cancel" style="color:gray">已取消</span>
-                  </template>
-                  <template v-else>
-                    <a href="#none" class="btn-5 order-confirm">确认收货</a><br>
-                  </template>
-                </div>
-                <div class="operate" v-else>
+                <div class="operate" v-if="order.order.status=== 0">
                   <router-link class="btn-5 order-confirm" :to="{path: '/orderpay',query: { orderId: order.order.id }}">去支付</router-link>
                   <br>
                   <a class="a-link order-cancel" @click="closeOrder(order.order.id)">取消订单</a><br>
+                </div>
+                <div class="operate" v-else-if="order.order.status=== 1">
+                  <a class="btn-5 order-confirm" @click="deliverOrder(order.order.id)">提醒发货</a>
+                </div>
+                <div class="operate" v-else-if="order.order.status=== 2">
+                  <a class="btn-5 order-confirm" @click="receiveOrder(order.order.id)">确认收货</a>
+                </div>
+                <div class="operate" v-else-if="order.order.status=== 3">
+                   <a class="btn-5 order-confirm" @click="commentOrder(order.order.id)">去评价</a>
+                </div>
+                <div class="operate" v-else>
+                   <span class="order-cancel">已取消</span><br>
                 </div>
               </td>
             </tr>
@@ -126,6 +130,9 @@ export default {
   methods: {
     handleCurrentChange (val) {
       this.$emit('handleCurrentChange', val)
+    },
+    getOrderList () {
+      this.$emit('getOrderList')
     },
     getOrderStatus (staus) {
       var statusText = ''
@@ -179,7 +186,60 @@ export default {
             .finally(() => {
               this.loading = false
             })
-        }).catch(() => { })
+        })
+        .catch(() => {})
+    },
+    receiveOrder (id) {
+      if (!id) {
+        return
+      }
+      this.$confirm('是否确认收货?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.loading = true
+          this.$http({
+            url: this.$http.adornUrl('/order/order/receiveOrder/' + id),
+            headers: {
+              token: this.$cookie.get('token')
+            },
+            method: 'post'
+          }).then(({ data }) => {
+            if (data && data.code === 0) {
+              this.$notify({
+                title: '收货成功',
+                type: 'success',
+                duration: 1500
+              })
+            } else {
+              this.$notify({
+                title: data.code,
+                message: data.msg,
+                type: 'error',
+                duration: 1500
+              })
+            }
+          }).finally(() => {
+            this.loading = false
+          })
+        })
+        .catch(() => {})
+    },
+    commentOrder (id) {
+      this.$notify({
+        title: '功能开发中,敬请期待',
+        type: 'error',
+        duration: 1500
+      })
+    },
+    deliverOrder (id) {
+      this.$notify({
+        title: '提醒成功',
+        type: 'success',
+        duration: 1500
+      })
     }
   },
   created () {

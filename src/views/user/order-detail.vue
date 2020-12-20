@@ -46,6 +46,9 @@
       <p class="price-total"><span>应付金额：</span><span class="price-red">¥ {{totalPrice.toFixed(2)}}</span>
       </p>
       <el-button type="warning" v-if="order.status === 0" @click="toPay">立即支付</el-button>
+      <el-button type="warning" v-else-if="order.status === 1">提醒发货</el-button>
+      <el-button type="warning" v-else-if="order.status === 2">确认收货</el-button>
+      <el-button type="warning" v-else-if="order.status === 3">去评价</el-button>
     </div>
 
     <div class="gray-sub-title cart-title">
@@ -142,6 +145,10 @@ export default {
         return '未支付'
       } else if (status === 1) {
         return '待发货'
+      } else if (status === 2) {
+        return '待收获'
+      } else if (status === 3) {
+        return '订单完成'
       } else if (status === 4) {
         return '订单关闭'
       }
@@ -168,7 +175,13 @@ export default {
         return '订单将于' + this.time + '后关闭, 请及时支付!'
       } else if (status === 1) {
         this.step.active = 2
-        return '支付成功, 等待发货中'
+        return '您的商品正在打包中，请耐心等待'
+      } else if (status === 2) {
+        this.step.active = 3
+        return '您的包裹正快马加鞭的赶来'
+      } else if (status === 3) {
+        this.step.active = 4
+        return '订单已完成，感谢购买'
       } else if (status === 4) {
         this.step.active = 0
         return '订单已关闭'

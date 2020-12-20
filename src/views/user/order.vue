@@ -1,13 +1,19 @@
 <template>
   <div class="s_content">
     <el-tabs type="border-card" @tab-click="tabClick">
-      <el-tab-pane label="全部订单" v-loading="loading" element-loading-text="加载中" class="tab">
+      <el-tab-pane label="待支付" v-loading="loading" element-loading-text="加载中" class="tab">
         <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
       </el-tab-pane>
-      <el-tab-pane label="待发货">
+      <el-tab-pane label="待发货" v-loading="loading" element-loading-text="加载中" class="tab">
         <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
       </el-tab-pane>
-      <el-tab-pane label="已取消">
+      <el-tab-pane label="待收货" v-loading="loading" element-loading-text="加载中" class="tab">
+        <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
+      </el-tab-pane>
+       <el-tab-pane label="已完成" v-loading="loading" element-loading-text="加载中" class="tab">
+        <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
+      </el-tab-pane>
+      <el-tab-pane label="已取消" v-loading="loading" element-loading-text="加载中" class="tab">
         <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
       </el-tab-pane>
     </el-tabs>
@@ -25,7 +31,7 @@ export default {
       pageSize: 6,
       currentPage: 1,
       orderList: [],
-      orderStatus: ''
+      orderStatus: '0'
     }
   },
   computed: {},
@@ -47,7 +53,6 @@ export default {
       })
         .then(({ data }) => {
           if (data && data.code === 0) {
-            console.log(data)
             this.total = data.page.totalCount
             this.orderList = data.page.list
           } else {
@@ -68,12 +73,15 @@ export default {
       this.getOrderList()
     },
     tabClick (tab) {
-      console.log(tab.index)
       if (tab.index === '0') {
-        this.orderStatus = ''
+        this.orderStatus = '0'
       } else if (tab.index === '1') {
         this.orderStatus = '1'
       } else if (tab.index === '2') {
+        this.orderStatus = '2'
+      } else if (tab.index === '3') {
+        this.orderStatus = '3'
+      } else if (tab.index === '4') {
         this.orderStatus = '4'
       }
       this.getOrderList()

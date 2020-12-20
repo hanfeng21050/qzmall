@@ -142,6 +142,7 @@ export default {
   methods: {
     getSpuList () {
       this.loading = true
+
       this.$http({
         url: this.$http.adornUrl('/product/spuinfo/spuList'),
         method: 'get',
