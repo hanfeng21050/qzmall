@@ -4,8 +4,7 @@
       <!-- 导航条 -->
       <el-breadcrumb separator-class="el-icon-arrow-right" class="nav_bar">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>数码</el-breadcrumb-item>
-        <el-breadcrumb-item>手机</el-breadcrumb-item>
+        <el-breadcrumb-item>商品列表</el-breadcrumb-item>
       </el-breadcrumb>
 
       <!-- 商品筛选 -->

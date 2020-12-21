@@ -19,8 +19,7 @@
                 <span>应付金额 <font>{{order.payAmount}}</font>元</span>
               </dd>
               <dd>
-                <span>推荐使用</span>
-                <span>扫码支付请您在<font>24小时</font>内完成支付，否则订单会被自动取消(库存紧订单请参见详情页时限)</span>
+                <span>请您在<font style="font-size:30px; color:red; padding:0 20px">{{this.time}}</font>内完成支付，否则订单会被自动取消(库存紧订单请参见详情页时限)</span>
                 <span @click="showDetail = !showDetail">订单详细</span>
               </dd>
             </dl>
@@ -58,7 +57,7 @@
 </template>
 
 <script>
-import { formatMoney } from '@/utils/utils'
+import { formatMoney, countDown } from '@/utils/utils'
 export default {
   components: {},
   data () {
@@ -68,12 +67,29 @@ export default {
       loading: false,
       loadingText: '',
       order: {},
-      orderItemList: []
+      orderItemList: [],
+      time: '00:00'
     }
   },
   computed: {},
   watch: {},
   methods: {
+    payRemainingTime (time) {
+      if (this.order.status === 0) {
+        var now = new Date().getTime()
+        var endtime = new Date(new Date(time).getTime() + 30 * 60 * 1000)
+        var second = Math.round((endtime - now) / 1000)
+        const timer = setInterval(() => {
+          second = second - 1
+          this.time = countDown(second)
+
+          if (time < 0) {
+            clearInterval(timer)
+            this.getOrderDetail()
+          }
+        }, 1000)
+      }
+    },
     getOrderDetail () {
       const orderId = this.$route.query.orderId
       this.loading = true
@@ -96,6 +112,7 @@ export default {
               })
             } else if (order.status === 0) {
               this.order = data.data.order
+              this.payRemainingTime(this.order.createTime)
               // 格式化
               this.order.payAmount = formatMoney(this.order.payAmount, 2)
               this.orderItemList = data.data.orderItemList.map((item) => {

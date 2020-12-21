@@ -4,6 +4,7 @@
     </div> -->
 
     <div class="menu">
+      <!-- 三级分类显示 -->
       <ul>
         <li v-for="(cate1) in categoryList" :key="cate1.catId">
           <a herf="javascript:;">{{cate1.name}}</a> <span></span>
@@ -12,23 +13,26 @@
               <dl v-for="(cate2) in cate1.children" :key="cate2.catId">
                 <dt>{{cate2.name}}</dt>
                 <dd>
-                  <router-link :to="{name: 'ProductList', params: {catelog3Id: cate3.catId}}" v-for="(cate3,index) in cate2.children" :key="cate3.catId +'-'+index">{{cate3.name}}</router-link>
+                  <router-link :to="{name: 'ProductList', params: {catelog3Id: cate3.catId}}" v-for="(cate3,index) in cate2.children" :key="cate3.catId +'-'+index">
+                    {{cate3.name}}
+                  </router-link>
                 </dd>
               </dl>
             </div>
           </div>
         </li>
       </ul>
+      <!-- 轮播图 -->
       <div class="right">
-        <el-carousel class="carousel" height="600px" >
+        <el-carousel class="carousel" height="600px">
           <el-carousel-item>
-            <img :src="require('@/style/images/carousel1.jpg')" style="vertical-align:middle; height:600px; width:968px; border-radius: 8px;object-fit: cover;" >
+            <img :src="require('@/style/images/carousel1.jpg')" style="vertical-align:middle; height:600px; width:968px; border-radius: 8px;object-fit: cover;">
           </el-carousel-item>
-           <el-carousel-item>
-            <img :src="require('@/style/images/carousel2.jpg')" style="vertical-align:middle; height:600px; width:968px; border-radius: 8px;object-fit: cover;" >
+          <el-carousel-item>
+            <img :src="require('@/style/images/carousel2.jpg')" style="vertical-align:middle; height:600px; width:968px; border-radius: 8px;object-fit: cover;">
           </el-carousel-item>
-           <el-carousel-item>
-            <img :src="require('@/style/images/carousel3.jpg')" style="vertical-align:middle; height:600px; width:968px; border-radius: 8px;object-fit: cover;" >
+          <el-carousel-item>
+            <img :src="require('@/style/images/carousel3.jpg')" style="vertical-align:middle; height:600px; width:968px; border-radius: 8px;object-fit: cover;">
           </el-carousel-item>
         </el-carousel>
       </div>
