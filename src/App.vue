@@ -19,7 +19,7 @@
                     <div><span class="avatar" :style="user.header ? 'background-image: url('+user.header+');':'background-image: url(https://coolmall-oss.oss-cn-hangzhou.aliyuncs.com/2020-12-18/01e615a1-9cc9-4c08-8686-30550325a8a4_logo.png);'"></span></div>
                     <p class="name">{{user.username}}</p>
                   </li>
-                  <li><router-link to="/shoppingcart" class="nav-user-list-item">购物车({{cart.length}})</router-link></li>
+                  <li><router-link to="/shoppingcart" class="nav-user-list-item">购物车({{carts.length}})</router-link></li>
                   <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
                   <li><router-link to="/user/information" class="nav-user-list-item">账户资料</router-link></li>
                   <li><router-link to="/user/address" class="nav-user-list-item">收货地址</router-link> </li>
@@ -99,12 +99,12 @@ export default {
         this.$store.commit('user/updateUser', val)
       }
     },
-    cart: {
+    carts: {
       get () {
-        return this.$store.state.user.cart
+        return this.$store.state.user.carts
       },
       set (val) {
-        this.$store.commit('user/updateCart', val)
+        this.$store.commit('user/updateCarts', val)
       }
     }
   },
@@ -127,7 +127,7 @@ export default {
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.user = data.member
-          this.cart = data.member.carts
+          this.carts = data.member.carts
           this.login = true
         } else {
           this.$notify({
@@ -174,7 +174,6 @@ export default {
   },
   created () {
     this.checkLogin()
-    console.log(this.$cookie.get('token'))
   }
 }
 </script>

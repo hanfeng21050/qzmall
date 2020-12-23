@@ -117,11 +117,6 @@ export default {
         .then(({ data }) => {
           if (data && data.code === 0) {
             this.productList = data.data
-            console.log(data.data)
-            const cart = this.productList.map((item) => {
-              return item.id
-            })
-            this.$store.commit('user/updateCart', cart)
             // 为productList添加select（是否选中）字段，初始值为true
             var _this = this
             // 为productList添加select（是否选中）字段，初始值为true

@@ -37,7 +37,7 @@
                 <li>售价</li>
                 <li>
                   <span>￥</span>
-                  <span>{{price}}</span>
+                  <span>{{formatMoney(this.sku.price)}}</span>
                 </li>
                 <li>
                   降价通知
@@ -186,6 +186,50 @@
         <div class="clearboth"></div>
       </div>
     </div>
+    <div class="cd-cart-container">
+      <a class="cd-cart-trigger">
+        <ul class="count">
+          <!-- cart items count -->
+          <li>{{carts.length}}</li>
+        </ul> <!-- .count -->
+      </a>
+
+      <div class="cd-cart">
+        <div class="wrapper">
+          <header>
+            <h2>Cart</h2>
+          </header>
+
+          <div class="body">
+            <ul>
+              <li class="product" v-for="(cart, index) in carts" :key="index">
+                <div class="product-img"><img :src="cart.skuPic">
+                  <!---->
+                </div>
+                <div class="product-detail">
+                  <h3><a href="#/product/detail?skuId=26" class="" :title="cart.skuName">{{cart.skuName}}</a></h3>
+                  <div class="product-info">
+                    <div class="product-info-attr">
+                      <p v-for="(attr, index) in JSON.parse(cart.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
+                    </div>
+                    <div class="product-info-count">
+                      X <span style="color:red;font-size:14px; font-weight:bolder">{{cart.skuQuantity}}</span>
+                    </div>
+                    <div class="product-info-price">
+                      ￥{{formatMoney(cart.skuPrice * cart.skuQuantity)}}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <footer>
+            <a class="checkout btn" @click="$router.push('/shoppingcart')"><em>去结算 ￥<span>{{formatMoney(cartTotalAmount)}}</span></em></a>
+          </footer>
+        </div>
+      </div> <!-- .cd-cart -->
+    </div>
   </div>
 
 </template>
@@ -195,6 +239,7 @@ import '@/style/iconfont/iconfont.css'
 import $ from 'jquery'
 import SingleSelector from '@/components/SingleSelector'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { formatMoney } from '@/utils/utils'
 import 'swiper/swiper-bundle.css'
 export default {
   components: {
@@ -221,16 +266,35 @@ export default {
       desc: {},
       saleAttrs: [],
       groupAttrs: [],
+      skuAttrsVals: '',
+      // 该数组包含了选择属性的商品id, 对数组求交集就可以知道选择了哪一个商品
+      /*
+      每一个销售属性都包含一个sku数组,表示哪些sku有这个属性
+      例如: select:[[1,2,3],[3,4,5],[3,5,6]]
+      对上述数组求交集,得出skuid为3
+      */
       select: []
     }
   },
   computed: {
-    // 格式化价格
-    price: function () {
-      return new Intl.NumberFormat().format(this.sku.price)
-    },
     imgList: function () {
       return this.images.map((img) => img.imgUrl)
+    },
+    carts: {
+      get () {
+        return this.$store.state.user.carts
+      },
+      set (val) {
+        this.$store.commit('user/updateCarts', val)
+      }
+    },
+    cartTotalAmount: function () {
+      var totalAmount = 0
+      for (let i = 0; i < this.carts.length; i++) {
+        const cart = this.carts[i]
+        totalAmount += cart.skuPrice * cart.skuQuantity
+      }
+      return totalAmount
     }
   },
   watch: {
@@ -249,12 +313,12 @@ export default {
         params: this.$http.adornParams({})
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          console.log(data)
           this.sku = data.data.sku
           this.desc = data.data.desc
           this.images = data.data.images
           this.groupAttrs = data.data.groupAttrs
           this.saleAttrs = data.data.saleAttrs
+          this.skuAttrsVals = data.data.skuAttrsVals
         } else {
           this.$notify({
             title: data.code,
@@ -282,35 +346,27 @@ export default {
         })
         return
       }
-
       const data = {
         skuId: this.sku.skuId,
         count: this.count
       }
 
       this.$http({
-        url: this.$http.adornUrl('/member/cartinfo/addcart'),
+        url: this.$http.adornUrl('/product/skuinfo/addcart'),
         method: 'post',
         headers: {
-          token: token
+          token: this.$cookie.get('token')
         },
         data: this.$http.adornData(data, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.$confirm('添加到购物车成功!', '成功', {
-            distinguishCancelAndClose: true,
-            confirmButtonText: '前往购物车',
-            cancelButtonText: '继续购物'
+          var cart = this.createCartInfo()
+          this.$store.commit('user/addCart', cart)
+          this.$notify({
+            title: '加入购物车成功',
+            type: 'success',
+            duration: 1500
           })
-            .then(() => {
-              // 跳转到购物车
-              console.log('跳转到购物车')
-              this.$router.push('/shoppingcart')
-            })
-            .catch((action) => {
-              // 留在当前页面
-              console.log('留在当前页面')
-            })
         } else {
           this.$notify({
             title: data.code,
@@ -346,13 +402,34 @@ export default {
         const _attr = this.$refs['item' + i]
         this.select.push(_attr[0].attr.attrValues[_attr[0].select].skuIds)
       }
-
       this.$router.push({
         path: '/product/detail',
         query: {
           skuId: this.getSkuId(this.select)
         }
       })
+    },
+
+    /**
+     * 价格格式化
+     */
+    formatMoney (price) {
+      return formatMoney(price, 2)
+    },
+
+    /**
+     * 创建一条购物车信息
+     */
+    createCartInfo () {
+      const data = {
+        id: this.sku.skuId,
+        skuAttrsVals: this.skuAttrsVals,
+        skuName: this.sku.skuName,
+        skuQuantity: this.count,
+        skuPic: this.sku.skuDefaultImg,
+        skuPrice: this.sku.price
+      }
+      return data
     }
   },
   created () {
@@ -420,8 +497,38 @@ export default {
           hoverbox.hide()
         })
     }
+
     $(function () {
       Zoomhover($('.probox img'), $('.hoverbox'), $('.showbox img'))
+
+      var cartWrapper = $('.cd-cart-container')
+
+      if (cartWrapper.length > 0) {
+        // store jQuery objects
+        var cartTrigger = cartWrapper.children('.cd-cart-trigger')
+
+        // open/close cart
+        cartTrigger.on('click', function (event) {
+          event.preventDefault()
+          toggleCart()
+        })
+
+        // close cart when clicking on the .cd-cart-container::before (bg layer)
+        cartWrapper.on('click', function (event) {
+          if ($(event.target).is($(this))) toggleCart(true)
+        })
+      }
+
+      function toggleCart (bool) {
+        var cartIsOpen =
+          typeof bool === 'undefined' ? cartWrapper.hasClass('cart-open') : bool
+
+        if (cartIsOpen) {
+          cartWrapper.removeClass('cart-open')
+        } else {
+          cartWrapper.addClass('cart-open')
+        }
+      }
     })
   },
   beforeCreate () {},
