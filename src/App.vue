@@ -149,7 +149,8 @@ export default {
       this.$router.push({
         path: '/product/list',
         query: {
-          spuName: this.searchText
+          keyword: this.searchText,
+          t: new Date().getTime()
         }
       })
     },

@@ -45,13 +45,13 @@
                 </div>
               </div>
 
-              <div class="JD_pre" v-for="attr in attrs" :key=attr.attrId>
+              <div class="JD_pre" v-for="attr in attrs" :key="attr.attrId">
                 <div class="sl_key">
                   <span>{{attr.attrName}}：</span>
                 </div>
                 <div class="sl_value">
                   <ul>
-                    <li v-for="(val, index) in attr.attrValueList" :key="index" @click="attrClick(attr.attrId, attr.attrName, val)"><a>{{val}}</a></li>
+                    <li v-for="(val, index) in attr.attrValue" :key="index" @click="attrClick(attr.attrId, attr.attrName, val)"><a>{{val}}</a></li>
                   </ul>
                 </div>
               </div>
@@ -64,10 +64,10 @@
       <div class="fun">
         <div class="sort">
           <span>排序：</span>
-          <a href="#" class="s1">
+          <a class="s1">
             <i></i>销量
           </a>
-          <a href="#" class="s2">
+          <a class="s2">
             <i></i>价格
           </a>
           <a href="#" class="s3">
@@ -84,10 +84,10 @@
         </div>
       </div>
       <div class="s_prod" v-loading="loading">
-        <product-item v-for="spu in spuList" :key="spu.spuId" :spu="spu"></product-item>
+        <product-item v-for="sku in products" :key="sku.skuId" :sku="sku"></product-item>
       </div>
 
-      <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="total" style="text-align:right" :current-page="pageNum">
+      <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="pageSize" :total="total" style="text-align:right" :current-page="pageNum">
       </el-pagination>
     </div>
   </div>
@@ -109,16 +109,18 @@ export default {
       catalogs: [],
       attrs: [],
       spuList: [],
+      products: [],
       /* 已选择的筛选条件 */
       selectTags: [],
       params: {
-        spuName: '',
+        keyword: '',
         pageNum: 1,
         pageSize: 16,
         catelog3Id: '',
         brandId: [],
         attrs: [],
-        hasStock: '0'
+        hasStock: '0',
+        sort: ''
       }
     }
   },
@@ -128,34 +130,36 @@ export default {
     $route (to, from) {
       this.selectTags = []
       this.params = {
-        spuName: to.query.spuName,
+        keyword: to.query.keyword,
         pageNum: 1,
         pageSize: 16,
         brandId: [],
         attrs: [],
         hasStock: ''
       }
-      this.getSpuList()
+      this.getProdtctList()
     }
   },
   methods: {
-    getSpuList () {
+    getProdtctList () {
       this.loading = true
 
       this.$http({
-        url: this.$http.adornUrl('/product/spuinfo/spuList'),
+        url: this.$http.adornUrl('/search/search'),
         method: 'get',
         params: this.$http.adornParams(this.params)
       }).then(
         ({ data }) => {
           if (data.code === 0) {
-            const _data = data.page
-            this.pageNum = _data.currentPage
-            this.total = _data.totalCount
-            this.brands = _data.list[0].brands
-            this.catalogs = _data.list[0].catalogs
-            this.attrs = _data.list[0].attrs
-            this.spuList = _data.list[0].spuList
+            const _data = data.data
+            console.log('file: product-list.vue - line 153 - _data', _data)
+            this.pageNum = _data.pageNum
+            this.total = _data.total
+            this.brands = _data.brands
+            this.catalogs = _data.catalogs
+            this.attrs = _data.attrs
+            this.products = _data.products
+            /*  this.spuList = _data.list[0].spuList */
           } else {
             this.$notify({
               title: data.code,
@@ -163,7 +167,6 @@ export default {
               type: 'error'
             })
           }
-          this.loading = false
         },
         (error) => {
           this.$notify({
@@ -172,7 +175,14 @@ export default {
           })
           this.loading = false
         }
-      )
+      ).finally(() => {
+        this.loading = false
+      })
+    },
+
+    handleCurrentChange (val) {
+      this.params.pageNum = val
+      this.getProdtctList()
     },
 
     brandCick (id, name) {
@@ -188,7 +198,7 @@ export default {
       }
       this.selectTags.push(tag)
       this.params.brandId.push(id)
-      this.getSpuList()
+      this.getProdtctList()
     },
 
     catalogClick (id, name) {
@@ -203,7 +213,7 @@ export default {
       }
       this.selectTags.push(tag)
       this.params.catalog3Id = id
-      this.getSpuList()
+      this.getProdtctList()
     },
     /**
      * id: 自定义属性id
@@ -225,7 +235,7 @@ export default {
       }
       this.selectTags.push(tag)
       this.params.attrs.push(id + '_' + value)
-      this.getSpuList()
+      this.getProdtctList()
     },
     /*
       flag = 0 表示品牌
@@ -249,10 +259,10 @@ export default {
       } else if (tag.flag === 2) {
         this.params.attrs.splice((val) => val === tag.value)
       }
-      this.getSpuList()
+      this.getProdtctList()
     },
     changeSwitch () {
-      this.getSpuList()
+      this.getProdtctList()
     }
   },
   created () {
@@ -283,7 +293,7 @@ export default {
       })
     }
 
-    this.getSpuList()
+    this.getProdtctList()
   },
   mounted () {
     /* 导航条 */

@@ -1,60 +1,41 @@
 <template>
   <div class="body">
     <p class="da">
-      <a href="#" :title="spu.spuName">
-        <img class="dim" :src="skuList[0].skuImg">
+      <a :title="sku.skuTitle" @click="toDetail(sku.skuId)">
+        <img class="dim" :src="sku.skuImg">
       </a>
     </p>
-    <swiper class="swiper" ref="mySwiper" :options="swiperOption">
-      <swiper-slide class="swiper-slide" v-for="sku in skuList" :key="sku.skuId" style="width:40px; height:45px; text-align:center;">
-        <img class="thumb" @click="toDetail(sku.skuId)" fit="cover" :src="sku.skuImg">
-      </swiper-slide>
-    </swiper>
+
+    <div class="split-line"></div>
+
     <p class="tab_R">
-      <span v-for="sku in skuList" :key="sku.skuId">¥{{sku.skuPrice}}</span>
+      <span>¥{{price}}</span>
     </p>
 
     <p class="tab_JE">
-      <a v-for="sku in skuList" :key="sku.skuId" href="#" :title="sku.skuName" @click="toDetail(sku.skuId)">
-        {{sku.skuName}}
+      <a :title="sku.skuTitle" @click="toDetail(sku.skuId)" v-html="sku.skuTitle">
       </a>
     </p>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { formatMoney } from '@/utils/utils'
-import 'swiper/swiper-bundle.css'
-import $ from 'jquery'
 export default {
   props: {
-    spu: {
+    sku: {
       type: Object
     }
   },
   components: {
-    Swiper,
-    SwiperSlide
   },
   data () {
     return {
-      defaultImg: '',
-      swiperOption: {
-        slidesPerView: 5,
-        spaceBetween: 0,
-        slidesPerGroup: 3,
-        loopFillGroupWithBlank: true,
-        preventClicks: false
-      }
     }
   },
   computed: {
-    skuList: function () {
-      return this.spu.skuList.map((item) => {
-        item.skuPrice = formatMoney(item.skuPrice)
-        return item
-      })
+    price: function () {
+      return formatMoney(this.sku.skuPrice, 0)
     }
   },
   watch: {},
@@ -70,34 +51,6 @@ export default {
   },
   created () {},
   mounted () {
-    $('.thumb').hover(function () {
-      var a = $(this).prop('src')
-      var index = $(this).parent('div').index()
-      $(this).parent().children('.thumb').css('border', '1.5px solid red')
-      $(this)
-        .parent()
-        .siblings()
-        .children('.thumb')
-        .css('border', '1.5px solid #ccc')
-      $(this).parents('.swiper').prev().find('.dim').prop('src', a)
-
-      $(this).parents('.swiper')
-        .siblings('.tab_JE')
-        .find('a')
-        .eq(index)
-        .css('display', 'block')
-        .siblings('a')
-        .css('display', 'none')
-
-      $(this)
-        .parents('.swiper')
-        .siblings('.tab_R')
-        .find('span')
-        .eq(index)
-        .css('display', 'block')
-        .siblings('span')
-        .css('display', 'none')
-    })
   },
   beforeCreate () {},
   beforeMount () {},
@@ -118,8 +71,9 @@ export default {
 }
 
 .body {
-  padding: 10px 5px;
-  height: 405px;
+  padding: 10px 0;
+  margin: 10px 0;
+
   width: 265px;
   box-sizing: border-box;
 }
@@ -131,19 +85,6 @@ export default {
 .body > .da .dim {
   width: 250px;
   height: 260px;
-}
-
-.body > .swiper .swiper-slide .thumb {
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid #ccc;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.swiper .swiper-slide:first-child .thumb {
-  border: 1.5px solid rgb(255, 50, 50);
 }
 
 .body .tab_R {
@@ -168,7 +109,8 @@ export default {
   color: #666;
   font-size: 14px;
   font-weight: bold;
-  height: 18px;
+  height: 30px;
+  line-height: 30px;
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -181,5 +123,11 @@ export default {
 
 .body .tab_JE a:first-child {
   display: block;
+}
+
+.split-line{
+  width: 100%;
+  height: 1px;
+  background-color: rgb(226, 225, 225, 0.6);
 }
 </style>

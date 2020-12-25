@@ -119,7 +119,7 @@
               <ul>
                 <li>
                   <div class="jieshao">
-                    <img class="xiaoguo" :src="desc.decript">
+                    <img v-for="(img, index) in descImgList" class="xiaoguo" :src="img" :key="index">
                   </div>
                 </li>
               </ul>
@@ -207,7 +207,7 @@
                   <!---->
                 </div>
                 <div class="product-detail">
-                  <h3><a href="#/product/detail?skuId=26" class="" :title="cart.skuName">{{cart.skuName}}</a></h3>
+                  <h3 @click="$router.push({path: '/product/detail', query: {skuId: cart.skuId}})"><a :title="cart.skuName">{{cart.skuName}}</a></h3>
                   <div class="product-info">
                     <div class="product-info-attr">
                       <p v-for="(attr, index) in JSON.parse(cart.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
@@ -280,6 +280,9 @@ export default {
     imgList: function () {
       return this.images.map((img) => img.imgUrl)
     },
+    descImgList: function () {
+      return (this.desc.decript || '').split(';')
+    },
     carts: {
       get () {
         return this.$store.state.user.carts
@@ -319,6 +322,7 @@ export default {
           this.groupAttrs = data.data.groupAttrs
           this.saleAttrs = data.data.saleAttrs
           this.skuAttrsVals = data.data.skuAttrsVals
+          console.log(this.desc)
         } else {
           this.$notify({
             title: data.code,
@@ -422,7 +426,7 @@ export default {
      */
     createCartInfo () {
       const data = {
-        id: this.sku.skuId,
+        skuId: this.sku.skuId,
         skuAttrsVals: this.skuAttrsVals,
         skuName: this.sku.skuName,
         skuQuantity: this.count,

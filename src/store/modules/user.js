@@ -15,7 +15,7 @@ export default {
     addCart (state, cart) {
       // 判断购物车中是否存在当前商品
       var index = state.carts.findIndex((item) => {
-        return item.id === cart.id
+        return item.skuId === cart.skuId
       })
       if (index === -1) {
         state.carts.push(cart)
