@@ -4,7 +4,7 @@
       <div class="inter">
         <router-link to="/" class="logo"><img src="./style/images/logo.png" alt=""></router-link>
         <router-link to="/" class="inter-i">首页</router-link>
-        <router-link to="/product/list" class="inter-i">查看所有商品</router-link>
+        <router-link :to="{path:'/product/list', query:{t:new Date().getTime()}}" class="inter-i">查看所有商品</router-link>
         <el-input @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;">
         </el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
@@ -36,8 +36,10 @@
         </div>
       </div>
     </div>
-
-    <router-view></router-view>
+    <div style="height:69px"></div>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
 
     <div class="footer">
       <div class="inter1">

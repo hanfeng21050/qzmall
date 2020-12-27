@@ -281,7 +281,7 @@ export default {
       return this.images.map((img) => img.imgUrl)
     },
     descImgList: function () {
-      return (this.desc.decript || '').split(';')
+      return (this.desc.decript || '').split(',')
     },
     carts: {
       get () {
@@ -502,11 +502,10 @@ export default {
         })
     }
 
-    $(function () {
+    this.$nextTick(() => {
       Zoomhover($('.probox img'), $('.hoverbox'), $('.showbox img'))
 
       var cartWrapper = $('.cd-cart-container')
-
       if (cartWrapper.length > 0) {
         // store jQuery objects
         var cartTrigger = cartWrapper.children('.cd-cart-trigger')
@@ -533,6 +532,10 @@ export default {
           cartWrapper.addClass('cart-open')
         }
       }
+    })
+
+    $(function () {
+
     })
   },
   beforeCreate () {},

@@ -64,15 +64,8 @@
       <div class="fun">
         <div class="sort">
           <span>排序：</span>
-          <a class="s1">
-            <i></i>销量
-          </a>
-          <a class="s2">
-            <i></i>价格
-          </a>
-          <a href="#" class="s3">
-            <i></i>上架时间
-          </a>
+          <el-button @click="sort('saleCount')" size="small" type="warning" style="height:35px; font-size:13px" plain>销量<i :class="params.sort && params.sort.split('_')[0] === 'saleCount' && params.sort.split('_')[1] === 'asc' ? 'el-icon-top el-icon--right':'el-icon-bottom el-icon--right'"/></el-button>
+          <el-button @click="sort('skuPrice')" size="small" type="warning" style="height:35px;font-size:13px" plain>价格<i :class="params.sort && params.sort.split('_')[0] === 'skuPrice' && params.sort.split('_')[1] === 'asc' ? 'el-icon-top el-icon--right':'el-icon-bottom el-icon--right'"/></el-button>
         </div>
         <div class="swi">
           <span>仅显示有货：</span>
@@ -112,6 +105,8 @@ export default {
       products: [],
       /* 已选择的筛选条件 */
       selectTags: [],
+      // 0:desc 1: asc
+      sortType: false,
       params: {
         keyword: '',
         pageNum: 1,
@@ -173,7 +168,6 @@ export default {
             title: error.message,
             type: 'error'
           })
-          this.loading = false
         }
       ).finally(() => {
         this.loading = false
@@ -213,6 +207,13 @@ export default {
       }
       this.selectTags.push(tag)
       this.params.catalog3Id = id
+      this.getProdtctList()
+    },
+    /** 排序 */
+    sort (val) {
+      this.params.sort = val + (this.sortType ? '_desc' : '_asc')
+      this.sortType = !this.sortType
+
       this.getProdtctList()
     },
     /**
@@ -266,7 +267,7 @@ export default {
     }
   },
   created () {
-    this.params.spuName = this.$route.query.spuName
+    this.params.keyword = this.$route.query.keyword
     var catelog3Id = this.$route.params.catelog3Id
     if (catelog3Id && catelog3Id !== '') {
       this.params.catalog3Id = catelog3Id

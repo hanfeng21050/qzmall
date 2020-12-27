@@ -2,6 +2,7 @@
 	width: 100%;
 	background: #f5f8fa;
 	margin: 0 auto;
+	padding-top: 20px;
 }
 
 .inner_c {
@@ -19,7 +20,6 @@
 .nav_bar {
 	width: 1140px;
 	margin: 0 auto;
-	margin-top: 90px;
 	height: 24px;
 	line-height: 24px;
 }
