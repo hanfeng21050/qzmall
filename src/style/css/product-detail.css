@@ -97,11 +97,6 @@
   box-sizing: border-box;
 }
 
-.imgbox {
-  position: relative;
-  z-index: 2;
-}
-
 .probox {
   width: 450px;
   height: 450px;
@@ -111,35 +106,6 @@
   width: 440px;
   height: 440px;
   border: 1px solid rgb(233, 231, 231);
-}
-
-.showbox {
-  display: none;
-  position: absolute;
-  left: 452px;
-  top: 0;
-  width: 450px;
-  height: 500px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background: #ffffff;
-}
-
-.showbox img {
-  position: absolute;
-  height: 600px;
-  width: 600px;
-}
-
-.hoverbox {
-  display: none;
-  position: absolute;
-  top: 0;
-  background: rgba(255, 255, 0, 0.5);
-  height: 300px;
-  width: 300px;
-  cursor: move;
-  z-index: 2;
 }
 
 
@@ -1187,23 +1153,25 @@
     -webkit-animation: cd-item-move-down .3s;
     animation: cd-item-move-down .3s;
   }
-  .cd-cart .product{
+
+  .cd-cart .product {
     display: flex;
   }
 
-  .cd-cart .product .product-img{
+  .cd-cart .product .product-img {
     width: 90px;
     height: 90px;
     display: inline-block;
     position: relative;
     border: 1px solid rgb(238, 232, 232, 0.5);
   }
-  .cd-cart .product .product-img img{
+
+  .cd-cart .product .product-img img {
     width: 90px;
     height: 90px;
   }
 
-  .cd-cart .product .product-detail{
+  .cd-cart .product .product-detail {
     margin-left: 5px;
     display: inline-block;
     vertical-align: middle;
@@ -1215,7 +1183,7 @@
     flex-direction: column;
   }
 
-  .cd-cart .product .product-detail h3{
+  .cd-cart .product .product-detail h3 {
     width: 300px;
     height: 30px;
     line-height: 30px;
@@ -1226,17 +1194,18 @@
     letter-spacing: -1px;
   }
 
-  .cd-cart .product .product-detail .product-info{
+  .cd-cart .product .product-detail .product-info {
     width: 300px;
     flex: 1;
     display: flex;
     align-items: center;
   }
 
-  .cd-cart .product .product-detail .product-info .product-info-attr{
+  .cd-cart .product .product-detail .product-info .product-info-attr {
     flex: 2;
   }
-  .cd-cart .product .product-detail .product-info .product-info-attr span{
+
+  .cd-cart .product .product-detail .product-info .product-info-attr span {
     padding: 1px 5px;
     margin: 2px;
     border: 1px solid rgb(199, 197, 197);
@@ -1245,10 +1214,12 @@
     display: inline-block;
     text-align: center;
   }
-  .cd-cart .product .product-detail .product-info .product-info-count{
+
+  .cd-cart .product .product-detail .product-info .product-info-count {
     flex: 1;
   }
-  .cd-cart .product .product-detail .product-info .product-info-price{
+
+  .cd-cart .product .product-detail .product-info .product-info-price {
     flex: 2;
     font-size: 15px;
     font-weight: 700;
@@ -1256,7 +1227,8 @@
   }
 
 
-  .product-info-price, .product-info-count {
+  .product-info-price,
+  .product-info-count {
     text-align: center;
   }
 

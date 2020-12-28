@@ -12,17 +12,13 @@
           <div class="boxx">
             <div class="imgbox">
               <div class="probox">
-                <img class="img1" :src="sku.skuDefaultImg">
-                <div class="hoverbox" style="display: none; opacity: 0.3; left: 0px; top: 140px;"></div>
-              </div>
-              <div class="showbox" style="display: none;">
-                <img class="img1" alt="" :src="sku.skuDefaultImg" style="left: 0px; top: -190.909px;">
+                <el-image class="img1" :src="sku.skuDefaultImg" :preview-src-list="imgList" :z-index="9999"/>
               </div>
             </div>
             <div class="box-thumb">
               <swiper class="swiper" ref="mySwiper" :options="swiperOption">
                 <swiper-slide class="swiper-slide" v-for="(img, index) in images" :key="img.id">
-                  <img class="thumb" @mouseenter="mouseenter(index)" :src="img.imgUrl" :style="imgHover === index ? 'border:1px solid #c78a49' : ''">
+                  <el-image class="thumb" @mouseenter="mouseenter(index)" :src="img.imgUrl" :style="imgHover === index ? 'border:1px solid #c78a49' : ''" />
                 </swiper-slide>
               </swiper>
             </div>
@@ -442,69 +438,7 @@ export default {
     this.getskuDetail(skuId)
   },
   mounted () {
-    function Zoom (imgbox, hoverbox, l, t, x, y, tw, hh, showbox) {
-      var moveX = x - l - tw / 2
-      // 鼠标区域距离
-      var moveY = y - t - hh / 2
-      // 鼠标区域距离
-      if (moveX < 0) {
-        moveX = 0
-      }
-      if (moveY < 0) {
-        moveY = 0
-      }
-      if (moveX > imgbox.width() - tw) {
-        moveX = imgbox.width() - tw
-      }
-      if (moveY > imgbox.height() - hh) {
-        moveY = imgbox.height() - hh
-      }
-      // 判断鼠标使其不跑出图片框
-      var zoomX = showbox.width() / imgbox.width()
-      // 求图片比例
-      var zoomY = showbox.height() / imgbox.height()
-
-      showbox.css({
-        left: -(moveX * zoomX),
-        top: -(moveY * zoomY)
-      })
-      hoverbox.css({
-        left: moveX,
-        top: moveY
-      })
-      // 确定位置
-    }
-    function Zoomhover (imgbox, hoverbox, showbox) {
-      var l = imgbox.offset().left
-      var t = imgbox.offset().top
-      var w = hoverbox.width()
-      var h = hoverbox.height()
-      $('.probox img,.hoverbox')
-        .mouseover(function (e) {
-          var x = e.pageX
-          var y = e.pageY
-          $('.hoverbox,.showbox').show()
-          hoverbox.css('opacity', '0.3')
-          setTimeout(function () {
-            Zoom(imgbox, hoverbox, l, t, x, y, w, h, showbox)
-          }, 1)
-        })
-        .mousemove(function (e) {
-          var x = e.pageX
-          var y = e.pageY
-          setTimeout(function () {
-            Zoom(imgbox, hoverbox, l, t, x, y, w, h, showbox)
-          }, 1)
-        })
-        .mouseout(function () {
-          showbox.parent().hide()
-          hoverbox.hide()
-        })
-    }
-
     this.$nextTick(() => {
-      Zoomhover($('.probox img'), $('.hoverbox'), $('.showbox img'))
-
       var cartWrapper = $('.cd-cart-container')
       if (cartWrapper.length > 0) {
         // store jQuery objects
