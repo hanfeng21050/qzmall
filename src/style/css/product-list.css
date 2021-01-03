@@ -198,6 +198,11 @@
 	background: url(../images/ico3.png);
 }
 
+.s_content .s_content_c .fun .price {
+	padding-left: 20px;
+	float: left;
+}
+
 .s_content .s_content_c .fun .swi {
 	float: left;
 	margin-left: 20px;

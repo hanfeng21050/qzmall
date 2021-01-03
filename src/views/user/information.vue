@@ -4,7 +4,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="头像">
           <el-upload :before-upload="beforeUpload" :data="dataObj" action="http://coolmall-oss.oss-cn-hangzhou.aliyuncs.com" :show-file-list="false" :on-success="handleAvatarSuccess">
-            <img v-if="form.header" :src="form.header" class="avatar">
+            <el-image v-if="form.header" :src="form.header" class="avatar" fit="scale-down" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>

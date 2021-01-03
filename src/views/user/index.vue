@@ -3,7 +3,7 @@
     <div class="content">
       <div class="account-sidebar">
         <div class="avatar gray-box ">
-          <div><img :src="$store.state.user.user.header">
+          <div><el-image class="img" :src="$store.state.user.user.header" fit="cover"/>
             <h5>
               {{user.username}}
             </h5>

@@ -51,7 +51,6 @@ export default {
       }
     }
     return {
-      sendLoading: false,
       loginLoading: false,
       countdown: 10,
       form: {
@@ -68,19 +67,6 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    // 发送验证码
-    send () {
-      const interval = setInterval(() => {
-        this.countdown--
-        if (this.countdown === 0) {
-          clearInterval(interval)
-          this.sendLoading = false
-          this.countdown = 10
-          return
-        }
-        this.sendLoading = true
-      }, 1000)
-    },
     // 登录
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -99,7 +85,7 @@ export default {
               })
               this.$cookie.set('token', data.token, 1)
               this.$store.commit('user/updateUser', data.user)
-              this.$router.go(-1)
+              this.$router.push('/')
             } else {
               this.$notify.error(data.msg)
             }

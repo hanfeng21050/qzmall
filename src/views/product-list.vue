@@ -64,8 +64,18 @@
       <div class="fun">
         <div class="sort">
           <span>排序：</span>
+          <el-button @click="sort('upTime')" size="small" type="warning" style="height:35px;font-size:13px" plain>上架时间<i :class="params.sort && params.sort.split('_')[0] === 'upTime' && params.sort.split('_')[1] === 'asc' ? 'el-icon-top el-icon--right':'el-icon-bottom el-icon--right'"/></el-button>
           <el-button @click="sort('saleCount')" size="small" type="warning" style="height:35px; font-size:13px" plain>销量<i :class="params.sort && params.sort.split('_')[0] === 'saleCount' && params.sort.split('_')[1] === 'asc' ? 'el-icon-top el-icon--right':'el-icon-bottom el-icon--right'"/></el-button>
-          <el-button @click="sort('skuPrice')" size="small" type="warning" style="height:35px;font-size:13px" plain>价格<i :class="params.sort && params.sort.split('_')[0] === 'skuPrice' && params.sort.split('_')[1] === 'asc' ? 'el-icon-top el-icon--right':'el-icon-bottom el-icon--right'"/></el-button>
+          <el-button @click="sort('skuPrice')" size="small" type="warning" style="height:35px; font-size:13px" plain>价格<i :class="params.sort && params.sort.split('_')[0] === 'skuPrice' && params.sort.split('_')[1] === 'asc' ? 'el-icon-top el-icon--right':'el-icon-bottom el-icon--right'"/></el-button>
+        </div>
+
+        <div class="price">
+          <span>价格：</span>
+          <a><el-input v-model="priceLow" style="width:90px" size="small" clearable></el-input></a>
+          --
+          <a><el-input v-model="priceHigh" style="width:90px" size="small" clearable></el-input></a>
+
+          <el-button type="warning" plain size="small" style="margin:0 20px" @click="getProdtctList()">查询</el-button>
         </div>
         <div class="swi">
           <span>仅显示有货：</span>
@@ -79,7 +89,6 @@
       <div class="s_prod" v-loading="loading">
         <product-item v-for="sku in products" :key="sku.skuId" :sku="sku"></product-item>
       </div>
-
       <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="pageSize" :total="total" style="text-align:right" :current-page="pageNum">
       </el-pagination>
     </div>
@@ -107,6 +116,8 @@ export default {
       selectTags: [],
       // 0:desc 1: asc
       sortType: false,
+      priceLow: '',
+      priceHigh: '',
       params: {
         keyword: '',
         pageNum: 1,
@@ -115,11 +126,26 @@ export default {
         brandId: [],
         attrs: [],
         hasStock: '0',
-        sort: ''
+        sort: 'upTime_desc',
+        skuPrice: ''
       }
     }
   },
-  computed: {},
+  computed: {
+    skuPrice: function () {
+      let price = ''
+      if (this.priceLow || this.priceHigh) {
+        if (this.priceLow.trim() === '') {
+          price = '_' + this.priceHigh
+        } else if (this.priceHigh.trim() === '') {
+          price = this.priceLow + '_'
+        } else {
+          price = this.priceLow + '_' + this.priceHigh
+        }
+      }
+      return price
+    }
+  },
   watch: {
     // 监控路由变化
     $route (to, from) {
@@ -138,7 +164,7 @@ export default {
   methods: {
     getProdtctList () {
       this.loading = true
-
+      this.params.skuPrice = this.skuPrice
       this.$http({
         url: this.$http.adornUrl('/search/search'),
         method: 'get',
@@ -147,7 +173,6 @@ export default {
         ({ data }) => {
           if (data.code === 0) {
             const _data = data.data
-            console.log('file: product-list.vue - line 153 - _data', _data)
             this.pageNum = _data.pageNum
             this.total = _data.total
             this.brands = _data.brands

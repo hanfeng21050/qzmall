@@ -1,12 +1,12 @@
 <template>
-  <div class="body">
+  <div class="product-item">
     <p class="da">
       <a :title="sku.skuTitle" @click="toDetail(sku.skuId)">
         <img class="dim" :src="sku.skuImg">
       </a>
     </p>
 
-    <div class="split-line"></div>
+    <!-- <div class="split-line"></div> -->
 
     <p class="tab_R">
       <span>¥{{price}}</span>
@@ -62,49 +62,52 @@ export default {
 }
 </script>
 <style scoped>
-.body {
-  box-shadow: 0 0 1px 0.5px rgb(185, 185, 185);
-  border-radius: 5px;
+.product-item {
+  background: #fff;
+  width: 25%;
+  transition: all .5s;
 }
-.body:hover{
-  box-shadow: 0 0 5px 0.5px rgb(185, 185, 185);
+.product-item:hover{
+  /* border-radius: 5px;
+  box-shadow: 0 0 5px 0.5px rgb(185, 185, 185); */
+  transform: translateY(-3px);
+    box-shadow: 1px 1px 20px #999;
 }
 
-.body {
+.product-item {
   padding: 10px 0;
   margin: 10px 0;
-
   width: 265px;
   box-sizing: border-box;
 }
 
-.body > .da {
+.product-item > .da {
   text-align: center;
 }
 
-.body > .da .dim {
+.product-item > .da .dim {
   width: 250px;
   height: 260px;
 }
 
-.body .tab_R {
+.product-item .tab_R {
   color: #be6307;
   font-size: 18px;
   font-weight: 800;
   margin: 10px;
 }
 
-.body .tab_R span {
+.product-item .tab_R span {
   display: none;
 }
-.body .tab_R span:first-child {
+.product-item .tab_R span:first-child {
   display: block;
 }
 
-.body .tab_JE {
+.product-item .tab_JE {
   margin: 10px;
 }
-.body .tab_JE a {
+.product-item .tab_JE a {
   display: none;
   color: #666;
   font-size: 14px;
@@ -117,11 +120,11 @@ export default {
   white-space: nowrap;
 }
 
-.body .tab_JE a:hover {
+.product-item .tab_JE a:hover {
   color: #da7007;
 }
 
-.body .tab_JE a:first-child {
+.product-item .tab_JE a:first-child {
   display: block;
 }
 
