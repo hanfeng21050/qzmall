@@ -9,6 +9,9 @@ import VueAxios from 'vue-axios'
 import VueCookie from 'vue-cookie'
 import httpRequest from '@/utils/httpRequest'
 
+// 引入自定义图标库
+import './style/iconfont/iconfont.css'
+
 Vue.use(ElementUI, VueAxios, axios)
 Vue.use(VueCookie)
 Vue.config.productionTip = false

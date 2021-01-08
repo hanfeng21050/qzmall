@@ -92,7 +92,7 @@ export default {
   border: solid 1px #cccccc;
   background: #f7f7f7;
   padding: 0;
-  margin: 0 5px;
+  margin: 2px 5px;
   height: 40px;
   cursor: pointer;
 }

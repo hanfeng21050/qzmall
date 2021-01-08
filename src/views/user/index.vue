@@ -44,6 +44,11 @@ export default {
           selected: true
         },
         {
+          name: '我的收藏',
+          path: '/user/collection',
+          selected: false
+        },
+        {
           name: '账户资料',
           path: '/user/information',
           selected: false

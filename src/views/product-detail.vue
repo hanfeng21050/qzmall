@@ -12,7 +12,7 @@
           <div class="boxx">
             <div class="imgbox">
               <div class="probox">
-                <el-image class="img1" :src="sku.skuDefaultImg" :preview-src-list="imgList" :z-index="9999"/>
+                <el-image class="img1" :src="sku.skuDefaultImg" :preview-src-list="imgList" :z-index="9999" />
               </div>
             </div>
             <div class="box-thumb">
@@ -50,11 +50,8 @@
               <div class="box-btns-one">
                 <el-input-number v-model="count" controls-position="right" :min="1" :max="999"></el-input-number>
               </div>
-              <div class="box-btns-two" @click="addToCart">
-                <a>
-                  加入购物车
-                </a>
-              </div>
+              <el-button type="warning" icon="iconfont icon-commodity" @click="addToCart"> 加入购物车</el-button>
+              <el-button type="danger" icon="iconfont icon-like_fill" @click="collect"> 收藏</el-button>
             </div>
 
             <div id="summary-tips" class="summary-tips">
@@ -377,6 +374,46 @@ export default {
         }
       })
     },
+
+    // 收藏
+    collect () {
+      const token = this.$cookie.get('token')
+      if (token === null) {
+        this.$notify({
+          title: '请先登录!',
+          type: 'error',
+          duration: 1500
+        })
+        return
+      }
+      const data = {
+        skuId: this.sku.skuId
+      }
+      this.$http({
+        url: this.$http.adornUrl('/member/membercollectsku/collect/sku'),
+        method: 'post',
+        headers: {
+          token: token
+        },
+        data: this.$http.adornData(data, false)
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.$notify({
+            title: '获取数据成功',
+            type: 'success',
+            duration: 1500
+          })
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
+    },
+
     /**
      * 计算属性选择的交集,得到skuid
      */
@@ -468,9 +505,7 @@ export default {
       }
     })
 
-    $(function () {
-
-    })
+    $(function () {})
   },
   beforeCreate () {},
   beforeMount () {},

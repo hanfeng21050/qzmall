@@ -98,6 +98,14 @@ const routes = [
         }
       },
       {
+        path: 'collection',
+        name: 'Collection',
+        component: () => import(/* webpackChunkName: "collection" */ '../views/user/collection.vue'),
+        meta: {
+          isLogin: true
+        }
+      },
+      {
         path: 'address',
         name: 'Address',
         component: () => import(/* webpackChunkName: "address" */ '../views/user/address.vue'),
