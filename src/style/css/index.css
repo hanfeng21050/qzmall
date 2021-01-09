@@ -42,7 +42,7 @@
   background-color: #FFFFFF;
   padding: 10px;
   border: 1px solid #dcdcdc;
-  border-color: rgba(0,0,0,.14);
+  border-color: rgba(0, 0, 0, .14);
   border-radius: 8px;
   box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
 
@@ -93,7 +93,7 @@
   background-color: #FFFFFF;
   padding: 10px;
   border: 1px solid #dcdcdc;
-  border-color: rgba(0,0,0,.14);
+  border-color: rgba(0, 0, 0, .14);
   box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
 }
 
@@ -120,157 +120,136 @@
   overflow: hidden;
 }
 
-.box2 .start,
-.start1 {
-  width: 220px;
-  height: 310px;
-  margin-bottom: 10px;
-  background-color: rgba(0, 0, 0, 0);
+/* -----------------专题活动-------------------- */
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.box2 ul .start a img {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+.subject {}
 
-.box2 ul .start1 a img {
-  position: absolute;
-  top: 320px;
-  left: 0;
-}
-
-.box2 .start .a1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 220px;
-  height: 310px;
-  background-color: rgba(0, 0, 0, 0.1);
-  display: none;
-  pointer-events: none;
-}
-
-.box2 .start:hover .a1 {
-  /*background-color: rgba(0,0,0,.1);*/
-  display: block;
-}
-
-.box2 .start1 .a2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 220px;
-  height: 310px;
-  background-color: rgba(0, 0, 0, 0.1);
-  display: none;
-  pointer-events: none;
-}
-
-.box2 .start1:hover .a2 {
-  /*background-color: rgba(0,0,0,.1);*/
-  display: block;
-  top: 50%;
-}
-
-.box2 .end {
-  position: absolute;
-  top: 0;
-  left: 220px;
+.mt30 {
 
 }
 
-.box2 ul li a img {
-  width: 220px;
-  height: 220px;
-  margin-bottom: 18px;
-  /*background-color: rgba(0,0,0,0);*/
-}
-
-.box2 .p11 {
-  /*display: block;*/
-  font-weight: bold;
-  color: #333;
-  font-size: 12px;
-  height: 32px;
-  /*background-color: grey;*/
-  line-height: 32px;
-
-}
-
-.box2 .p22 {
-  font-size: 14px;
-  /*background-color: #FFFFFF;*/
-  height: 39px;
-  line-height: 39px;
-  color: #E02B41;
-}
-
-.box2 ul li .a11 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 220px;
-  height: 310px;
-  background-color: rgba(0, 0, 0, 0.1);
-  display: none;
-  pointer-events: none;
-}
-
-.box2 ul li .d11 {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  margin-left: -75px;
-  margin-top: -25px;
-  width: 150px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 14px;
-  color: #FFFFFF;
-  background-color: #C78A49;
-  text-align: center;
-}
-
-.box2 ul li:hover .a11 {
-  display: block;
-}
-
-.box3 {
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  /*background-color: #C78A49;*/
-  pointer-events: none;
-  z-index: 999;
-}
-
-.box3 a {
-  position: absolute;
-  top: 80%;
-  left: 45%;
-  /*margin-top: -75px;*/
-  /*margin-left: -100px;*/
+.w {
+  width: 1160px;
   margin: 0 auto;
 }
 
-.box3 a img {
+.gray-box {
+  padding-top: 30px;
+  position: relative;
+  margin-top: 50px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  border-color: rgba(0, 0, 0, .14);
+  box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
+}
+
+
+
+.floors {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.floors .imgbanner {
+  width: 50%;
+  height: 430px;
+  
+}
+
+.floors img {
+  display: block;
+  object-fit: cover;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+
+}
+.good-item .ds {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.good-item {
+  background: #fff;
+  width: 25%;
+  transition: all .3s;
+  height: 430px;
+}
+
+.good-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 1px 1px 10px #999;
+}
+
+.good-item:hover .good-price p {
+  display: none;
+}
+
+.good-item:hover .ds {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.good-item .ds {
+  width: 100%;
+  display: none;
+}
+
+.good-item .good-img img {
+  margin: 50px auto 10px;
+  width: 206px;
+  height: 206px;
+  display: block;
+}
+
+.good-item .good-price {
+  margin: 15px 0;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  color: #d44d44;
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.good-item .good-title {
+  line-height: 1.2;
+  font-size: 16px;
+  color: #424242;
+  margin: 0 auto;
+  padding: 0 14px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.good-item h3 {
+  text-align: center;
+  line-height: 1.2;
+  font-size: 12px;
+  color: #d0d0d0;
   padding: 10px;
 }
 
-.box3 a span {
-  text-align: center;
-  font-size: 14px;
-  height: 46px;
-  color: #FFFFFF;
-  background-color: #262626;
-  padding: 15px 15px;
-  border-radius: 5px;
-}
 
 
+/* ----------------------------------- */
 
 .menu {
   width: 1160px;
@@ -290,11 +269,11 @@
   position: relative;
   box-shadow: 0 3px 8px -6px rgb(0 0 0 / 10%);
   border: 1px solid #dcdcdc;
-  border-color: rgba(0,0,0,.14);
+  border-color: rgba(0, 0, 0, .14);
 }
 
 .menu .right {
-  flex:1;
+  flex: 1;
   border-radius: 8px;
   margin-left: 10px;
 }
@@ -325,8 +304,8 @@
 }
 
 .menu ul li a:hover {
-  color:#E6A23C;
-  
+  color: #E6A23C;
+
 }
 
 .menu ul li:hover {
@@ -334,12 +313,11 @@
   background-color: rgb(245, 245, 245);
   background-image: none;
   cursor: pointer;
-  
+
 }
 
 .menu ul li:hover .submenu,
-.menu ul li:hover .submenu .subleft
-{
+.menu ul li:hover .submenu .subleft {
   display: block;
   transform: scaleX(1);
   transition: transform .3s ease-in-out;
@@ -357,7 +335,7 @@
   border: 1px solid #DDD;
   background-color: #FFF;
   z-index: 99;
-  transform:scaleX(0);
+  transform: scaleX(0);
 }
 
 .menu ul li .submenu .subleft {
@@ -372,7 +350,7 @@
   border-bottom: 1px solid #D1D1D1;
   padding: 10px 0;
   display: flex;
-  
+
 }
 
 .menu ul li .submenu .subleft dl dt {
@@ -402,8 +380,8 @@
   font-size: 11px;
 }
 
-.menu ul li .submenu .subleft dl dd a:hover{
-  color:#E6A23C;
+.menu ul li .submenu .subleft dl dd a:hover {
+  color: #E6A23C;
 }
 
 .menu ul li .submenu .subright {
