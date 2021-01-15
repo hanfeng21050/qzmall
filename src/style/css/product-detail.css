@@ -355,11 +355,14 @@
   width: 212px;
   background: #f7f7f7;
   line-height: 40px;
+  border: 1px solid rgba(212, 212, 212, 0.651);
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .aside .mt h4 {
-  margin-left: 20px;
   color: #666666;
+  
 }
 
 .aside .mc {
@@ -377,6 +380,7 @@
   text-align: center;
   box-sizing: border-box;
   position: relative;
+  border-bottom: 1px solid rgba(179, 179, 179, 0.473);
 }
 
 .aside .mc .plist li:hover a {

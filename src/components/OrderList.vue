@@ -83,7 +83,7 @@
               </td>
               <td :rowspan="order.orderItemList.length" v-if="index===0" width="15%">
                 <div class="operate" v-if="order.order.status=== 0">
-                  <router-link class="btn-5 order-confirm" :to="{path: '/orderpay',query: { orderId: order.order.id }}">去支付</router-link>
+                  <router-link class="btn-5 order-confirm" :to="{name: 'OrderPay',query: { orderId: order.order.id }}">去支付</router-link>
                   <br>
                   <a class="a-link order-cancel" @click="closeOrder(order.order.id)">取消订单</a><br>
                 </div>

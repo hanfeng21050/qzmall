@@ -75,32 +75,18 @@
           <div class="mc">
             <ul class="plist">
               <li>
-                <a href="##"><img src="../style/images/57d11c72N093250ec.jpg"></a>
+                <a><img src="https://coolmall-oss.oss-cn-hangzhou.aliyuncs.com/2020-12-27/7af293d5-bdf7-4c24-8b18-965d1d91f508_主图-02.jpg"></a>
                 <p>
-                  <a href="##">OPPO R11s Plus 双卡双待全面屏拍照手机香槟色 全网通(6G RAM+64G ROM)标配</a>
+                  <a>AppleAirPods Max 银色 官方AppleCare+版</a>
                 </p>
-                <p><strong class="J-p-20015341974">￥3699.00</strong></p>
+                <p><strong class="J-p-20015341974">￥4878.00</strong></p>
               </li>
               <li>
-                <a href="##"><img src="../style/images/57d11c72N093250ec.jpg"></a>
+                <a><img src="https://coolmall-oss.oss-cn-hangzhou.aliyuncs.com/2020-12-27/b02f1fe9-657c-401c-80ed-184a3c9329da_主图-02.jpg"></a>
                 <p>
-                  <a href="##">OPPO R11s Plus 双卡双待全面屏拍照手机香槟色 全网通(6G RAM+64G ROM)标配</a>
+                  <a>AppleAirPods Max 粉色 官方AppleCare+版</a>
                 </p>
-                <p><strong class="J-p-20015341974">￥3699.00</strong></p>
-              </li>
-              <li>
-                <a href="##"><img src="../style/images/57d11c72N093250ec.jpg"></a>
-                <p>
-                  <a href="##">OPPO R11s Plus 双卡双待全面屏拍照手机香槟色 全网通(6G RAM+64G ROM)标配</a>
-                </p>
-                <p><strong class="J-p-20015341974">￥3699.00</strong></p>
-              </li>
-              <li>
-                <a href="##"><img src="../style/images/57d11c72N093250ec.jpg"></a>
-                <p>
-                  <a href="##">OPPO R11s Plus 双卡双待全面屏拍照手机香槟色 全网通(6G RAM+64G ROM)标配</a>
-                </p>
-                <p><strong class="J-p-20015341974">￥3699.00</strong></p>
+                <p><strong class="J-p-20015341974">￥4878.00</strong></p>
               </li>
             </ul>
           </div>
@@ -200,7 +186,7 @@
                   <!---->
                 </div>
                 <div class="product-detail">
-                  <h3 @click="$router.push({path: '/product/detail', query: {skuId: cart.skuId}})"><a :title="cart.skuName">{{cart.skuName}}</a></h3>
+                  <h3 @click="$router.push({name: 'ProductDetail', query: {skuId: cart.skuId}})"><a :title="cart.skuName">{{cart.skuName}}</a></h3>
                   <div class="product-info">
                     <div class="product-info-attr">
                       <p v-for="(attr, index) in JSON.parse(cart.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
@@ -218,7 +204,7 @@
           </div>
 
           <footer>
-            <a class="checkout btn" @click="$router.push('/shoppingcart')"><em>去结算 ￥<span>{{formatMoney(cartTotalAmount)}}</span></em></a>
+            <a class="checkout btn" @click="$router.push({name:'ShoppingCart'})"><em>去结算 ￥<span>{{formatMoney(cartTotalAmount)}}</span></em></a>
           </footer>
         </div>
       </div> <!-- .cd-cart -->
@@ -440,7 +426,7 @@ export default {
         this.select.push(_attr[0].attr.attrValues[_attr[0].select].skuIds)
       }
       this.$router.push({
-        path: '/product/detail',
+        name: 'ProductDetail',
         query: {
           skuId: this.getSkuId(this.select)
         }

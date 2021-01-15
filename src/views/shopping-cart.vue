@@ -26,7 +26,7 @@
                 </div>
                 <div class="product-info">
                   <h3>
-                    <router-link :to="{path:'product/detail', query: {'skuId':item.skuId}}" :title="item.skuName">{{item.skuName}}</router-link>
+                    <router-link :to="{name:'ProductDetail', query: {'skuId':item.skuId}}" :title="item.skuName">{{item.skuName}}</router-link>
                   </h3>
                   <p>品牌: {{item.spuBrand}}</p>
                   <p v-for="(attr, index) in JSON.parse(item.skuAttrsVals)" :key="index">{{attr.attrName}}: {{attr.attrValue}}</p>
@@ -57,7 +57,7 @@
       </div>
       <div class="cart-product-info">
         <a class="delect-product" href="javascript:;" @click="deleteProduct">移除所选商品</a>
-        <router-link class="keep-shopping" to="/product/list">继续购物</router-link>
+        <router-link class="keep-shopping" :to="{name:'ProductList'}">继续购物</router-link>
         <a to="/orderConfirm" class="btn-buy fr" href="javascript:;" @click="orderConfirm">去结算</a>
         <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
         <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品 总计（不含运费）：</p>
@@ -258,7 +258,7 @@ export default {
         .map((item) => item.id)
       if (ids.length > 0) {
         this.$cookie.set('payList', ids)
-        this.$router.push('/orderConfirm')
+        this.$router.push({ name: 'OrderConfirm' })
       } else {
         this.$notify({
           title: '至少选择一项',

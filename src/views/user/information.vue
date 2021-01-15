@@ -26,7 +26,7 @@
         </el-form-item>
         <el-form-item label="生日">
           <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="form.birth"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" v-model="form.birth"></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="签名">

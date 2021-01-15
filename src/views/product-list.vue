@@ -180,6 +180,7 @@ export default {
             this.attrs = _data.attrs
             this.products = _data.products
             /*  this.spuList = _data.list[0].spuList */
+            console.log(data)
           } else {
             this.$notify({
               title: data.code,

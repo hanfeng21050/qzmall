@@ -7,7 +7,7 @@
         </div>
         <div class="right">
           已有账号
-          <router-link to="/login">立即登录</router-link>
+          <router-link :to="{name:'Login'}">立即登录</router-link>
         </div>
       </div>
       <el-form ref="form" status-icon :rules="rules" :model="form">
@@ -179,7 +179,7 @@ export default {
                 type: 'success',
                 duration: 1500
               })
-              this.$router.push('/login')
+              this.$router.push({ name: 'Login' })
             } else {
               this.$notify({
                 title: data.code,

@@ -4,8 +4,8 @@
       <div class="inter">
         <router-link to="/" class="logo"><img src="./style/images/logo.png" alt=""></router-link>
         <router-link to="/" class="inter-i">首页</router-link>
-        <router-link :to="{path:'/product/list', query:{t:new Date().getTime()}}" class="inter-i">查看所有商品</router-link>
-        <el-input @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-sousuo" style="display:inline-block; width:300px;line-height:68px;">
+        <router-link :to="{name:'ProductList', query:{t:new Date().getTime()}}" class="inter-i">查看所有商品</router-link>
+        <el-input clearable @keydown.native="doSearch" v-model="searchText" placeholder="请输入内容" size="small " prefix-icon="iconfont icon-search" style="display:inline-block; width:300px;line-height:68px;">
         </el-input>
         <el-button plain size="small" type="warning" style="margin-left:5px" @click="search">搜索</el-button>
 
@@ -19,19 +19,19 @@
                     <div><span class="avatar" :style="user.header ? 'background-image: url('+user.header+');':'background-image: url(https://coolmall-oss.oss-cn-hangzhou.aliyuncs.com/2020-12-18/01e615a1-9cc9-4c08-8686-30550325a8a4_logo.png);'"></span></div>
                     <p class="name">{{user.username}}</p>
                   </li>
-                  <li><router-link to="/shoppingcart" class="nav-user-list-item">购物车({{carts.length}})</router-link></li>
-                  <li><router-link to="/user/order" class="nav-user-list-item">我的订单</router-link></li>
-                  <li><router-link to="/user/information" class="nav-user-list-item">账户资料</router-link></li>
-                  <li><router-link to="/user/address" class="nav-user-list-item">收货地址</router-link> </li>
+                  <li><router-link :to="{name:'ShoppingCart'}" class="nav-user-list-item">购物车({{carts.length}})</router-link></li>
+                  <li><router-link :to="{name:'Order'}" class="nav-user-list-item">我的订单</router-link></li>
+                  <li><router-link :to="{name:'Information'}" class="nav-user-list-item">账户资料</router-link></li>
+                  <li><router-link :to="{name:'Address'}" class="nav-user-list-item">收货地址</router-link> </li>
                   <li @click="logout">退出</li>
                 </ul>
               </div>
             </div>
           </div>
           <div v-else>
-            <router-link to="/login">登录</router-link>
+            <router-link :to="{name:'Login'}" >登录</router-link>
             <span>|</span>
-            <router-link to="/regist">注册</router-link>
+            <router-link :to="{name:'Regist'}">注册</router-link>
           </div>
         </div>
       </div>
@@ -71,8 +71,8 @@
           </dl>
         </div>
         <div class="right">
-          <img src="./style/images/weixin.png" alt="">
-          <img src="./style/images/weibo.png" alt="">
+          <img src="./assets/hanfeng.png" alt="">
+          <img src="./assets/hanfeng.png" alt="">
           <span>微信公众号</span>
           <span>微博公众号</span>
         </div>

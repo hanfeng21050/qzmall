@@ -42,7 +42,7 @@ export default {
   methods: {
     toDetail (skuId) {
       this.$router.push({
-        path: '/product/detail',
+        name: 'ProductDetail',
         query: {
           skuId: skuId
         }

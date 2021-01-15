@@ -7,7 +7,7 @@
         </div>
         <div class="right">
           没有账号?
-          <router-link to="/regist">立即注册</router-link>
+          <router-link :to="{name:'Regist'}">立即注册</router-link>
         </div>
       </div>
       <el-form ref="form" status-icon :rules="rules" :model="form">

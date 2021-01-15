@@ -79,7 +79,7 @@
             </table>
           </div>
           <div class="cart-product-info">
-            <router-link class="keep-shopping" to="/shoppingcart" replace>返回</router-link>
+            <router-link class="keep-shopping" :to="{name:'ShoppingCart'}" replace>返回</router-link>
             <a class="btn-buy fr" href="javascript:;" @click="submitOrder">提交订单</a>
             <p class="fr product-total">￥<span>{{getTotal.totalPrice.toFixed(2)}}</span></p>
             <p class="fr check-num"><span>{{getTotal.totalNum}}</span>件商品总计（不含运费）：</p>
@@ -409,7 +409,7 @@ export default {
         .then(({ data }) => {
           if (data && data.code === 0) {
             this.$router.push({
-              path: '/orderpay',
+              name: 'OrderPay',
               query: { orderId: data.data.id }
             })
           } else {

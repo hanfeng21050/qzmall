@@ -245,7 +245,7 @@ export default {
     // 跳转到商品详情
     toDetail (skuId) {
       this.$router.push({
-        path: '/product/detail',
+        name: 'ProductDetail',
         query: {
           skuId: skuId
         }
