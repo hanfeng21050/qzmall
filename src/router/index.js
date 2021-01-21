@@ -39,7 +39,7 @@ const routes = [
     }
   },
   {
-    path: '/shoppingcart',
+    path: '/shopping/cart',
     name: 'ShoppingCart',
     component: () => import(/* webpackChunkName: "shoppingcart" */ '../views/shopping-cart.vue'),
     meta: {
@@ -55,7 +55,7 @@ const routes = [
     }
   },
   {
-    path: '/orderconfirm',
+    path: '/order/confirm',
     name: 'OrderConfirm',
     component: () => import(/* webpackChunkName: "orderconfirm" */ '../views/order-confirm.vue'),
     meta: {
@@ -63,7 +63,7 @@ const routes = [
     }
   },
   {
-    path: '/orderpay',
+    path: '/order/pay',
     name: 'OrderPay',
     component: () => import(/* webpackChunkName: "orderpay" */ '../views/order-pay.vue'),
     meta: {
@@ -91,7 +91,7 @@ const routes = [
         }
       },
       {
-        path: 'orderDetail',
+        path: 'order/detail',
         name: 'OrderDetail',
         component: () => import(/* webpackChunkName: "orderDetail" */ '../views/user/order-detail.vue'),
         meta: {

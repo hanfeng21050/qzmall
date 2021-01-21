@@ -122,10 +122,7 @@ export default {
     getMemberInfo () {
       this.$http({
         url: this.$http.adornUrl('/member/member/baseInfo'),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.user = data.member

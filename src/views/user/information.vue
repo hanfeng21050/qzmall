@@ -119,9 +119,6 @@ export default {
           this.loading = true
           this.$http({
             url: this.$http.adornUrl('/member/member/update'),
-            headers: {
-              token: this.$cookie.get('token')
-            },
             method: 'post',
             data: this.$http.adornData(this.form, false)
           }).then(({ data }) => {
@@ -155,9 +152,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/member/info'),
         method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         params: this.$http.adornParams({})
       })
         .then(({ data }) => {

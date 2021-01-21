@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import Vue from 'vue'
 import merge from 'lodash/merge'
 import router from '@/router'
 import { clearLoginInfo } from '@/utils/utils'
@@ -16,7 +17,7 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  // config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
+  config.headers.token = Vue.cookie.get('token') // 请求头带上token
 
   /* 如果get请求中带有数组,则需要处理一下 */
   if (config.method === 'get') {

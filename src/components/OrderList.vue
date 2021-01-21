@@ -162,9 +162,6 @@ export default {
           this.$http({
             url: this.$http.adornUrl('/order/order/closeOrder/' + id),
             method: 'get',
-            headers: {
-              token: this.$cookie.get('token')
-            },
             params: this.$http.adornParams({})
           })
             .then(({ data }) => {
@@ -202,9 +199,6 @@ export default {
           this.loading = true
           this.$http({
             url: this.$http.adornUrl('/order/order/receiveOrder/' + id),
-            headers: {
-              token: this.$cookie.get('token')
-            },
             method: 'post'
           }).then(({ data }) => {
             if (data && data.code === 0) {

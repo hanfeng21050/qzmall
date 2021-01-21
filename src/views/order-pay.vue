@@ -95,10 +95,7 @@ export default {
       this.loading = true
       this.$http({
         url: this.$http.adornUrl('/order/order/getOrderDetail/' + orderId),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       })
         .then(({ data }) => {
           if (data && data.code === 0) {
@@ -155,10 +152,7 @@ export default {
       this.loading = true
       this.$http({
         url: this.$http.adornUrl('/order/order/pay/' + orderId),
-        method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'post'
       })
         .then(({ data }) => {
           if (data && data.code === 0) {

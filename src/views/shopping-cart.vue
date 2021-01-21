@@ -105,13 +105,9 @@ export default {
   methods: {
     getCartList () {
       this.loading = true
-      const token = this.$cookie.get('token')
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/getListByMemberId'),
         method: 'get',
-        headers: {
-          token: token
-        },
         params: this.$http.adornParams({})
       })
         .then(({ data }) => {
@@ -174,9 +170,6 @@ export default {
         this.$http({
           url: this.$http.adornUrl('/member/cartinfo/delete'),
           method: 'post',
-          headers: {
-            token: this.$cookie.get('token')
-          },
           data: this.$http.adornData(ids, false)
         })
           .then(({ data }) => {
@@ -205,9 +198,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/delete'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData([id], false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
@@ -242,9 +232,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/update'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(data, false)
       }).then((data) => {
         this.getCartList()

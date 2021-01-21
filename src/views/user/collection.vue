@@ -89,9 +89,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/membercollectsku/list'),
         method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         params: this.$http.adornParams({
           page: this.currPage,
           limit: this.pageSize,
@@ -145,9 +142,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/membercollectsku/unCollect/sku'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(data, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
@@ -182,9 +176,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/membercollectsku/unCollect/sku'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(this.selected, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
@@ -214,9 +205,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/membercollectsku/collect/top'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(data, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {

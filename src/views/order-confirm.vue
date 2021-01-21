@@ -1,5 +1,5 @@
 <template>
-  <div class="page-order-comfirm" v-loading.fullscreen.lock="submitLoading"  element-loading-text="订单生成中..." >
+  <div class="page-order-comfirm" v-loading.fullscreen.lock="submitLoading" element-loading-text="订单生成中...">
     <el-steps :active="2" finish-status="success" align-center>
       <el-step title="我的购物车"></el-step>
       <el-step title="核对订单信息"></el-step>
@@ -203,10 +203,7 @@ export default {
       if (mod === 'update') {
         this.$http({
           url: this.$http.adornUrl('/member/memberreceiveaddress/info/' + id),
-          method: 'get',
-          headers: {
-            token: this.$cookie.get('token')
-          }
+          method: 'get'
         }).then(({ data }) => {
           if (data && data.code === 0) {
             const addr = [data.data.province, data.data.city, data.data.region]
@@ -231,10 +228,7 @@ export default {
     getOrderToken () {
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/getOrderToken'),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       }).then(({ data }) => {
         if (data && data.code === 0) {
           console.log(data)
@@ -255,10 +249,7 @@ export default {
         url: this.$http.adornUrl(
           '/member/memberreceiveaddress/getAddrByMemberId'
         ),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       }).then(({ data }) => {
         if (data && data.code === 0) {
           console.log(data)
@@ -279,9 +270,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/cartinfo/getListByIds'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
+
         data: this.$http.adornData(payList, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
@@ -319,10 +308,7 @@ export default {
 
       this.$http({
         url: this.$http.adornUrl('/member/memberreceiveaddress/delete/' + id),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.getAddrList()
@@ -355,9 +341,6 @@ export default {
           this.$http({
             url: this.$http.adornUrl(url),
             method: 'post',
-            headers: {
-              token: this.$cookie.get('token')
-            },
             data: this.$http.adornData(this.addrForm, false)
           }).then(({ data }) => {
             if (data && data.code === 0) {
@@ -401,9 +384,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/order/order/submitOrder'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(data, false)
       })
         .then(({ data }) => {

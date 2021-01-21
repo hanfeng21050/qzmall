@@ -42,9 +42,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/order/order/listByMemberId'),
         method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         params: this.$http.adornParams({
           page: this.currentPage,
           limit: this.pageSize,

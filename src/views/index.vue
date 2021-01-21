@@ -171,9 +171,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/product/skuinfo/addcart'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(data, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {

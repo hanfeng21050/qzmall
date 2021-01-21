@@ -111,9 +111,6 @@ export default {
           '/order/order/getOrderDetail/' + this.$route.query.orderId
         ),
         method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         params: this.$http.adornParams({})
       })
         .then(({ data }) => {

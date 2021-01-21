@@ -11,7 +11,7 @@
           <div class="box-inner">
             <ul class="account-nav">
               <li @click="menuClick(index)" v-for="(item, index) in menu" :key="index" :class="item.selected? 'current' : ''">
-                <router-link :to="{name:item.path}">{{item.title}}</router-link>
+                <router-link :to="{name:item.name}">{{item.title}}</router-link>
               </li>
             </ul>
           </div>
@@ -40,7 +40,7 @@ export default {
       menu: [
         {
           title: '我的订单',
-          name: 'User',
+          name: 'Order',
           selected: true
         },
         {

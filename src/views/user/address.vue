@@ -117,10 +117,7 @@ export default {
         url: this.$http.adornUrl(
           '/member/memberreceiveaddress/getAddrByMemberId'
         ),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.addressList = data.data
@@ -141,10 +138,7 @@ export default {
       if (mod === 'update') {
         this.$http({
           url: this.$http.adornUrl('/member/memberreceiveaddress/info/' + id),
-          method: 'get',
-          headers: {
-            token: this.$cookie.get('token')
-          }
+          method: 'get'
         }).then(({ data }) => {
           if (data && data.code === 0) {
             const addr = [data.data.province, data.data.city, data.data.region]
@@ -173,10 +167,7 @@ export default {
 
       this.$http({
         url: this.$http.adornUrl('/member/memberreceiveaddress/delete/' + id),
-        method: 'get',
-        headers: {
-          token: this.$cookie.get('token')
-        }
+        method: 'get'
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.getAddrList()
@@ -209,9 +200,6 @@ export default {
           this.$http({
             url: this.$http.adornUrl(url),
             method: 'post',
-            headers: {
-              token: this.$cookie.get('token')
-            },
             data: this.$http.adornData(this.addrForm, false)
           }).then(({ data }) => {
             if (data && data.code === 0) {
@@ -246,9 +234,6 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/member/memberreceiveaddress/update'),
         method: 'post',
-        headers: {
-          token: this.$cookie.get('token')
-        },
         data: this.$http.adornData(data, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
