@@ -369,6 +369,13 @@
   width: 210px;
   border: 1px solid #eeeeee;
 }
+.store {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
 
 .aside .mc .plist {
   width: 100%;

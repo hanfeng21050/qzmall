@@ -1,0 +1,101 @@
+* {
+  font-family: 'Microsoft YaHei',Arial,Helvetica,sans-serif
+}
+.s_content {
+  padding-bottom:20px;
+  background-size: auto;
+  background-position: 50% 50%;
+  background-repeat: repeat;
+  background-color: #dcf9e0;
+  background-image: url(../images/store_bg.png);
+}
+
+.wrapper {
+  position: relative;
+  width: 1140px;
+  background-color: none;
+  padding-top: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-color: #FFF;
+  border-style: solid;
+  border-width: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  background-color: #FFFFFF;
+}
+
+.blocks-content {
+  position: relative;
+  background: none;
+  display: block;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+.grid-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1140px;
+}
+.blocks-content h1, .blocks-content h2, .blocks-content h3, .blocks-content h4, .blocks-content h5, .blocks-content h6 {
+  letter-spacing: 0;
+  color: #000;
+  line-height: 150%;
+  font-weight: normal;
+}
+.blocks-content label, .blocks-content li, .blocks-content p, .blocks-content td {
+  color: #555;
+  font-size: 16px;
+  line-height: 150%;
+}
+.blocks-content p {
+  margin: 5px 0;
+  word-wrap: break-word;
+  line-height: 150%;
+}
+
+.box1 {
+  background-size: cover; 
+  background-position: 50% 50%; 
+  background-repeat: no-repeat;
+  background-image:url(../images/store_1.jpg);
+  padding-top:120px;
+  padding-right:20px;
+  padding-bottom:100px;
+  padding-left:20px;
+}
+
+.box2 {
+  margin: 20px;
+  padding: 10px;
+  border-color: #5C7C4B;
+  border-style: dashed;
+  border-top-width: 1px;
+  border-right-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+}
+
+.box3 {
+	min-height: 400px;
+	padding: 15px 10px;
+	display: grid;
+	overflow: hidden;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}

@@ -71,12 +71,20 @@ const routes = [
     }
   },
   {
+    path: '/shop',
+    name: 'Shop',
+    component: () => import(/* webpackChunkName: "orderpay" */ '../views/shop.vue'),
+    meta: {
+      isLogin: false
+    }
+  },
+  {
     path: '/user',
-    name: 'User',
     component: () => import(/* webpackChunkName: "user" */ '../views/user/index.vue'),
     children: [
       {
         path: '',
+        name: 'User',
         component: () => import(/* webpackChunkName: "" */ '../views/user/order.vue'),
         meta: {
           isLogin: true

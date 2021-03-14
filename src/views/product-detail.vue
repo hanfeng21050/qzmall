@@ -70,6 +70,13 @@
         <!-- 侧边栏 -->
         <div class="aside">
           <div class="mt">
+            <h4>某某旗舰店</h4>
+          </div>
+          <div class="mc store">
+            <el-button size="small" icon="iconfont icon-workbench_fill">进店逛逛</el-button>
+            <el-button size="small" icon="iconfont icon-collection_fill">关注店铺</el-button>
+          </div>
+          <div class="mt">
             <h4>选购达人</h4>
           </div>
           <div class="mc">
@@ -92,7 +99,7 @@
           </div>
         </div>
         <!-- 商品详情 -->
-        <el-tabs type="border-card" class="detail">
+        <el-tabs type="border-card" class="detail" v-model="activeTab">
           <el-tab-pane label="商品介绍">
             <div class="tab-con">
               <ul>
@@ -160,7 +167,9 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="商品评价(800+)">// TODO</el-tab-pane>
+          <el-tab-pane label="商品评价(800+)" name="comment">
+            <comment></comment>
+          </el-tab-pane>
         </el-tabs>
         <div class="clearboth"></div>
       </div>
@@ -217,12 +226,14 @@
 import '@/style/iconfont/iconfont.css'
 import $ from 'jquery'
 import SingleSelector from '@/components/SingleSelector'
+import Comment from '@/components/Comment'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { formatMoney } from '@/utils/utils'
 import 'swiper/swiper-bundle.css'
 export default {
   components: {
     SingleSelector,
+    Comment,
     Swiper,
     SwiperSlide
   },
