@@ -107,6 +107,14 @@ const routes = [
         }
       },
       {
+        path: 'order/comment',
+        name: 'OrderComment',
+        component: () => import(/* webpackChunkName: "OrderComment" */ '../views/user/order-comment.vue'),
+        meta: {
+          isLogin: true
+        }
+      },
+      {
         path: 'collection',
         name: 'Collection',
         component: () => import(/* webpackChunkName: "collection" */ '../views/user/collection.vue'),

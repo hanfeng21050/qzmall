@@ -226,6 +226,17 @@ a.btn-5:hover{
   color: #fff;
 }
 
+a.btn-6 {
+  background-color: #e4e4e4;
+  color: rgb(158, 158, 158);
+  border-radius: 2px;
+  width: 85px;
+  text-align: center;
+  padding: 3px 10px;
+  margin: 3px 0;
+  font-weight: 700;
+}
+
 .order-tb .goods-number {
   float: right;
   width: 40px;

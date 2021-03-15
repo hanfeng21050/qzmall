@@ -10,7 +10,7 @@
       <el-tab-pane label="待收货" v-loading="loading" element-loading-text="加载中" class="tab">
         <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
       </el-tab-pane>
-       <el-tab-pane label="已完成" v-loading="loading" element-loading-text="加载中" class="tab">
+      <el-tab-pane label="已完成" v-loading="loading" element-loading-text="加载中" class="tab">
         <order-list @handleCurrentChange="handleCurrentChange" :orderList="orderList" :total="total" :pageSize="pageSize" :currentPage="currentPage"></order-list>
       </el-tab-pane>
       <el-tab-pane label="已取消" v-loading="loading" element-loading-text="加载中" class="tab">
