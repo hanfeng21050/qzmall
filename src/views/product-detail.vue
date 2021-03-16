@@ -99,7 +99,7 @@
           </div>
         </div>
         <!-- 商品详情 -->
-        <el-tabs type="border-card" class="detail" v-model="activeTab">
+        <el-tabs type="border-card" class="detail" @tab-click="tabClick">
           <el-tab-pane label="商品介绍">
             <div class="tab-con">
               <ul>
@@ -167,8 +167,12 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="商品评价(800+)" name="comment">
-            <comment></comment>
+          <el-tab-pane :label="comment.title" name="comment" v-loading="comment.loading" style="min-height:500px">
+            <template v-for="(item, index) in comment.list">
+              <comment :comment="item" :key="index"></comment>
+            </template>
+            <el-pagination @current-change="handleCurrentChange" background layout="prev, pager, next" :total="comment.total" :page-size="comment.limit" hide-on-single-page style="float:right">
+            </el-pagination>
           </el-tab-pane>
         </el-tabs>
         <div class="clearboth"></div>
@@ -250,6 +254,7 @@ export default {
       // 购买数量
       count: 1,
       sku: {
+        skuDefaultImg: '',
         price: 0
       },
       images: [],
@@ -263,7 +268,15 @@ export default {
       例如: select:[[1,2,3],[3,4,5],[3,5,6]]
       对上述数组求交集,得出skuid为3
       */
-      select: []
+      select: [],
+      comment: {
+        list: [],
+        total: 0,
+        page: 1,
+        limit: 16,
+        loading: false,
+        title: '商品评价'
+      }
     }
   },
   computed: {
@@ -312,7 +325,6 @@ export default {
           this.groupAttrs = data.data.groupAttrs
           this.saleAttrs = data.data.saleAttrs
           this.skuAttrsVals = data.data.skuAttrsVals
-          console.log(this.desc)
         } else {
           this.$notify({
             title: data.code,
@@ -458,6 +470,57 @@ export default {
         skuPrice: this.sku.price
       }
       return data
+    },
+
+    /**
+     * tab点击事件
+     */
+    tabClick (tab) {
+      if (tab.index === '3') {
+        this.getCommentList()
+      }
+    },
+
+    /**
+     * 获取去该spu下的所有评论
+     */
+    getCommentList () {
+      this.comment.spuId = this.sku.spuId
+      this.comment.loading = true
+      this.$http({
+        url: this.$http.adornUrl('/product/spucomment/list'),
+        method: 'get',
+        params: this.$http.adornParams({
+          page: this.comment.page,
+          limit: this.comment.limit,
+          spuId: this.comment.spuId
+        })
+      })
+        .then(({ data }) => {
+          if (data && data.code === 0) {
+            const { page } = data
+            this.comment.total = page.totalCount
+            this.comment.list = page.list
+            this.comment.title = '商品评价(' + page.list.length + ')'
+          } else {
+            this.$notify({
+              title: data.code,
+              message: data.msg,
+              type: 'error',
+              duration: 1500
+            })
+          }
+        })
+        .finally(() => {
+          this.comment.loading = false
+        })
+    },
+    /**
+     * 评论分页
+    */
+    handleCurrentChange (val) {
+      this.comment.page = val
+      this.getCommentList()
     }
   },
   created () {

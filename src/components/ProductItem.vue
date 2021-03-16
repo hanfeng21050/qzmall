@@ -24,7 +24,14 @@ import { formatMoney } from '@/utils/utils'
 export default {
   props: {
     sku: {
-      type: Object
+      type: Object,
+      default: function () {
+        return {
+          skuId: undefined,
+          skuTitle: '',
+          skuImg: ''
+        }
+      }
     }
   },
   components: {
@@ -35,7 +42,7 @@ export default {
   },
   computed: {
     price: function () {
-      return formatMoney(this.sku.skuPrice, 0)
+      return formatMoney(this.sku.skuPrice, 2)
     }
   },
   watch: {},

@@ -102,9 +102,8 @@
               <template v-else>
                 <td width="15%">
                   <div class="operate">
-                    <router-link class="btn-5 order-confirm" :to="{name: 'OrderComment', query: {orderItemId: orderItem.id}}">去评价</router-link>
-                    <!-- <a v-if="orderItem.commentStatus === 0" class="btn-5 order-confirm" @click="commentOrder(orderItem.id)">去评价</a>
-                    <a v-else class="btn-6 order-confirm">已评价</a> -->
+                    <router-link v-if="orderItem.commentStatus === 0" class="btn-5 order-confirm" :to="{name: 'OrderComment', query: {orderItemId: orderItem.id}}">去评价</router-link>
+                    <a v-else class="btn-6 order-confirm">已评价</a>
                   </div>
                 </td>
               </template>

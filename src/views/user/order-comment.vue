@@ -20,28 +20,28 @@
         <div class="fop-star">
           <div class="fop-label">商品评分</div>
           <div class="fop-main">
-            <el-rate v-model="star" show-score score-template='{value}分'></el-rate>
+            <el-rate v-model="commentForm.star" show-score score-template='{value}分'></el-rate>
           </div>
         </div>
 
         <div class="fop-item">
           <div class="fop-label">商品评分</div>
           <div class="fop-main">
-            <el-input type="textarea" :rows="5" show-word-limit maxlength="500" placeholder="请输入内容" v-model="comment">
+            <el-input type="textarea" :rows="5" show-word-limit maxlength="500" placeholder="请输入内容" v-model="commentForm.content">
             </el-input>
           </div>
         </div>
         <div class="comment-imgs">
           <div class="fop-label">商品评分</div>
           <div class="fop-main">
-            <multi-upload ref="decript" v-model="imgs" :maxCount="9"></multi-upload>
+            <multi-upload ref="decript" v-model="commentForm.images" :maxCount="9"></multi-upload>
           </div>
         </div>
       </div>
     </div>
 
     <div class="f-btnbox">
-      <el-button type="warning" class="btn">发表</el-button>
+      <el-button type="warning" class="btn" @click="published">发表</el-button>
     </div>
   </div>
 </template>
@@ -55,9 +55,14 @@ export default {
   data () {
     return {
       orderItem: {},
-      star: 0,
-      comment: '',
-      imgs: []
+      commentForm: {
+        skuId: undefined,
+        orderItemId: undefined,
+        star: 0,
+        content: '',
+        skuAttrsVals: '',
+        images: []
+      }
     }
   },
   computed: {
@@ -84,6 +89,33 @@ export default {
           console.log(this.orderItem)
           this.$notify({
             title: '获取数据成功',
+            type: 'success',
+            duration: 1500
+          })
+        } else {
+          this.$notify({
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
+          })
+        }
+      })
+    },
+
+    published () {
+      this.commentForm.skuId = this.orderItem.skuId
+      this.commentForm.orderItemId = this.orderItem.id
+      this.commentForm.skuAttrsVals = this.orderItem.skuAttrsVals
+
+      this.$http({
+        url: this.$http.adornUrl('/product/spucomment/published'),
+        method: 'post',
+        data: this.$http.adornData(this.commentForm, false)
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.$notify({
+            title: '评论成功',
             type: 'success',
             duration: 1500
           })
