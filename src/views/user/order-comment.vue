@@ -114,10 +114,12 @@ export default {
         data: this.$http.adornData(this.commentForm, false)
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.$notify({
-            title: '评论成功',
-            type: 'success',
-            duration: 1500
+          this.$alert('评论成功', '成功', {
+            confirmButtonText: '返回订单页面',
+            showClose: false,
+            callback: (action) => {
+              this.$router.push({ name: 'Order' })
+            }
           })
         } else {
           this.$notify({

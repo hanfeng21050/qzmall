@@ -24,21 +24,15 @@ transition: opacity .3s ease;
   background-color: #ffffff;
   /*background-color: gainsboro;*/
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
 }
 
-.header .inter .logo {
-  float: left;
-  width: 162px;
-  height: 100%;
-  text-align: center;
+
+.header .inter {
+  flex: 1;
 }
 
-.header .inter img {
-  width: 110px;
-  margin: 20px auto;
-  height: 27.88px;
-  line-height: 27.88px;
-}
 .header .inter .inter-i {
   font-size: 14px;
   color: #555;
@@ -47,13 +41,22 @@ transition: opacity .3s ease;
   padding: 0 28px;
 }
 
-.header .inter .inter-i:hover {
+.header .inter  .inter-i:hover {
   color: #c78a49;
 }
 
-.header .inter .inter_right {
-  float: right;
+.header .inter .search-box{
+  display:inline-block;
+  position: absolute;
+  left:50%;
+  margin-left: -160px;
 }
+
+.header .inter .search-box .search_input {
+  width:300px;
+  line-height:68px;
+}
+
 
 .header .inter .inter_right a {
   font-size: 14px;
