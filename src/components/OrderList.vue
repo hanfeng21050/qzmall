@@ -66,10 +66,10 @@
                   </div>
                 </div>
               </td>
-              <td :rowspan="order.orderItemList.length" v-if="index===0" width="15%">
+              <td width="15%">
                 <div class="amount">
-                  <span>¥{{order.order.payAmount.toFixed(2)}}</span> <br>
-                  <span class="ftx-13">在线支付</span>
+                  <span>¥{{orderItem.skuPrice.toFixed(2)}}</span> <br>
+                  <!-- <span class="ftx-13">在线支付</span> -->
                 </div>
               </td>
               <td :rowspan="order.orderItemList.length" v-if="index===0" width="15%">
@@ -81,18 +81,12 @@
                   <router-link :to="{name: 'OrderDetail', query: {orderId: order.order.id}}">订单详情</router-link>
                 </div>
               </td>
-              <template v-if="order.order.status !== 3">
+              <template v-if="order.order.status === 0 || order.order.status===4">
                 <td :rowspan="order.orderItemList.length" v-if="index===0" width="15%">
                   <div class="operate" v-if="order.order.status=== 0">
                     <router-link class="btn-5 order-confirm" :to="{name: 'OrderPay',query: { orderId: order.order.id }}">去支付</router-link>
                     <br>
                     <a class="a-link order-cancel" @click="closeOrder(order.order.id)">取消订单</a><br>
-                  </div>
-                  <div class="operate" v-else-if="order.order.status=== 1">
-                    <a class="btn-5 order-confirm" @click="deliverOrder(order.order.id)">提醒发货</a>
-                  </div>
-                  <div class="operate" v-else-if="order.order.status=== 2">
-                    <a class="btn-5 order-confirm" @click="receiveOrder(order.order.id)">确认收货</a>
                   </div>
                   <div class="operate" v-else>
                     <span class="order-cancel">已取消</span><br>
@@ -101,9 +95,15 @@
               </template>
               <template v-else>
                 <td width="15%">
-                  <div class="operate">
+                  <div class="operate"  v-if="order.order.status=== 3">
                     <router-link v-if="orderItem.commentStatus === 0" class="btn-5 order-confirm" :to="{name: 'OrderComment', query: {orderItemId: orderItem.id}}">去评价</router-link>
                     <a v-else class="btn-6 order-confirm">已评价</a>
+                  </div>
+                  <div class="operate" v-else-if="order.order.status=== 1">
+                    <a class="btn-5 order-confirm" @click="deliverOrder(order.order.id)">提醒发货</a>
+                  </div>
+                  <div class="operate" v-else-if="order.order.status=== 2">
+                    <a class="btn-5 order-confirm" @click="receiveOrder(order.order.id)">确认收货</a>
                   </div>
                 </td>
               </template>

@@ -2,7 +2,7 @@
   <div class="product-item">
     <p class="da">
       <a :title="sku.skuTitle" @click="toDetail(sku.skuId)">
-        <img class="dim" :src="sku.skuImg">
+        <img class="dim" :src="sku.skuImg || sku.skuDefaultImg">
       </a>
     </p>
 
@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     price: function () {
-      return formatMoney(this.sku.skuPrice, 2)
+      return formatMoney(this.sku.skuPrice ? this.sku.skuPrice : this.sku.price, 2)
     }
   },
   watch: {},

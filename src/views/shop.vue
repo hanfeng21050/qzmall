@@ -4,8 +4,8 @@
       <div class="blocks-content box1">
         <div class="grid-container">
           <div class="blocks-text">
-            <h1 style="text-align: center; color: rgb(92, 124, 75);" data-forecolor="#5C7C4B">水果店</h1>
-            <p style="text-align: center; color: rgb(41, 46, 40);" data-forecolor="#292E28">这是一个店铺模板</p>
+            <h1 style="text-align: center; color: rgb(92, 124, 75);" data-forecolor="#5C7C4B">{{shop.shopName}}</h1>
+            <p style="text-align: center; color: rgb(41, 46, 40);" data-forecolor="#292E28">{{shop.shopNotice}}</p>
           </div>
         </div>
       </div>
@@ -22,6 +22,9 @@
       <div class="blocks-content box3" v-loading="loading">
         <product-item v-for="sku in products" :key="sku.skuId" :sku="sku"></product-item>
       </div>
+
+      <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="params.limit" :total="total" style="text-align:right" :current-page="params.page">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -35,55 +38,65 @@ export default {
   data () {
     return {
       loading: false,
+      shop: {},
       products: [],
+      total: 0,
       params: {
-        keyword: '',
-        pageNum: 1,
-        pageSize: 16,
-        catelog3Id: '',
-        brandId: [],
-        attrs: [],
-        hasStock: '0',
-        sort: 'upTime_desc',
-        skuPrice: ''
+        shopId: '',
+        page: 1,
+        limit: 12
       }
     }
   },
   methods: {
-    getProdtctList () {
-      this.loading = true
-      this.params.skuPrice = this.skuPrice
+    getShopInfo () {
       this.$http({
-        url: this.$http.adornUrl('/search/search'),
+        url: this.$http.adornUrl('/shop/shop/info/' + this.params.shopId),
         method: 'get',
-        params: this.$http.adornParams(this.params)
-      }).then(
-        ({ data }) => {
-          if (data.code === 0) {
-            const _data = data.data
-            this.products = _data.products
-            /*  this.spuList = _data.list[0].spuList */
-            console.log(data)
-          } else {
-            this.$notify({
-              title: data.code,
-              message: data.msg,
-              type: 'error'
-            })
-          }
-        },
-        (error) => {
+        params: this.$http.adornParams({})
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          console.log(data)
+          this.shop = data.shop
+        } else {
           this.$notify({
-            title: error.message,
-            type: 'error'
+            title: data.code,
+            message: data.msg,
+            type: 'error',
+            duration: 1500
           })
         }
+      })
+    },
+    getProdtctList () {
+      this.loading = true
+      this.$http({
+        url: this.$http.adornUrl('/product/skuinfo/list'),
+        method: 'get',
+        params: this.$http.adornParams(this.params)
+      }).then(({ data }) => {
+        this.total = data.page.totalCount
+        this.products = data.page.list
+      },
+      (error) => {
+        this.$notify({
+          title: error.message,
+          type: 'error'
+        })
+      }
       ).finally(() => {
         this.loading = false
       })
+    },
+    handleCurrentChange (val) {
+      this.params.page = val
+      this.getProdtctList()
     }
   },
   created () {
+    const shopId = this.$route.query.shopId
+    this.params.shopId = shopId
+    this.getShopInfo()
     this.getProdtctList()
   }
 }

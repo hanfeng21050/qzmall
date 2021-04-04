@@ -73,7 +73,7 @@
             <h4>某某旗舰店</h4>
           </div>
           <div class="mc store">
-            <el-button size="small" icon="iconfont icon-workbench_fill">进店逛逛</el-button>
+            <el-button size="small" icon="iconfont icon-workbench_fill" @click="$router.push({name: 'Shop', query: {shopId: sku.shopId}})">进店逛逛</el-button>
             <el-button size="small" icon="iconfont icon-collection_fill">关注店铺</el-button>
           </div>
           <div class="mt">
@@ -558,8 +558,6 @@ export default {
         }
       }
     })
-
-    $(function () {})
   },
   beforeCreate () {},
   beforeMount () {},
